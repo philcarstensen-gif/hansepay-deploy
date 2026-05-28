@@ -21,7 +21,7 @@
   --r-pill:100px;--r-lg:16px;--r-md:10px;--r-sm:6px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:var(--font-ui);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -398,28 +398,35 @@ footer{background:#0A0A0A;padding:96px 0 48px}
 .view-toggle a:not(.active):hover{color:#fff}
 
 @media(max-width:768px){
-  body{overflow-x:hidden}
+  .nav-inner{justify-content:space-between}
+  .nav-logo{margin-right:0}
   .nav-cta{display:none}
+
   .hero-layout{padding:96px clamp(20px,5vw,40px) 60px}
-  .section{padding:64px 0}
-  .section-sm{padding:48px 0}
-  .cta-band{padding:72px 0}
-  footer{padding:64px 0 40px}
-  .footer-grid{margin-bottom:48px;gap:40px}
-  .how-intro{margin-bottom:40px}
+
+  .showcase-layout > div:last-child{display:none}
+  .screen-wrap::before{display:none}
+  .showcase-layout{gap:0}
+
+  .section{padding:56px 0}
+  .section-sm{padding:40px 0}
+  .cta-band{padding:64px 0}
+  footer{padding:56px 0 36px}
+  .footer-grid{margin-bottom:40px;gap:36px}
+  .how-intro{margin-bottom:36px}
   .insights-header{flex-direction:column;align-items:flex-start;gap:12px}
   .cta-actions{flex-direction:column;align-items:center}
-  .calc-bullets{margin-top:32px}
+  .calc-bullets{margin-top:28px}
   .hero-actions{flex-direction:column;align-items:flex-start}
   .hero-actions .btn{width:100%;justify-content:center}
   .trust-strip .trust-item:nth-child(n+4){display:none}
   .calc-card{padding:24px 20px}
-  .feat-card{padding:28px 24px}
-  .how-step{padding:28px 12px}
-  .vp-metric{padding:28px 20px}
-  .cred-item{padding:20px 20px}
-  .screen-wrap::before{display:none}
-  .showcase-layout{gap:40px}
+  .feat-card{padding:24px 20px}
+  .how-step{padding:24px 12px}
+  .vp-metric{padding:24px 20px}
+  .cred-item{padding:18px 20px}
+  .seg-body{padding:18px 20px}
+  .ins-body{padding:18px 20px}
 }
 @media(max-width:640px){
   .currency-grid{grid-template-columns:repeat(2,1fr)}

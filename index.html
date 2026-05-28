@@ -21,7 +21,7 @@
   --r-pill:100px;--r-lg:16px;--r-md:10px;--r-sm:6px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{font-family:var(--font-ui);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -388,51 +388,57 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 
 /* ── Global mobile polish ── */
 @media(max-width:768px){
-  /* Prevent horizontal overflow from any negative-inset elements */
-  body{overflow-x:hidden}
-
-  /* NAV — hide CTA button on mobile, keep burger only */
+  /* NAV — logo left / burger right, no CTA button cluttering the bar */
+  .nav-inner{justify-content:space-between}
+  .nav-logo{margin-right:0}
   .nav-cta{display:none}
 
-  /* HERO — shorter, content-hugging, darker overlay */
+  /* HERO — anchor content to top, no min-height dead zone at bottom */
   .hero{min-height:0}
-  .hero-layout{min-height:0;padding:100px clamp(20px,5vw,40px) 72px;justify-content:flex-start}
-  /* Stronger gradient overlay so text pops on the photo */
+  .hero-layout{min-height:0;padding:96px clamp(20px,5vw,40px) 64px;justify-content:flex-start}
+  /* Stronger gradient — photo was bleeding through too much on small screens */
   .hero::before{background:
     linear-gradient(108deg,
       rgba(6,13,26,.97) 0%,
       rgba(6,13,26,.90) 28%,
-      rgba(6,13,26,.70) 52%,
+      rgba(6,13,26,.72) 52%,
       rgba(6,13,26,.42) 72%,
-      rgba(6,13,26,.20) 100%),
+      rgba(6,13,26,.18) 100%),
     linear-gradient(to top,
-      rgba(6,13,26,.80) 0%,
-      rgba(6,13,26,.30) 22%,
+      rgba(6,13,26,.82) 0%,
+      rgba(6,13,26,.28) 22%,
       transparent 48%),
     linear-gradient(to bottom,
       rgba(6,13,26,.55) 0%,
       transparent 20%)}
 
-  .section{padding:64px 0}
-  .section-sm{padding:48px 0}
-  .cta-band{padding:72px 0}
-  footer{padding:64px 0 40px}
-  .footer-grid{margin-bottom:48px;gap:40px}
-  .how-intro{margin-bottom:40px}
+  /* PLATFORM SHOWCASE — hide app mockup on mobile (too complex, causes overflow) */
+  .showcase-layout > div:last-child{display:none}
+  .screen-wrap::before{display:none}
+  .showcase-layout{gap:0}
+
+  /* SECTIONS */
+  .section{padding:56px 0}
+  .section-sm{padding:40px 0}
+  .cta-band{padding:64px 0}
+  footer{padding:56px 0 36px}
+  .footer-grid{margin-bottom:40px;gap:36px}
+  .how-intro{margin-bottom:36px}
   .insights-header{flex-direction:column;align-items:flex-start;gap:12px}
   .cta-actions{flex-direction:column;align-items:center}
-  .calc-bullets{margin-top:32px}
+  .calc-bullets{margin-top:28px}
   .hero-actions{flex-direction:column;align-items:flex-start}
   .hero-actions .btn{width:100%;justify-content:center}
   .trust-strip .trust-item:nth-child(n+4){display:none}
+
+  /* COMPONENT PADDING — tighter on mobile */
   .calc-card{padding:24px 20px}
-  .feat-card{padding:28px 24px}
-  .how-step{padding:28px 12px}
-  .vp-metric{padding:28px 20px}
-  .cred-item{padding:20px 20px}
-  /* Platform showcase — kill the glass frame that causes right-edge overflow */
-  .screen-wrap::before{display:none}
-  .showcase-layout{gap:40px}
+  .feat-card{padding:24px 20px}
+  .how-step{padding:24px 12px}
+  .vp-metric{padding:24px 20px}
+  .cred-item{padding:18px 20px}
+  .seg-body{padding:18px 20px}
+  .ins-body{padding:18px 20px}
 }
 @media(max-width:640px){
   .currency-grid{grid-template-columns:repeat(2,1fr)}

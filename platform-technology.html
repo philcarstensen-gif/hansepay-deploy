@@ -35,7 +35,6 @@ a{color:inherit;text-decoration:none}
 .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
 .btn-primary{background:var(--n500);color:#fff}.btn-primary:hover{background:var(--n600)}
 .btn-ghost-white{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.7)}.btn-ghost-white:hover{background:rgba(255,255,255,.1)}
-.btn-ghost-navy{background:transparent;color:var(--n600);border:1.5px solid rgba(11,25,41,.2)}.btn-ghost-navy:hover{background:var(--n050)}
 .btn-white-fill{background:#fff;color:var(--n500)}.btn-white-fill:hover{background:var(--n050)}
 
 /* NAV */
@@ -93,10 +92,9 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 .mobile-menu-cta{margin-top:16px}
 @media(max-width:768px){.nav-links{display:none}.nav-burger{display:flex}.nav-inner{justify-content:space-between}.nav-logo{margin-right:0}.nav-cta{display:none}}
 
-/* PAGE SECTIONS */
+/* SECTIONS */
 .section{padding:96px 0}
-.section-sm{padding:72px 0}
-@media(max-width:768px){.section{padding:64px 0}.section-sm{padding:48px 0}}
+@media(max-width:768px){.section{padding:64px 0}}
 
 /* PAGE HERO */
 .page-hero{
@@ -104,9 +102,7 @@ nav.scrolled .nav-burger span{background:var(--n700)}
   background:
     radial-gradient(ellipse at 18% 40%,#0F2540 0%,transparent 55%),
     radial-gradient(ellipse at 82% 25%,#2E6BAD 0%,transparent 50%),
-    #060D1A;
-  position:relative;overflow:hidden
-}
+    #060D1A}
 .hero-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:var(--r-pill);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:28px;backdrop-filter:blur(8px)}
 .hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;box-shadow:0 0 6px var(--gold)}
 .page-hero h1{font-family:var(--font-display);font-size:clamp(40px,5.2vw,72px);font-weight:400;line-height:1.06;letter-spacing:-.03em;color:#fff;margin-bottom:20px}
@@ -116,7 +112,7 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 @media(max-width:768px){.page-hero{padding:112px 0 72px}}
 @media(max-width:480px){.page-hero-actions{flex-direction:column;align-items:flex-start}.page-hero-actions .btn{width:100%;justify-content:center}}
 
-/* TILE MOSAIC — same pattern as landing page features-grid */
+/* MOSAIC TILES (from landing page features-grid) */
 .tile-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(11,25,41,.06);border-radius:var(--r-lg);overflow:hidden}
 .tile-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(11,25,41,.06);border-radius:var(--r-lg);overflow:hidden}
 .tile-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:rgba(11,25,41,.06);border-radius:var(--r-lg);overflow:hidden}
@@ -140,52 +136,75 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 /* SECTION INTRO */
 .sec-intro{max-width:640px;margin-bottom:52px}
 
-/* EMT DISPLAY */
-.emt-display{background:var(--n050);border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);
-  padding:clamp(32px,4vw,56px);display:flex;align-items:center;justify-content:center;min-height:176px}
-.emt-display-inner{text-align:center}
-.emt-display-eq{font-family:var(--font-display);font-size:clamp(30px,3.8vw,52px);font-weight:400;letter-spacing:-.03em;color:var(--n800);line-height:1}
-.emt-display-sub{font-size:13px;font-weight:500;color:var(--ink3);margin-top:14px;letter-spacing:.01em}
-
-/* FLOW TILES */
-.flow-col-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(11,25,41,.07)}
+/* FLOW */
+.flow-col-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(11,25,41,.07)}
 .flow-col-label.bank{color:var(--ink3)}
 .flow-col-label.hp{color:var(--n400)}
 .flow-step-row{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid rgba(11,25,41,.05)}
 .flow-step-row:last-of-type{border-bottom:none}
-.flow-num{width:24px;height:24px;border-radius:50%;background:var(--n050);border:1px solid rgba(11,25,41,.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--n400);flex-shrink:0;margin-top:1px}
+.flow-num{width:24px;height:24px;border-radius:50%;background:var(--n050);border:1px solid rgba(11,25,41,.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--n400);flex-shrink:0;margin-top:2px}
 .flow-num.hp{background:rgba(30,78,128,.1);border-color:rgba(30,78,128,.18);color:var(--n500)}
+.flow-step-info{flex:1;min-width:0}
 .flow-step-name{font-size:14px;font-weight:600;color:var(--n800);line-height:1.3}
 .flow-step-note{font-size:12px;color:var(--ink3);margin-top:1px}
-.flow-summary{margin-top:20px;padding:14px 16px;border-radius:var(--r-sm);background:rgba(11,25,41,.03);border:1px solid rgba(11,25,41,.06)}
+.flow-cost-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.flow-chip{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 7px;border-radius:var(--r-pill);background:rgba(160,78,78,.07);color:#9b3535;border:1px solid rgba(160,78,78,.14)}
+.flow-chip.time{background:rgba(120,100,60,.07);color:#7a6230;border-color:rgba(120,100,60,.14)}
+.flow-summary{padding:13px 16px;border-radius:var(--r-sm);background:rgba(11,25,41,.03);border:1px solid rgba(11,25,41,.06)}
 .flow-summary.hp{background:rgba(30,78,128,.04);border-color:rgba(30,78,128,.1)}
 .flow-summary-stat{font-size:13px;font-weight:600;color:var(--ink2);line-height:1.5}
 .flow-summary-stat.hp{color:var(--n500)}
 
-/* COST TILES */
-.cost-total{font-family:var(--font-display);font-size:clamp(48px,5.5vw,76px);font-weight:400;letter-spacing:-.04em;line-height:1;margin-bottom:6px}
-.cost-total.bank{color:var(--ink3)}
-.cost-total.hp{color:var(--n500)}
-.cost-sublabel{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid rgba(11,25,41,.07)}
-.cost-sublabel.hp{color:var(--n400)}
-.cost-line{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px solid rgba(11,25,41,.05)}
-.cost-line:last-of-type{border-bottom:none}
-.cost-line-label{font-size:13px;color:var(--ink2)}
-.cost-line-pct{font-size:13px;font-weight:600;color:var(--n800);font-variant-numeric:tabular-nums;flex-shrink:0;margin-left:12px}
+/* MONEY SPECTRUM */
+.spectrum-tile{background:#fff;padding:28px 24px;display:flex;flex-direction:column;gap:8px;transition:background .2s}
+.spectrum-tile.active{background:var(--n050)}
+.spectrum-tile:hover{background:var(--n050)}
+.spectrum-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.spectrum-label.active{color:var(--n400)}
+.spectrum-name{font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--n800);letter-spacing:-.01em}
+.spectrum-en{font-size:12px;color:var(--ink3)}
+.spectrum-examples{font-size:12px;font-weight:600;color:var(--ink2)}
+.spectrum-examples.active{color:var(--n500)}
 
-/* RATE TILES */
-.rate-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:28px}
-.rate-label.bank{color:var(--ink3)}
-.rate-label.hp{color:var(--n400)}
-.rate-block{text-align:center;padding:12px 0}
-.rate-caption-sm{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
-.rate-number{font-family:var(--font-display);font-size:clamp(28px,3.5vw,44px);font-weight:400;letter-spacing:-.03em;line-height:1}
-.rate-number.neutral{color:var(--n800)}
-.rate-number.bad{color:#C0392B}
-.rate-number.good{color:var(--n500)}
+/* STACKED BAR CHART */
+.chart-wrap{max-width:840px}
+.chart-bars{display:flex;align-items:flex-end;gap:clamp(32px,5vw,80px);padding-bottom:0}
+.chart-col{display:flex;flex-direction:column;align-items:center}
+.chart-bar-track{height:260px;display:flex;flex-direction:column;justify-content:flex-end;width:72px}
+.chart-bar{width:72px;display:flex;flex-direction:column;overflow:hidden;border-radius:4px 4px 0 0}
+.chart-bar-bank{height:240px}  /* 1.20 / 1.20 * 240 */
+.chart-bar-hp{height:20px}     /* 0.10 / 1.20 * 240 = 20px */
+.chart-seg{width:100%;flex-shrink:0}
+.chart-baseline{width:72px;height:1px;background:rgba(11,25,41,.15);margin-bottom:12px}
+.chart-total{font-family:var(--font-display);font-size:clamp(36px,4vw,52px);font-weight:400;letter-spacing:-.04em;line-height:1}
+.chart-total.bank{color:var(--ink3)}
+.chart-total.hp{color:var(--n500)}
+.chart-col-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-top:6px}
+.chart-col-label.hp{color:var(--n400)}
+.chart-legend-list{display:flex;flex-direction:column;gap:6px;margin-top:20px;width:100%}
+.chart-legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2)}
+.chart-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.chart-legend-pct{font-weight:600;color:var(--n800);margin-left:auto;font-variant-numeric:tabular-nums}
+.chart-note{font-size:11px;color:var(--ink3);margin-top:20px;line-height:1.6}
+.chart-savings-callout{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(30,78,128,.06);border:1px solid rgba(30,78,128,.12);border-radius:var(--r-md);font-size:13px;font-weight:600;color:var(--n500);margin-top:20px}
+@media(max-width:640px){.chart-bars{flex-direction:column;align-items:flex-start;gap:32px}.chart-bar-track{height:auto;justify-content:flex-start}.chart-bar-bank{height:160px}.chart-bar-hp{height:14px}}
+
+/* LOCKED RATES */
+.rate-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:860px}
+@media(max-width:640px){.rate-cards{grid-template-columns:1fr}}
+.rate-card{border:1px solid rgba(11,25,41,.09);border-radius:var(--r-lg);padding:36px;background:#fff;display:flex;flex-direction:column;gap:0}
+.rate-card-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:28px}
+.rate-card-label.bank{color:var(--ink3)}
+.rate-card-label.hp{color:var(--n400)}
+.rate-card-row{text-align:center;padding:16px 0}
+.rate-card-caption{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);margin-bottom:8px}
+.rate-num{font-family:var(--font-display);font-size:clamp(30px,3.5vw,44px);font-weight:400;letter-spacing:-.03em;line-height:1}
+.rate-num.neutral{color:var(--n800)}
+.rate-num.bad{color:#b83232}
+.rate-num.good{color:var(--n500)}
 .rate-divider{text-align:center;padding:8px 0;color:var(--ink3)}
-.rate-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:var(--r-pill);font-size:12px;font-weight:700;margin-top:20px}
-.rate-badge.bad{background:rgba(192,57,43,.08);color:#C0392B}
+.rate-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border-radius:var(--r-pill);font-size:12px;font-weight:700;margin-top:20px;align-self:center}
+.rate-badge.bad{background:rgba(184,50,50,.07);color:#b83232}
 .rate-badge.good{background:rgba(30,78,128,.08);color:var(--n500)}
 .rate-note{font-size:12px;color:var(--ink3);text-align:center;margin-top:10px;font-style:italic;line-height:1.5}
 
@@ -259,8 +278,7 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
     </a>
     <ul class="nav-links">
       <li class="nav-item">
-        <span class="nav-link">
-          Product
+        <span class="nav-link">Product
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </span>
         <div class="nav-dropdown">
@@ -274,16 +292,11 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
               <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg></div>
               <div class="nav-dd-text"><div class="nav-dd-title">Global Payments</div><div class="nav-dd-sub">Send to 35+ currencies in minutes</div></div>
             </a>
-            <a href="index.html#solutions" class="nav-dd-link">
-              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-              <div class="nav-dd-text"><div class="nav-dd-title">Recipient Management</div><div class="nav-dd-sub">Manage payees across the world</div></div>
-            </a>
           </div>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link active-page" href="platform.html">
-          Platform
+        <a class="nav-link active-page" href="platform.html">Platform
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </a>
         <div class="nav-dropdown">
@@ -311,24 +324,17 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
     </ul>
     <div class="nav-right">
       <a href="index.html#contact" class="btn nav-cta">Open an account</a>
-      <button class="nav-burger" id="nav-burger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="nav-burger" id="nav-burger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
 
-<!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu">
-  <a class="mobile-menu-link" href="index.html#product" onclick="closeMobileMenu()">Product</a>
-  <a class="mobile-menu-sub" href="index.html#transfers" onclick="closeMobileMenu()">FX Execution</a>
-  <a class="mobile-menu-sub" href="index.html#solutions" onclick="closeMobileMenu()">Payments</a>
+  <a class="mobile-menu-link" href="index.html" onclick="closeMobileMenu()">Home</a>
   <a class="mobile-menu-link" href="platform.html" onclick="closeMobileMenu()">Platform</a>
   <a class="mobile-menu-sub" href="platform-technology.html" onclick="closeMobileMenu()">Technology</a>
   <a class="mobile-menu-link" href="index.html#calculator" onclick="closeMobileMenu()">Pricing</a>
-  <a class="mobile-menu-link" href="index.html#solutions" onclick="closeMobileMenu()">Solutions</a>
   <a class="mobile-menu-link" href="blog.html" onclick="closeMobileMenu()">Insights</a>
-  <a class="mobile-menu-link" href="index.html#about" onclick="closeMobileMenu()">About</a>
   <a href="index.html#contact" class="btn btn-primary mobile-menu-cta" onclick="closeMobileMenu()">Open an account</a>
 </div>
 
@@ -350,22 +356,20 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 <!-- ① WHAT IT IS -->
 <section class="section" id="what-it-is">
   <div class="container">
-    <!-- Heading row: text left, equation display right -->
-    <div class="two-col-w" style="margin-bottom:56px">
-      <div>
-        <span class="eyebrow">What it is</span>
-        <h2 class="section-head" style="margin-top:12px">The euro, on <em>different rails.</em></h2>
-        <p class="lede" style="margin-top:20px">An E-Money Token is a regulated digital version of the euro, issued by a licensed financial institution. One token equals one euro, always. It exists so money can settle the way information already does — instantly, programmatically, across borders.</p>
-      </div>
-      <div class="emt-display">
-        <div class="emt-display-inner">
-          <div class="emt-display-eq">1&thinsp;EMT&ensp;=&ensp;1&thinsp;EUR</div>
-          <p class="emt-display-sub">Always 1:1. By law, under MiCAR.</p>
-        </div>
-      </div>
+    <div class="sec-intro">
+      <span class="eyebrow">What it is</span>
+      <h2 class="section-head" style="margin-top:12px">The euro, on <em>different rails.</em></h2>
+      <p class="lede" style="margin-top:20px">An E-Money Token is a regulated digital version of the euro, issued by a licensed financial institution. One token equals one euro, always. It exists so money can settle the way information already does — instantly, programmatically, across borders.</p>
     </div>
 
-    <!-- Three pillars -->
+    <!-- Equation statement — full width, centered, before the tiles -->
+    <div style="text-align:center;padding:clamp(32px,5vw,52px) clamp(24px,5vw,64px);background:var(--n050);border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);margin-bottom:24px">
+      <div style="font-family:var(--font-display);font-size:clamp(36px,5vw,64px);font-weight:400;letter-spacing:-.04em;color:var(--n800);line-height:1">
+        1&thinsp;EMT&ensp;=&ensp;1&thinsp;EUR
+      </div>
+      <p style="font-size:14px;font-weight:400;color:var(--ink3);margin-top:14px">Always 1:1. Fixed by law under MiCAR. Not a market price.</p>
+    </div>
+
     <div class="tile-grid-3">
       <div class="tile">
         <div class="tile-icon-wrap">
@@ -379,14 +383,14 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
           <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
         <div class="tile-title">Issued under MiCAR</div>
-        <div class="tile-body">The EU's Markets in Crypto-Assets Regulation — the strictest digital money framework in the world. HansePay operates fully within it.</div>
+        <div class="tile-body">The EU's strictest digital money framework. HansePay operates fully within it — licensed, audited, supervised.</div>
       </div>
       <div class="tile">
         <div class="tile-icon-wrap">
           <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
         </div>
         <div class="tile-title">Redeemable on demand</div>
-        <div class="tile-body">Convert back to fiat at any time. 1:1, no fees, no waiting. The token value is pegged to the euro — not a market price.</div>
+        <div class="tile-body">Convert back to fiat at any time. 1:1, no fees, no waiting. The value is pegged to the euro — not a market price.</div>
       </div>
     </div>
   </div>
@@ -398,62 +402,100 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
   <div class="container">
     <div class="sec-intro">
       <span class="eyebrow">How it works</span>
-      <h2 class="section-head" style="margin-top:12px">From your invoice to your supplier <em>in three steps.</em></h2>
-      <p class="lede" style="margin-top:20px">Traditional cross-border wires pass through a chain of correspondent banks — each adding a day and a fee. EMT settlement removes every intermediate hop.</p>
+      <h2 class="section-head" style="margin-top:12px">Six hops versus <em>one.</em></h2>
+      <p class="lede" style="margin-top:20px">Every bank in the correspondent chain adds a fee, a spread, and a day of delay. EMT settlement collapses the entire chain into a single atomic step.</p>
     </div>
 
-    <div class="tile-grid-2" style="max-width:960px">
+    <div class="tile-grid-2">
+      <!-- Bank tile -->
       <div class="tile" style="gap:0;justify-content:space-between">
         <div>
           <div class="flow-col-label bank">Today, with a bank</div>
           <div class="flow-step-row">
             <div class="flow-num">1</div>
-            <div><div class="flow-step-name">Sender bank</div><div class="flow-step-note">Initiates the wire transfer</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">Sender bank</div>
+              <div class="flow-step-note">Initiates the international wire</div>
+            </div>
           </div>
           <div class="flow-step-row">
             <div class="flow-num">2</div>
-            <div><div class="flow-step-name">Correspondent bank 1</div><div class="flow-step-note">+ FX spread &middot; + wire fee</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">Correspondent bank 1</div>
+              <div class="flow-cost-chips">
+                <span class="flow-chip">+0.20% FX spread</span>
+                <span class="flow-chip">+€25 wire fee</span>
+              </div>
+            </div>
           </div>
           <div class="flow-step-row">
             <div class="flow-num">3</div>
-            <div><div class="flow-step-name">Correspondent bank 2</div><div class="flow-step-note">+ FX spread &middot; + 1 day</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">Correspondent bank 2</div>
+              <div class="flow-cost-chips">
+                <span class="flow-chip">+0.15% margin</span>
+                <span class="flow-chip time">+1 day</span>
+              </div>
+            </div>
           </div>
           <div class="flow-step-row">
             <div class="flow-num">4</div>
-            <div><div class="flow-step-name">SWIFT network</div><div class="flow-step-note">Routing and messaging layer</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">SWIFT network</div>
+              <div class="flow-step-note">Routing and messaging layer</div>
+            </div>
           </div>
           <div class="flow-step-row">
             <div class="flow-num">5</div>
-            <div><div class="flow-step-name">Correspondent bank 3</div><div class="flow-step-note">+ wire fee &middot; + 1 day</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">Correspondent bank 3</div>
+              <div class="flow-cost-chips">
+                <span class="flow-chip">+€30 wire fee</span>
+                <span class="flow-chip time">+1–2 days</span>
+              </div>
+            </div>
           </div>
           <div class="flow-step-row" style="border-bottom:none">
             <div class="flow-num">6</div>
-            <div><div class="flow-step-name">Recipient bank</div><div class="flow-step-note">Funds available — eventually</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">Recipient bank</div>
+              <div class="flow-step-note">Funds credited — eventually</div>
+            </div>
           </div>
         </div>
-        <div class="flow-summary">
-          <div class="flow-summary-stat">3–5 business days &middot; €60–€180 in fees &middot; 1.2% spread typical</div>
+        <div class="flow-summary" style="margin-top:20px">
+          <div class="flow-summary-stat">3–5 business days &middot; €60–€180 fees &middot; 1.2% spread typical</div>
         </div>
       </div>
 
+      <!-- HansePay tile -->
       <div class="tile" style="gap:0;justify-content:space-between">
         <div>
           <div class="flow-col-label hp">With HansePay</div>
           <div class="flow-step-row">
             <div class="flow-num hp">1</div>
-            <div><div class="flow-step-name">Sender bank</div><div class="flow-step-note">EUR debited, rate locked instantly</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">Sender bank</div>
+              <div class="flow-step-note">EUR debited, FX rate locked instantly</div>
+            </div>
           </div>
           <div class="flow-step-row">
             <div class="flow-num hp">2</div>
-            <div><div class="flow-step-name">EMT settlement layer</div><div class="flow-step-note">Atomic conversion and transfer at locked rate</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">EMT settlement layer</div>
+              <div class="flow-step-note">Atomic conversion and transfer at locked rate</div>
+            </div>
           </div>
           <div class="flow-step-row" style="border-bottom:none">
             <div class="flow-num hp">3</div>
-            <div><div class="flow-step-name">Recipient bank</div><div class="flow-step-note">EUR credited — same session</div></div>
+            <div class="flow-step-info">
+              <div class="flow-step-name">Recipient bank</div>
+              <div class="flow-step-note">EUR credited — same session</div>
+            </div>
           </div>
         </div>
-        <div class="flow-summary hp">
-          <div class="flow-summary-stat hp">Minutes &middot; ~0.1% all-in &middot; FX rate locked at quote</div>
+        <div class="flow-summary hp" style="margin-top:20px">
+          <div class="flow-summary-stat hp">Minutes &middot; ~0.1% all-in &middot; Rate locked at quote</div>
         </div>
       </div>
     </div>
@@ -464,20 +506,47 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 <!-- ③ FAMILIAR TERRITORY -->
 <section class="section" id="familiar-territory">
   <div class="container">
-    <div style="max-width:720px">
-      <span class="eyebrow">Familiar territory</span>
-      <h2 class="section-head" style="margin-top:12px">You already use e-money <em>without knowing it.</em></h2>
-      <p class="lede" style="margin-top:20px">PayPal is the most familiar e-money institution in Europe. Every PayPal balance you hold is e-money — regulated under the same EU legal category as a HansePay EMT, supervised under the same rulebook, held under similar custody rules. You are not sending crypto when you pay with PayPal. You are sending e-money.</p>
-      <p class="lede" style="margin-top:16px">HansePay operates inside the same regulatory framework. The difference is what we built on top of it: real-time cross-border settlement at a fraction of the cost.</p>
+    <div class="two-col-w" style="align-items:start">
+      <div>
+        <span class="eyebrow">Familiar territory</span>
+        <h2 class="section-head" style="margin-top:12px">You already use e-money <em>without knowing it.</em></h2>
+        <p class="lede" style="margin-top:20px">Every PayPal balance you hold is e-money — regulated under the same EU framework as a HansePay EMT, held under the same custody rules. HansePay operates in the same legal category. The difference is what we built on top: real-time cross-border settlement at ~0.1%.</p>
+        <p style="font-size:14px;font-weight:600;color:var(--n500);margin-top:20px;display:flex;align-items:center;gap:8px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Same regulatory category as PayPal. Different economics.
+        </p>
+      </div>
 
-      <div style="margin-top:40px;padding:24px 28px;border:1px solid rgba(11,25,41,.09);border-radius:var(--r-lg);background:#fff;display:flex;align-items:flex-start;gap:16px">
-        <div style="width:36px;height:36px;border-radius:50%;background:var(--n050);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--n400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      <!-- Money spectrum -->
+      <div>
+        <p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px">Where e-money sits</p>
+        <div class="tile-grid-4" style="background:rgba(11,25,41,.06)">
+          <div class="spectrum-tile">
+            <div class="spectrum-label">Traditional</div>
+            <div class="spectrum-name">Bargeld</div>
+            <div class="spectrum-en">Cash</div>
+            <div class="spectrum-examples" style="margin-top:4px">Coins &amp; notes</div>
+          </div>
+          <div class="spectrum-tile">
+            <div class="spectrum-label">Traditional</div>
+            <div class="spectrum-name">Giralgeld</div>
+            <div class="spectrum-en">Book money</div>
+            <div class="spectrum-examples" style="margin-top:4px">Bank account</div>
+          </div>
+          <div class="spectrum-tile active" style="border-left:3px solid var(--n300)">
+            <div class="spectrum-label active">E-money ← here</div>
+            <div class="spectrum-name">E-Geld</div>
+            <div class="spectrum-en">Electronic money</div>
+            <div class="spectrum-examples active" style="margin-top:4px">PayPal · HansePay</div>
+          </div>
+          <div class="spectrum-tile">
+            <div class="spectrum-label">Unregulated</div>
+            <div class="spectrum-name">Krypto</div>
+            <div class="spectrum-en">Crypto-assets</div>
+            <div class="spectrum-examples" style="margin-top:4px">Bitcoin, ETH</div>
+          </div>
         </div>
-        <div>
-          <div style="font-size:14px;font-weight:600;color:var(--n800);margin-bottom:4px">Same legal category as PayPal</div>
-          <div style="font-size:13px;color:var(--ink2);line-height:1.6">Both are EU E-Money Institutions. Same regulatory framework, same custody rules — different use case. PayPal optimises for consumer payments at ~3%. HansePay optimises for cross-border business payments at ~0.1%.</div>
-        </div>
+        <p style="font-size:11px;color:var(--ink3);margin-top:10px;line-height:1.55">E-money is fixed in value (1:1 to EUR), issued by a licensed institution, and regulated under EU law. Not a crypto-asset.</p>
       </div>
     </div>
   </div>
@@ -487,54 +556,65 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 <!-- ④ THE COST STACK -->
 <section class="section" style="background:#f7f8fc" id="cost-stack">
   <div class="container">
-    <div class="sec-intro">
-      <span class="eyebrow">The cost stack</span>
-      <h2 class="section-head" style="margin-top:12px">1.2% vs 0.1%. Here is <em>where the difference goes.</em></h2>
-      <p class="lede" style="margin-top:20px">Every fee in cross-border banking maps to a layer of infrastructure the system was forced to build around its own latency. Remove the latency, and most of those layers disappear.</p>
-    </div>
+    <div class="two-col" style="align-items:start">
+      <div>
+        <span class="eyebrow">The cost stack</span>
+        <h2 class="section-head" style="margin-top:12px">1.2% versus 0.1%. Here is <em>where the difference goes.</em></h2>
+        <p class="lede" style="margin-top:20px">Every fee in cross-border banking maps to infrastructure built around the system's own latency. Remove the latency, and most of those layers disappear.</p>
+        <div class="chart-savings-callout">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          HansePay is 12× cheaper, structurally
+        </div>
+        <p class="chart-note">Indicative breakdown for a small to mid cross-border wire. Actual bank costs vary by corridor, volume, and relationship.</p>
+      </div>
 
-    <div class="tile-grid-2" style="max-width:840px">
-      <div class="tile">
-        <div class="cost-total bank">1.20%</div>
-        <div class="cost-sublabel bank">Traditional bank wire</div>
-        <div class="cost-line">
-          <span class="cost-line-label">FX spread (bid/ask + margin)</span>
-          <span class="cost-line-pct">0.55%</span>
+      <!-- Stacked bar chart -->
+      <div class="chart-wrap">
+        <div class="chart-bars">
+          <!-- Bank -->
+          <div class="chart-col">
+            <div class="chart-bar-track">
+              <div class="chart-bar chart-bar-bank">
+                <!-- segments from top (smallest) to bottom (largest) — flex-col, so first item is at top -->
+                <div class="chart-seg" style="height:10px;background:#b0bec5"></div><!-- Lift fee 0.05% -->
+                <div class="chart-seg" style="height:20px;background:#90a4ae"></div><!-- SWIFT 0.10% -->
+                <div class="chart-seg" style="height:40px;background:#607d8b"></div><!-- Settlement risk 0.20% -->
+                <div class="chart-seg" style="height:60px;background:#455a64"></div><!-- Correspondent 0.30% -->
+                <div class="chart-seg" style="height:110px;background:#263238"></div><!-- FX spread 0.55% -->
+              </div>
+            </div>
+            <div class="chart-baseline"></div>
+            <div class="chart-total bank">1.20%</div>
+            <div class="chart-col-label">Bank wire</div>
+            <div class="chart-legend-list" style="max-width:180px">
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#263238"></span>FX spread<span class="chart-legend-pct">0.55%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#455a64"></span>Correspondent fees<span class="chart-legend-pct">0.30%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#607d8b"></span>Settlement risk<span class="chart-legend-pct">0.20%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#90a4ae"></span>SWIFT fees<span class="chart-legend-pct">0.10%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#b0bec5"></span>Lift fee<span class="chart-legend-pct">0.05%</span></div>
+            </div>
+          </div>
+
+          <!-- HansePay -->
+          <div class="chart-col">
+            <div class="chart-bar-track">
+              <div class="chart-bar chart-bar-hp">
+                <div class="chart-seg" style="height:4px;background:var(--n200)"></div><!-- Network 0.02% -->
+                <div class="chart-seg" style="height:16px;background:var(--n500)"></div><!-- FX 0.08% -->
+              </div>
+            </div>
+            <div class="chart-baseline"></div>
+            <div class="chart-total hp">0.10%</div>
+            <div class="chart-col-label hp">HansePay</div>
+            <div class="chart-legend-list" style="max-width:180px">
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:var(--n500)"></span>FX spread<span class="chart-legend-pct">0.08%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:var(--n200)"></span>Network fee<span class="chart-legend-pct">0.02%</span></div>
+            </div>
+          </div>
         </div>
-        <div class="cost-line">
-          <span class="cost-line-label">Correspondent fees (3 hops)</span>
-          <span class="cost-line-pct">0.30%</span>
-        </div>
-        <div class="cost-line">
-          <span class="cost-line-label">Settlement risk buffer</span>
-          <span class="cost-line-pct">0.20%</span>
-        </div>
-        <div class="cost-line">
-          <span class="cost-line-label">SWIFT fees (normalised)</span>
-          <span class="cost-line-pct">0.10%</span>
-        </div>
-        <div class="cost-line">
-          <span class="cost-line-label">Lift fee (sender bank)</span>
-          <span class="cost-line-pct">0.05%</span>
-        </div>
-      </div>
-      <div class="tile">
-        <div class="cost-total hp">0.10%</div>
-        <div class="cost-sublabel hp">HansePay</div>
-        <div class="cost-line">
-          <span class="cost-line-label">FX spread (deterministic, atomic)</span>
-          <span class="cost-line-pct">0.08%</span>
-        </div>
-        <div class="cost-line">
-          <span class="cost-line-label">Network fee (on-chain settlement)</span>
-          <span class="cost-line-pct">0.02%</span>
-        </div>
-        <div style="margin-top:24px;padding-top:20px;border-top:1px solid rgba(11,25,41,.06)">
-          <p style="font-size:12px;color:var(--ink3);line-height:1.65">Without correspondent banks, SWIFT fees, or settlement-risk premiums, the cost stack collapses to network fee plus FX spread. The savings are in the architecture, not in promotional pricing.</p>
-        </div>
+        <p class="chart-note" style="margin-top:16px">Chart not to scale. At true scale the bank bar would be 12&times; taller.</p>
       </div>
     </div>
-    <p style="margin-top:16px;font-size:11px;color:var(--ink3);max-width:840px;line-height:1.6">Indicative breakdown of typical bank pricing on a small to mid cross-border wire. Actual bank costs vary by corridor, volume, and customer relationship.</p>
   </div>
 </section>
 
@@ -545,41 +625,46 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
     <div class="sec-intro">
       <span class="eyebrow">Locked rates</span>
       <h2 class="section-head" style="margin-top:12px">The rate you see is <em>the rate you get.</em></h2>
-      <p class="lede" style="margin-top:20px">When you confirm a transfer at HansePay, the recipient receives the exact amount shown in your quote. The rate is locked at the moment of execution, the settlement is atomic, and the value that leaves your account matches the value that arrives. No slippage. No surprises.</p>
+      <p class="lede" style="margin-top:20px">When you confirm a transfer at HansePay, the rate is locked at that exact moment — atomically. The value that leaves your account is the value that arrives at the recipient bank. No execution gap. No slippage.</p>
     </div>
 
-    <div class="tile-grid-2" style="max-width:680px">
-      <div class="tile" style="align-items:center;text-align:center">
-        <div class="rate-label bank" style="width:100%;text-align:left">Traditional bank</div>
-        <div class="rate-block" style="width:100%">
-          <div class="rate-caption-sm">Rate quoted</div>
-          <div class="rate-number neutral">1.0850</div>
+    <div class="rate-cards">
+      <!-- Bank card -->
+      <div class="rate-card">
+        <div class="rate-card-label bank">Traditional bank</div>
+        <div class="rate-card-row">
+          <div class="rate-card-caption">Rate quoted</div>
+          <div class="rate-num neutral">1.0850</div>
         </div>
-        <div class="rate-divider" style="width:100%">
-          <svg width="14" height="18" viewBox="0 0 14 18" fill="none"><path d="M7 0v14M1 8l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="rate-divider">
+          <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 0v16M1 10l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);margin-top:4px">3 days later</div>
         </div>
-        <div class="rate-block" style="width:100%">
-          <div class="rate-caption-sm">Rate executed</div>
-          <div class="rate-number bad">1.0843</div>
+        <div class="rate-card-row">
+          <div class="rate-card-caption">Rate executed</div>
+          <div class="rate-num bad">1.0843</div>
         </div>
-        <span class="rate-badge bad">&#8722;7 pips slippage</span>
-        <div class="rate-note">Rate moved during the execution gap between quote and settlement.</div>
+        <span class="rate-badge bad" style="align-self:center">&#8722;7 pips slippage</span>
+        <div class="rate-note" style="margin-top:12px">On a €100,000 transfer, 7 pips = <strong style="color:#b83232">€70 lost</strong> to execution gap.</div>
       </div>
-      <div class="tile" style="align-items:center;text-align:center">
-        <div class="rate-label hp" style="width:100%;text-align:left">HansePay</div>
-        <div class="rate-block" style="width:100%">
-          <div class="rate-caption-sm">Rate quoted</div>
-          <div class="rate-number neutral">1.0850</div>
+
+      <!-- HansePay card -->
+      <div class="rate-card" style="border-color:rgba(30,78,128,.18)">
+        <div class="rate-card-label hp">HansePay</div>
+        <div class="rate-card-row">
+          <div class="rate-card-caption">Rate quoted</div>
+          <div class="rate-num neutral">1.0850</div>
         </div>
-        <div class="rate-divider" style="width:100%;color:var(--n300)">
-          <svg width="14" height="18" viewBox="0 0 14 18" fill="none"><path d="M7 0v14M1 8l6 6 6-6" stroke="var(--n300)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div class="rate-divider">
+          <svg width="14" height="20" viewBox="0 0 14 20" fill="none"><path d="M7 0v16M1 10l6 6 6-6" stroke="var(--n300)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div style="font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--n300);margin-top:4px">Instantly</div>
         </div>
-        <div class="rate-block" style="width:100%">
-          <div class="rate-caption-sm">Rate executed</div>
-          <div class="rate-number good">1.0850</div>
+        <div class="rate-card-row">
+          <div class="rate-card-caption">Rate executed</div>
+          <div class="rate-num good">1.0850</div>
         </div>
-        <span class="rate-badge good">&#10003; Locked atomically</span>
-        <div class="rate-note">Same rate at quote, execution, and settlement. No buffers needed.</div>
+        <span class="rate-badge good" style="align-self:center">&#10003;&nbsp;Locked atomically</span>
+        <div class="rate-note" style="margin-top:12px">Same rate at quote, execution, and settlement. <strong style="color:var(--n500)">Zero slippage by design.</strong></div>
       </div>
     </div>
   </div>
@@ -593,7 +678,6 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
       <span class="eyebrow">Why it matters</span>
       <h2 class="section-head" style="margin-top:12px">What changes when settlement and <em>payment become one thing.</em></h2>
     </div>
-
     <div class="tile-grid-4">
       <div class="tile">
         <div class="tile-icon-wrap">
@@ -607,21 +691,21 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
           <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="9 16 11 18 15 14"/></svg>
         </div>
         <div class="tile-title">Same-day reconciliation</div>
-        <div class="tile-body">Final settlement in minutes means the confirmation hits your accounting system on the same day, not the same week. AP work compresses from days to hours.</div>
+        <div class="tile-body">Final settlement in minutes means the confirmation hits your accounting system the same day, not the same week. AP work compresses from days to hours.</div>
       </div>
       <div class="tile">
         <div class="tile-icon-wrap">
           <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
         </div>
         <div class="tile-title">FX locked before execution</div>
-        <div class="tile-body">Deterministic pricing. No slippage, no surprise on the settlement date, no need to build buffers around bank execution lag.</div>
+        <div class="tile-body">Deterministic pricing. No slippage, no surprise on settlement date, no need to build buffers around bank execution lag.</div>
       </div>
       <div class="tile">
         <div class="tile-icon-wrap">
           <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
         </div>
         <div class="tile-title">Structurally lower cost</div>
-        <div class="tile-body">Without correspondent banks, SWIFT fees, or settlement-risk premiums, the cost stack collapses. The savings are in the architecture, not promotional pricing.</div>
+        <div class="tile-body">Without correspondent banks, SWIFT fees, or settlement-risk premiums, the cost stack collapses. The savings are in the architecture.</div>
       </div>
     </div>
   </div>
@@ -686,7 +770,7 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
             <span class="faq-q-text">How is this different from PayPal?</span>
             <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
-          <div class="faq-a">PayPal is also an e-money institution under EU law. Same legal framework. The difference is scope and economics. PayPal optimises for consumer payments at around 3% per transaction. HansePay optimises for cross-border business payments at around 0.1%.</div>
+          <div class="faq-a">PayPal is also an e-money institution under EU law — same legal framework. The difference is scope and economics. PayPal optimises for consumer payments at around 3% per transaction. HansePay optimises for cross-border business payments at around 0.1%.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">
@@ -700,21 +784,21 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
             <span class="faq-q-text">How does my auditor classify EMT holdings?</span>
             <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
-          <div class="faq-a">As a cash equivalent. Same balance-sheet line as your operating account. EMTs are treated as electronic money under EU law, not as crypto-assets. No special tax treatment, no capital-gains tracking, no mark-to-market on every transaction.</div>
+          <div class="faq-a">As a cash equivalent — same balance-sheet line as your operating account. EMTs are treated as electronic money under EU law, not as crypto-assets. No special tax treatment, no capital-gains tracking, no mark-to-market on every transaction.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">
-            <span class="faq-q-text">What is the actual settlement medium? Am I sending crypto?</span>
+            <span class="faq-q-text">Am I sending crypto when I use HansePay?</span>
             <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
-          <div class="faq-a">No. You send euros and the recipient receives euros. The settlement layer underneath uses regulated digital infrastructure that lets value transfer atomically. As a customer, you never see a token, you never touch a wallet, you never deal with anything that resembles crypto.</div>
+          <div class="faq-a">No. You send euros and the recipient receives euros. The settlement layer uses regulated digital infrastructure for atomic transfer. You never see a token, never touch a wallet, never deal with anything that resembles crypto.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">
-            <span class="faq-q-text">What if the network has issues — what is the fallback?</span>
+            <span class="faq-q-text">What if the settlement network has issues?</span>
             <svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
           </div>
-          <div class="faq-a">The settlement infrastructure is multi-rail. If a primary network is congested or unavailable, transactions route through redundant rails. The user experience is unchanged. Settlement may take slightly longer in the rare fallback case, but the rate-lock and the cost economics are preserved.</div>
+          <div class="faq-a">The settlement infrastructure is multi-rail. If a primary network is congested, transactions route through redundant rails automatically. The user experience is unchanged. Settlement may take slightly longer in the rare fallback case, but the rate-lock and cost economics are preserved.</div>
         </div>
       </div>
     </div>
@@ -750,34 +834,25 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
       <div>
         <div class="footer-col-title">Product</div>
         <ul class="footer-links">
-          <li><a class="footer-link" href="#">Payments</a></li>
-          <li><a class="footer-link" href="#">Rate Hedging</a></li>
-          <li><a class="footer-link" href="#">Spot FX</a></li>
-          <li><a class="footer-link" href="#">Bulk Payments</a></li>
-          <li><a class="footer-link" href="#">API</a></li>
-          <li><a class="footer-link" href="#">Security</a></li>
+          <li><a class="footer-link" href="#">Payments</a></li><li><a class="footer-link" href="#">Rate Hedging</a></li>
+          <li><a class="footer-link" href="#">Spot FX</a></li><li><a class="footer-link" href="#">Bulk Payments</a></li>
+          <li><a class="footer-link" href="#">API</a></li><li><a class="footer-link" href="#">Security</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links">
-          <li><a class="footer-link" href="#">About</a></li>
-          <li><a class="footer-link" href="#">Team</a></li>
-          <li><a class="footer-link" href="#">Insights</a></li>
-          <li><a class="footer-link" href="#">Careers</a></li>
-          <li><a class="footer-link" href="#">Contact</a></li>
-          <li><a class="footer-link" href="#">Press</a></li>
+          <li><a class="footer-link" href="#">About</a></li><li><a class="footer-link" href="#">Team</a></li>
+          <li><a class="footer-link" href="#">Insights</a></li><li><a class="footer-link" href="#">Careers</a></li>
+          <li><a class="footer-link" href="#">Contact</a></li><li><a class="footer-link" href="#">Press</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">Legal</div>
         <ul class="footer-links">
-          <li><a class="footer-link" href="#">Imprint</a></li>
-          <li><a class="footer-link" href="#">Privacy</a></li>
-          <li><a class="footer-link" href="#">Terms</a></li>
-          <li><a class="footer-link" href="#">Complaints</a></li>
-          <li><a class="footer-link" href="#">Regulatory</a></li>
-          <li><a class="footer-link" href="#">Licences</a></li>
+          <li><a class="footer-link" href="#">Imprint</a></li><li><a class="footer-link" href="#">Privacy</a></li>
+          <li><a class="footer-link" href="#">Terms</a></li><li><a class="footer-link" href="#">Complaints</a></li>
+          <li><a class="footer-link" href="#">Regulatory</a></li><li><a class="footer-link" href="#">Licences</a></li>
         </ul>
       </div>
     </div>
@@ -793,12 +868,9 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 </footer>
 
 <script>
-/* NAV SCROLL */
 var nav=document.getElementById('main-nav');
 window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',scrollY>20)},{passive:true});
 if(scrollY>20)nav.classList.add('scrolled');
-
-/* MOBILE MENU */
 var burger=document.getElementById('nav-burger');
 var mobileMenu=document.getElementById('mobile-menu');
 burger.addEventListener('click',function(){
@@ -806,13 +878,7 @@ burger.addEventListener('click',function(){
   burger.classList.toggle('open',open);
   document.body.style.overflow=open?'hidden':'';
 });
-function closeMobileMenu(){
-  mobileMenu.classList.remove('open');
-  burger.classList.remove('open');
-  document.body.style.overflow='';
-}
-
-/* FAQ ACCORDION */
+function closeMobileMenu(){mobileMenu.classList.remove('open');burger.classList.remove('open');document.body.style.overflow='';}
 document.querySelectorAll('.faq-q').forEach(function(q){
   q.addEventListener('click',function(){
     var item=q.closest('.faq-item');

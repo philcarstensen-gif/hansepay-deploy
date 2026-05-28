@@ -390,9 +390,9 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 @media(max-width:768px){
   .section{padding:64px 0}
   .section-sm{padding:48px 0}
-  .cta-band{padding:80px 0}
+  .cta-band{padding:72px 0}
   footer{padding:64px 0 40px}
-  .footer-grid{margin-bottom:48px}
+  .footer-grid{margin-bottom:48px;gap:40px}
   .how-intro{margin-bottom:40px}
   .insights-header{flex-direction:column;align-items:flex-start;gap:12px}
   .cta-actions{flex-direction:column;align-items:center}
@@ -400,6 +400,24 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
   .hero-actions{flex-direction:column;align-items:flex-start}
   .hero-actions .btn{width:100%;justify-content:center}
   .trust-strip .trust-item:nth-child(n+4){display:none}
+  .calc-card{padding:24px 20px}
+  .feat-card{padding:28px 24px}
+  .how-step{padding:28px 12px}
+  .vp-metric{padding:28px 20px}
+  .cred-item{padding:20px 20px}
+  .screen-wrap::before{display:none}
+}
+@media(max-width:640px){
+  .currency-grid{grid-template-columns:repeat(2,1fr)}
+  .corridor-row{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:380px){
+  .currency-grid{grid-template-columns:1fr}
+  .corridor-row{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .view-toggle{bottom:16px;right:16px;padding:3px}
+  .view-toggle a{padding:5px 10px;font-size:11px}
 }
 </style>
 </head>

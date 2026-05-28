@@ -140,15 +140,12 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 /* SECTION INTRO */
 .sec-intro{max-width:640px;margin-bottom:52px}
 
-/* EMT EQUATION */
-.emt-eq{display:flex;align-items:center;justify-content:space-between;
-  padding:28px 40px;background:#fff;
-  border:1px solid rgba(11,25,41,.09);
-  border-radius:var(--r-lg) var(--r-lg) 0 0}
-.emt-eq-val{font-family:var(--font-display);font-size:clamp(26px,3.5vw,46px);font-weight:400;letter-spacing:-.03em;color:var(--n800)}
-.emt-eq-op{font-family:var(--font-display);font-size:clamp(22px,3vw,40px);color:var(--ink3)}
-.emt-eq-note{font-size:13px;font-weight:500;color:var(--ink3);font-family:var(--font-ui)}
-@media(max-width:560px){.emt-eq{padding:20px 24px}.emt-eq-note{display:none}}
+/* EMT DISPLAY */
+.emt-display{background:var(--n050);border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);
+  padding:clamp(32px,4vw,56px);display:flex;align-items:center;justify-content:center;min-height:176px}
+.emt-display-inner{text-align:center}
+.emt-display-eq{font-family:var(--font-display);font-size:clamp(30px,3.8vw,52px);font-weight:400;letter-spacing:-.03em;color:var(--n800);line-height:1}
+.emt-display-sub{font-size:13px;font-weight:500;color:var(--ink3);margin-top:14px;letter-spacing:.01em}
 
 /* FLOW TILES */
 .flow-col-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid rgba(11,25,41,.07)}
@@ -353,41 +350,43 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 <!-- ① WHAT IT IS -->
 <section class="section" id="what-it-is">
   <div class="container">
-    <div class="sec-intro">
-      <span class="eyebrow">What it is</span>
-      <h2 class="section-head" style="margin-top:12px">The euro, on <em>different rails.</em></h2>
-      <p class="lede" style="margin-top:20px">An E-Money Token is a regulated digital version of the euro, issued by a licensed financial institution. One token equals one euro, always. It exists so money can settle the way information already does — instantly, programmatically, across borders.</p>
+    <!-- Heading row: text left, equation display right -->
+    <div class="two-col-w" style="margin-bottom:56px">
+      <div>
+        <span class="eyebrow">What it is</span>
+        <h2 class="section-head" style="margin-top:12px">The euro, on <em>different rails.</em></h2>
+        <p class="lede" style="margin-top:20px">An E-Money Token is a regulated digital version of the euro, issued by a licensed financial institution. One token equals one euro, always. It exists so money can settle the way information already does — instantly, programmatically, across borders.</p>
+      </div>
+      <div class="emt-display">
+        <div class="emt-display-inner">
+          <div class="emt-display-eq">1&thinsp;EMT&ensp;=&ensp;1&thinsp;EUR</div>
+          <p class="emt-display-sub">Always 1:1. By law, under MiCAR.</p>
+        </div>
+      </div>
     </div>
 
-    <div style="max-width:900px">
-      <div class="emt-eq">
-        <span class="emt-eq-val">1 EMT</span>
-        <span class="emt-eq-op">=</span>
-        <span class="emt-eq-val">1 EUR</span>
-        <span class="emt-eq-note">Always. By law.</span>
+    <!-- Three pillars -->
+    <div class="tile-grid-3">
+      <div class="tile">
+        <div class="tile-icon-wrap">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="tile-title">Backed 1:1</div>
+        <div class="tile-body">Held in segregated reserves at regulated banks. Not on the issuer's balance sheet — your funds are always fully covered.</div>
       </div>
-      <div class="tile-grid-3">
-        <div class="tile">
-          <div class="tile-icon-wrap">
-            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <div class="tile-title">Backed 1:1</div>
-          <div class="tile-body">Held in segregated reserves at regulated banks. Not on the issuer's balance sheet — your funds are always fully covered.</div>
+      <div class="tile">
+        <div class="tile-icon-wrap">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         </div>
-        <div class="tile">
-          <div class="tile-icon-wrap">
-            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          </div>
-          <div class="tile-title">Issued under MiCAR</div>
-          <div class="tile-body">The EU's Markets in Crypto-Assets Regulation — the strictest digital money framework in the world. HansePay operates fully within it.</div>
+        <div class="tile-title">Issued under MiCAR</div>
+        <div class="tile-body">The EU's Markets in Crypto-Assets Regulation — the strictest digital money framework in the world. HansePay operates fully within it.</div>
+      </div>
+      <div class="tile">
+        <div class="tile-icon-wrap">
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
         </div>
-        <div class="tile">
-          <div class="tile-icon-wrap">
-            <svg class="tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg>
-          </div>
-          <div class="tile-title">Redeemable on demand</div>
-          <div class="tile-body">Convert back to fiat at any time. 1:1, no fees, no waiting. The token value is pegged to the euro — not a market price.</div>
-        </div>
+        <div class="tile-title">Redeemable on demand</div>
+        <div class="tile-body">Convert back to fiat at any time. 1:1, no fees, no waiting. The token value is pegged to the euro — not a market price.</div>
       </div>
     </div>
   </div>
@@ -404,52 +403,56 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
     </div>
 
     <div class="tile-grid-2" style="max-width:960px">
-      <div class="tile" style="gap:0">
-        <div class="flow-col-label bank">Today, with a bank</div>
-        <div class="flow-step-row">
-          <div class="flow-num">1</div>
-          <div><div class="flow-step-name">Sender bank</div><div class="flow-step-note">Initiates the wire transfer</div></div>
+      <div class="tile" style="gap:0;justify-content:space-between">
+        <div>
+          <div class="flow-col-label bank">Today, with a bank</div>
+          <div class="flow-step-row">
+            <div class="flow-num">1</div>
+            <div><div class="flow-step-name">Sender bank</div><div class="flow-step-note">Initiates the wire transfer</div></div>
+          </div>
+          <div class="flow-step-row">
+            <div class="flow-num">2</div>
+            <div><div class="flow-step-name">Correspondent bank 1</div><div class="flow-step-note">+ FX spread &middot; + wire fee</div></div>
+          </div>
+          <div class="flow-step-row">
+            <div class="flow-num">3</div>
+            <div><div class="flow-step-name">Correspondent bank 2</div><div class="flow-step-note">+ FX spread &middot; + 1 day</div></div>
+          </div>
+          <div class="flow-step-row">
+            <div class="flow-num">4</div>
+            <div><div class="flow-step-name">SWIFT network</div><div class="flow-step-note">Routing and messaging layer</div></div>
+          </div>
+          <div class="flow-step-row">
+            <div class="flow-num">5</div>
+            <div><div class="flow-step-name">Correspondent bank 3</div><div class="flow-step-note">+ wire fee &middot; + 1 day</div></div>
+          </div>
+          <div class="flow-step-row" style="border-bottom:none">
+            <div class="flow-num">6</div>
+            <div><div class="flow-step-name">Recipient bank</div><div class="flow-step-note">Funds available — eventually</div></div>
+          </div>
         </div>
-        <div class="flow-step-row">
-          <div class="flow-num">2</div>
-          <div><div class="flow-step-name">Correspondent bank 1</div><div class="flow-step-note">+ FX spread &middot; + wire fee</div></div>
-        </div>
-        <div class="flow-step-row">
-          <div class="flow-num">3</div>
-          <div><div class="flow-step-name">Correspondent bank 2</div><div class="flow-step-note">+ FX spread &middot; + 1 day</div></div>
-        </div>
-        <div class="flow-step-row">
-          <div class="flow-num">4</div>
-          <div><div class="flow-step-name">SWIFT network</div><div class="flow-step-note">Routing and messaging layer</div></div>
-        </div>
-        <div class="flow-step-row">
-          <div class="flow-num">5</div>
-          <div><div class="flow-step-name">Correspondent bank 3</div><div class="flow-step-note">+ wire fee &middot; + 1 day</div></div>
-        </div>
-        <div class="flow-step-row" style="border-bottom:none">
-          <div class="flow-num">6</div>
-          <div><div class="flow-step-name">Recipient bank</div><div class="flow-step-note">Funds available — eventually</div></div>
-        </div>
-        <div class="flow-summary" style="margin-top:20px">
+        <div class="flow-summary">
           <div class="flow-summary-stat">3–5 business days &middot; €60–€180 in fees &middot; 1.2% spread typical</div>
         </div>
       </div>
 
-      <div class="tile" style="gap:0">
-        <div class="flow-col-label hp">With HansePay</div>
-        <div class="flow-step-row">
-          <div class="flow-num hp">1</div>
-          <div><div class="flow-step-name">Sender bank</div><div class="flow-step-note">EUR debited, rate locked instantly</div></div>
+      <div class="tile" style="gap:0;justify-content:space-between">
+        <div>
+          <div class="flow-col-label hp">With HansePay</div>
+          <div class="flow-step-row">
+            <div class="flow-num hp">1</div>
+            <div><div class="flow-step-name">Sender bank</div><div class="flow-step-note">EUR debited, rate locked instantly</div></div>
+          </div>
+          <div class="flow-step-row">
+            <div class="flow-num hp">2</div>
+            <div><div class="flow-step-name">EMT settlement layer</div><div class="flow-step-note">Atomic conversion and transfer at locked rate</div></div>
+          </div>
+          <div class="flow-step-row" style="border-bottom:none">
+            <div class="flow-num hp">3</div>
+            <div><div class="flow-step-name">Recipient bank</div><div class="flow-step-note">EUR credited — same session</div></div>
+          </div>
         </div>
-        <div class="flow-step-row">
-          <div class="flow-num hp">2</div>
-          <div><div class="flow-step-name">EMT settlement layer</div><div class="flow-step-note">Atomic conversion and transfer at locked rate</div></div>
-        </div>
-        <div class="flow-step-row" style="border-bottom:none">
-          <div class="flow-num hp">3</div>
-          <div><div class="flow-step-name">Recipient bank</div><div class="flow-step-note">EUR credited — same session</div></div>
-        </div>
-        <div class="flow-summary hp" style="margin-top:20px">
+        <div class="flow-summary hp">
           <div class="flow-summary-stat hp">Minutes &middot; ~0.1% all-in &middot; FX rate locked at quote</div>
         </div>
       </div>

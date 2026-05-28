@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>HansePay — Cross-border payments, reimagined.</title>
 <meta name="description" content="Global payment infrastructure for modern business. Mid-market rates, BaFin-regulated, dedicated expert service." />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230B1929'/><text x='16' y='24' font-family='Georgia,serif' font-size='22' font-weight='400' fill='%238DBDE6' text-anchor='middle'>H</text></svg>">
+<link rel="icon" type="image/png" sizes="32x32" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%230B1929'/><text x='16' y='24' font-family='Georgia,serif' font-size='22' font-weight='400' fill='%238DBDE6' text-anchor='middle'>H</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
@@ -43,7 +45,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80p
 nav.scrolled{background:rgba(255,255,255,.97);box-shadow:0 1px 0 rgba(11,25,41,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;gap:0}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;margin-right:40px}
-.nav-logo img{height:28px;width:28px;object-fit:contain}
+.nav-logo img{height:28px;width:28px;object-fit:contain;filter:brightness(0) invert(1);transition:filter .35s}
+nav.scrolled .nav-logo img{filter:none}
 .nav-logo-text{font-family:var(--font-logo);font-size:19px;font-weight:400;letter-spacing:-.02em;color:#fff;line-height:1;transition:color .25s}
 nav.scrolled .nav-logo-text{color:var(--n800)}
 /* nav links */
@@ -328,7 +331,14 @@ footer{background:#0A0A0A;padding:96px 0 48px}
 .vp-metric-sub{font-size:12px;color:var(--ink3);line-height:1.4}
 
 /* CURRENCIES */
-.currency-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.currencies-layout{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:center}
+@media(max-width:960px){.currencies-layout{grid-template-columns:1fr;gap:40px}}
+.currencies-globe-wrap{display:flex;align-items:center;justify-content:center;position:relative}
+.currencies-globe-wrap canvas{display:block;border-radius:50%;animation:globe-float 9s ease-in-out infinite;
+  box-shadow:0 32px 80px rgba(11,25,41,.13),0 8px 24px rgba(11,25,41,.08)}
+@media(max-width:960px){.currencies-globe-wrap{display:none}}
+.currencies-content-col{}
+.currency-grid{display:flex;flex-wrap:wrap;gap:8px}
 .ccy-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1px solid rgba(11,25,41,.09);border-radius:var(--r-pill);background:#fff;transition:all .15s;cursor:default}
 .ccy-chip:hover{border-color:var(--n200);background:var(--n050)}
 .ccy-flag{font-size:15px;line-height:1}
@@ -494,8 +504,7 @@ footer{background:#0A0A0A;padding:96px 0 48px}
         </div>
       </div>
     </div>
-    <!-- Globe canvas kept for JS compatibility, column hidden via CSS -->
-    <div class="hero-globe-col"><div class="globe-canvas-wrap"><canvas id="globe-canvas"></canvas></div></div>
+    <!-- Globe moved to currencies section -->
   </div>
 </section>
 
@@ -733,40 +742,49 @@ footer{background:#0A0A0A;padding:96px 0 48px}
 <!-- CURRENCIES -->
 <section class="section" id="currencies" style="background:#f7f8fc">
   <div class="container">
-    <div style="text-align:center;max-width:560px;margin:0 auto 52px">
-      <span class="eyebrow reveal">Global reach</span>
-      <h2 class="section-head reveal d1" style="margin-top:12px">Send to <em>35+ currencies.</em></h2>
-      <p class="lede reveal d2" style="margin-top:16px">Seamless transfers across Europe, the Americas, Asia, and the Middle East — with same-day availability on major corridors.</p>
+    <div class="currencies-layout">
+      <!-- Left: animated globe -->
+      <div class="currencies-globe-wrap">
+        <canvas id="globe-canvas"></canvas>
+      </div>
+      <!-- Right: header + chips -->
+      <div class="currencies-content-col">
+        <div style="margin-bottom:36px">
+          <span class="eyebrow reveal">Global reach</span>
+          <h2 class="section-head reveal d1" style="margin-top:12px">Send to <em>35+ currencies.</em></h2>
+          <p class="lede reveal d2" style="margin-top:16px">Seamless transfers across Europe, the Americas, Asia, and the Middle East — with same-day availability on major corridors.</p>
+        </div>
+        <div class="currency-grid reveal">
+          <div class="ccy-chip"><span class="ccy-flag">🇺🇸</span><span class="ccy-code">USD</span><span class="ccy-name">US Dollar</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇬🇧</span><span class="ccy-code">GBP</span><span class="ccy-name">British Pound</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇨🇭</span><span class="ccy-code">CHF</span><span class="ccy-name">Swiss Franc</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇯🇵</span><span class="ccy-code">JPY</span><span class="ccy-name">Japanese Yen</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇸🇬</span><span class="ccy-code">SGD</span><span class="ccy-name">Singapore Dollar</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇦🇪</span><span class="ccy-code">AED</span><span class="ccy-name">UAE Dirham</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇨🇳</span><span class="ccy-code">CNY</span><span class="ccy-name">Chinese Yuan</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇦🇺</span><span class="ccy-code">AUD</span><span class="ccy-name">Australian Dollar</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇨🇦</span><span class="ccy-code">CAD</span><span class="ccy-name">Canadian Dollar</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇸🇪</span><span class="ccy-code">SEK</span><span class="ccy-name">Swedish Krona</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇳🇴</span><span class="ccy-code">NOK</span><span class="ccy-name">Norwegian Krone</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇩🇰</span><span class="ccy-code">DKK</span><span class="ccy-name">Danish Krone</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇵🇱</span><span class="ccy-code">PLN</span><span class="ccy-name">Polish Zloty</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇨🇿</span><span class="ccy-code">CZK</span><span class="ccy-name">Czech Koruna</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇭🇺</span><span class="ccy-code">HUF</span><span class="ccy-name">Hungarian Forint</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇭🇰</span><span class="ccy-code">HKD</span><span class="ccy-name">Hong Kong Dollar</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇳🇿</span><span class="ccy-code">NZD</span><span class="ccy-name">New Zealand Dollar</span></div>
+          <div class="ccy-chip"><span class="ccy-flag">🇮🇳</span><span class="ccy-code">INR</span><span class="ccy-name">Indian Rupee</span></div>
+        </div>
+        <div class="corridor-row reveal" style="margin-top:20px">
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/USD &mdash; same day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/GBP &mdash; same day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/CHF &mdash; same day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/JPY &mdash; same day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/SGD &mdash; next day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/AED &mdash; next day</span>
+        </div>
+        <p style="font-size:12px;color:var(--ink3);margin-top:16px">+17 more currencies available &mdash; speak with your FX expert for full corridor availability.</p>
+      </div>
     </div>
-    <div class="currency-grid reveal">
-      <div class="ccy-chip"><span class="ccy-flag">🇺🇸</span><span class="ccy-code">USD</span><span class="ccy-name">US Dollar</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇬🇧</span><span class="ccy-code">GBP</span><span class="ccy-name">British Pound</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇨🇭</span><span class="ccy-code">CHF</span><span class="ccy-name">Swiss Franc</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇯🇵</span><span class="ccy-code">JPY</span><span class="ccy-name">Japanese Yen</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇸🇬</span><span class="ccy-code">SGD</span><span class="ccy-name">Singapore Dollar</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇦🇪</span><span class="ccy-code">AED</span><span class="ccy-name">UAE Dirham</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇨🇳</span><span class="ccy-code">CNY</span><span class="ccy-name">Chinese Yuan</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇦🇺</span><span class="ccy-code">AUD</span><span class="ccy-name">Australian Dollar</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇨🇦</span><span class="ccy-code">CAD</span><span class="ccy-name">Canadian Dollar</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇸🇪</span><span class="ccy-code">SEK</span><span class="ccy-name">Swedish Krona</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇳🇴</span><span class="ccy-code">NOK</span><span class="ccy-name">Norwegian Krone</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇩🇰</span><span class="ccy-code">DKK</span><span class="ccy-name">Danish Krone</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇵🇱</span><span class="ccy-code">PLN</span><span class="ccy-name">Polish Zloty</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇨🇿</span><span class="ccy-code">CZK</span><span class="ccy-name">Czech Koruna</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇭🇺</span><span class="ccy-code">HUF</span><span class="ccy-name">Hungarian Forint</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇭🇰</span><span class="ccy-code">HKD</span><span class="ccy-name">Hong Kong Dollar</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇳🇿</span><span class="ccy-code">NZD</span><span class="ccy-name">New Zealand Dollar</span></div>
-      <div class="ccy-chip"><span class="ccy-flag">🇮🇳</span><span class="ccy-code">INR</span><span class="ccy-name">Indian Rupee</span></div>
-    </div>
-    <div class="corridor-row reveal">
-      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/USD &mdash; same day</span>
-      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/GBP &mdash; same day</span>
-      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/CHF &mdash; same day</span>
-      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/JPY &mdash; same day</span>
-      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/SGD &mdash; next day</span>
-      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/AED &mdash; next day</span>
-    </div>
-    <p style="text-align:center;font-size:12px;color:var(--ink3);margin-top:20px">+17 more currencies available &mdash; speak with your FX expert for full corridor availability.</p>
   </div>
 </section>
 
@@ -986,9 +1004,9 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener
   var ctx=canvas.getContext('2d');
   var DPR=window.devicePixelRatio||1;
 
-  /* Size the canvas to fit its column — walk up to the grid column, not the inline-block wrap */
-  var col=canvas.closest('.hero-globe-col')||canvas.parentElement.parentElement||canvas.parentElement;
-  var SIZE=Math.min(col.offsetWidth-48, 520);
+  /* Size the canvas to fit its container in the currencies section */
+  var col=canvas.closest('.currencies-globe-wrap')||canvas.parentElement;
+  var SIZE=Math.min(col.offsetWidth-32, 480);
   canvas.width=SIZE*DPR; canvas.height=SIZE*DPR;
   canvas.style.width=SIZE+'px'; canvas.style.height=SIZE+'px';
   ctx.scale(DPR,DPR);

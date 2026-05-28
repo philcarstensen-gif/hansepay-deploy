@@ -175,6 +175,9 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 .spectrum-tile{background:#fff;padding:28px 24px;display:flex;flex-direction:column;gap:8px;transition:background .2s}
 .spectrum-tile.active{background:var(--n050)}
 .spectrum-tile:hover{background:var(--n050)}
+.spectrum-icon{width:20px;height:20px;color:var(--ink3);flex-shrink:0;transition:color .2s}
+.spectrum-tile.active .spectrum-icon{color:var(--n400)}
+.spectrum-tile:hover .spectrum-icon{color:var(--n400)}
 .spectrum-label{font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
 .spectrum-label.active{color:var(--n400)}
 .spectrum-name{font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--n800);letter-spacing:-.01em}
@@ -440,7 +443,10 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 
       <!-- BANK TRACK -->
       <div class="hflow-track bank">
-        <div class="hflow-track-label bank">Today, with a bank</div>
+        <div class="hflow-track-label bank" style="display:flex;align-items:center;gap:6px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Today, with a bank
+        </div>
         <div class="hflow-chain">
 
           <div class="hflow-node">
@@ -503,7 +509,10 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 
       <!-- HANSEPAY TRACK -->
       <div class="hflow-track hp">
-        <div class="hflow-track-label hp">With HansePay</div>
+        <div class="hflow-track-label hp" style="display:flex;align-items:center;gap:6px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          With HansePay
+        </div>
         <div class="hflow-chain">
 
           <div class="hflow-node hp">
@@ -556,24 +565,32 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
         <p style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px">Where e-money sits</p>
         <div class="tile-grid-4" style="background:rgba(11,25,41,.06)">
           <div class="spectrum-tile">
+            <!-- Banknote icon -->
+            <svg class="spectrum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
             <div class="spectrum-label">Traditional</div>
             <div class="spectrum-name">Bargeld</div>
             <div class="spectrum-en">Cash</div>
             <div class="spectrum-examples" style="margin-top:4px">Coins &amp; notes</div>
           </div>
           <div class="spectrum-tile">
+            <!-- Landmark / bank building icon -->
+            <svg class="spectrum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="22" x2="21" y2="22"/><line x1="6" y1="18" x2="6" y2="11"/><line x1="10" y1="18" x2="10" y2="11"/><line x1="14" y1="18" x2="14" y2="11"/><line x1="18" y1="18" x2="18" y2="11"/><polygon points="12 2 20 7 4 7"/></svg>
             <div class="spectrum-label">Traditional</div>
             <div class="spectrum-name">Giralgeld</div>
             <div class="spectrum-en">Book money</div>
             <div class="spectrum-examples" style="margin-top:4px">Bank account</div>
           </div>
           <div class="spectrum-tile active" style="border-left:3px solid var(--n300)">
+            <!-- Smartphone icon -->
+            <svg class="spectrum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
             <div class="spectrum-label active">E-money</div>
             <div class="spectrum-name">E-Geld</div>
             <div class="spectrum-en">Electronic money</div>
             <div class="spectrum-examples active" style="margin-top:4px">PayPal · HansePay</div>
           </div>
           <div class="spectrum-tile">
+            <!-- Hexagon icon (crypto / unregulated digital assets) -->
+            <svg class="spectrum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5"/></svg>
             <div class="spectrum-label">Unregulated</div>
             <div class="spectrum-name">Krypto</div>
             <div class="spectrum-en">Crypto-assets</div>

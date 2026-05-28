@@ -539,168 +539,108 @@ a{color:inherit;text-decoration:none}
               We'll notify you once it settles — usually within 2 hours.
             </p>
 
-            <!-- Globe SVG — orthographic, centred ~54°N 12°E (Northern Europe) -->
+            <!-- Globe — canvas dot-matrix renderer -->
             <div style="display:flex;justify-content:center;margin-bottom:22px">
-              <svg width="210" height="210" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <!-- Deep blue sphere gradient, highlight top-left -->
-                  <radialGradient id="gBg" cx="32%" cy="26%" r="72%">
-                    <stop offset="0%"   stop-color="#1E4E80"/>
-                    <stop offset="40%"  stop-color="#0D2B4E"/>
-                    <stop offset="100%" stop-color="#050C1A"/>
-                  </radialGradient>
-                  <!-- Limb darkening -->
-                  <radialGradient id="gLimb" cx="50%" cy="50%" r="50%">
-                    <stop offset="68%" stop-color="transparent"/>
-                    <stop offset="94%" stop-color="rgba(2,6,18,0.72)"/>
-                    <stop offset="100%" stop-color="rgba(2,6,18,0.25)"/>
-                  </radialGradient>
-                  <!-- Atmosphere rim -->
-                  <radialGradient id="gAtmo" cx="50%" cy="50%" r="50%">
-                    <stop offset="84%" stop-color="transparent"/>
-                    <stop offset="96%" stop-color="rgba(80,140,220,0.28)"/>
-                    <stop offset="100%" stop-color="transparent"/>
-                  </radialGradient>
-                  <!-- Arc glow -->
-                  <filter id="arcGlow" x="-60%" y="-60%" width="220%" height="220%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
-                  </filter>
-                  <!-- City dot glow -->
-                  <filter id="cityGlow" x="-80%" y="-80%" width="260%" height="260%">
-                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
-                  </filter>
-                  <clipPath id="gc"><circle cx="105" cy="105" r="98"/></clipPath>
-                </defs>
-
-                <!-- Sphere base -->
-                <circle cx="105" cy="105" r="100" fill="url(#gBg)"/>
-
-                <!-- Grid lines (latitude parallels + meridians) -->
-                <g clip-path="url(#gc)" fill="none" stroke="rgba(141,189,230,0.13)" stroke-width="0.7">
-                  <!-- Parallels (approximate ellipses for oblique projection at 54°N centre) -->
-                  <ellipse cx="105" cy="53"  rx="49"  ry="40"/>
-                  <ellipse cx="105" cy="62"  rx="63"  ry="52"/>
-                  <ellipse cx="105" cy="74"  rx="76"  ry="62"/>
-                  <ellipse cx="105" cy="88"  rx="88"  ry="72"/>
-                  <ellipse cx="105" cy="120" rx="88"  ry="56"/>
-                  <!-- Meridians -->
-                  <ellipse cx="105" cy="105" rx="30"  ry="98"/>
-                  <ellipse cx="105" cy="105" rx="65"  ry="98"/>
-                  <ellipse cx="105" cy="105" rx="92"  ry="98"/>
-                </g>
-
-                <!-- Land masses — Northern Europe -->
-                <g clip-path="url(#gc)">
-
-                  <!-- Scandinavia + Finland -->
-                  <path d="M 101,94
-                    C 100,91 101,89 101,88
-                    C 102,85 103,83 104,81
-                    C 106,76 108,73 109,71
-                    C 111,68 112,67 113,68
-                    C 115,68 117,70 117,71
-                    C 116,71 114,71 113,71
-                    C 113,74 114,77 115,79
-                    C 116,83 117,85 116,87
-                    C 115,90 113,92 111,93
-                    C 109,94 107,95 104,95
-                    C 102,95 101,95 101,94 Z"
-                    fill="rgba(100,160,220,0.22)" stroke="rgba(141,189,230,0.55)" stroke-width="0.9"/>
-
-                  <!-- Continental Europe (incl. Iberia, France, Germany, Balkans) -->
-                  <path d="M 103,99
-                    C 107,99 111,98 114,98
-                    C 118,97 119,94 118,90
-                    C 120,92 122,95 121,99
-                    C 124,100 127,101 128,103
-                    C 129,106 129,110 128,113
-                    C 126,117 124,120 121,121
-                    C 118,122 113,121 110,120
-                    C 107,119 104,117 103,115
-                    C 100,115 98,115 98,116
-                    C 96,117 94,118 93,118
-                    C 90,117 88,115 87,112
-                    C 86,109 86,107 87,105
-                    C 89,104 91,103 94,102
-                    C 97,101 100,100 100,99
-                    C 101,99 102,99 103,99 Z"
-                    fill="rgba(100,160,220,0.22)" stroke="rgba(141,189,230,0.55)" stroke-width="0.9"/>
-
-                  <!-- Great Britain -->
-                  <path d="M 95,103
-                    C 92,103 89,103 88,103
-                    C 89,101 90,99 91,99
-                    C 91,95 91,92 91,91
-                    C 92,92 93,92 93,92
-                    C 94,95 94,99 95,103 Z"
-                    fill="rgba(100,160,220,0.18)" stroke="rgba(141,189,230,0.45)" stroke-width="0.8"/>
-
-                  <!-- Ireland -->
-                  <ellipse cx="85" cy="99" rx="3.8" ry="4.8" fill="rgba(100,160,220,0.15)" stroke="rgba(141,189,230,0.38)" stroke-width="0.7"/>
-
-                  <!-- Iceland -->
-                  <ellipse cx="77" cy="82" rx="6"   ry="3"   fill="rgba(100,160,220,0.13)" stroke="rgba(141,189,230,0.30)" stroke-width="0.7"/>
-                </g>
-
-                <!-- Secondary city dots (Amsterdam, London, Paris, Berlin, Copenhagen, Oslo, Warsaw) -->
-                <g clip-path="url(#gc)" fill="rgba(141,189,230,0.45)">
-                  <circle cx="98"  cy="100" r="1.6"/><!-- Amsterdam -->
-                  <circle cx="93"  cy="102" r="1.6"/><!-- London -->
-                  <circle cx="95"  cy="107" r="1.4"/><!-- Paris -->
-                  <circle cx="107" cy="100" r="1.4"/><!-- Berlin -->
-                  <circle cx="106" cy="95"  r="1.6"/><!-- Copenhagen -->
-                  <circle cx="103" cy="91"  r="1.4"/><!-- Oslo -->
-                  <circle cx="116" cy="101" r="1.4"/><!-- Warsaw -->
-                </g>
-
-                <!-- Arc glow layer (Hamburg → Stockholm) -->
-                <path d="M 105,100 Q 101,86 110,90"
-                  stroke="rgba(201,169,97,0.30)" stroke-width="7"
-                  fill="none" stroke-linecap="round"
-                  clip-path="url(#gc)" filter="url(#arcGlow)"/>
-
-                <!-- Arc solid dashed line -->
-                <path d="M 105,100 Q 101,86 110,90"
-                  stroke="#C9A961" stroke-width="2"
-                  fill="none" stroke-linecap="round"
-                  stroke-dasharray="4 4"
-                  clip-path="url(#gc)" opacity="0.95"/>
-
-                <!-- Faint secondary arc (Hamburg → London) -->
-                <path d="M 105,100 Q 96,95 93,102"
-                  stroke="#C9A961" stroke-width="1.1"
-                  fill="none" stroke-linecap="round"
-                  stroke-dasharray="2.5 4"
-                  clip-path="url(#gc)" opacity="0.35"/>
-
-                <!-- Hamburg origin — glow + dot -->
-                <g clip-path="url(#gc)" filter="url(#cityGlow)">
-                  <circle cx="105" cy="100" r="5" fill="rgba(141,189,230,0.50)"/>
-                </g>
-                <circle cx="105" cy="100" r="4.5" fill="rgba(141,189,230,0.18)" clip-path="url(#gc)"/>
-                <circle cx="105" cy="100" r="3"   fill="#8DBDE6"                clip-path="url(#gc)"/>
-                <circle cx="105" cy="100" r="1.4" fill="#fff"/>
-                <text x="105" y="111" font-family="Inter,sans-serif" font-size="7" font-weight="600"
-                  fill="rgba(141,189,230,0.80)" text-anchor="middle" clip-path="url(#gc)">Hamburg</text>
-
-                <!-- Stockholm destination — pulsing rings + gold dot -->
-                <g clip-path="url(#gc)" filter="url(#cityGlow)">
-                  <circle cx="110" cy="90" r="6" fill="rgba(201,169,97,0.40)"/>
-                </g>
-                <circle cx="110" cy="90" r="11"  fill="rgba(201,169,97,0.08)"  clip-path="url(#gc)"/>
-                <circle cx="110" cy="90" r="6.5" fill="rgba(201,169,97,0.18)"  clip-path="url(#gc)"/>
-                <circle cx="110" cy="90" r="3.8" fill="#C9A961"                clip-path="url(#gc)"/>
-                <circle cx="110" cy="90" r="1.6" fill="#fff"/>
-                <text x="110" y="80" font-family="Inter,sans-serif" font-size="7" font-weight="600"
-                  fill="rgba(201,169,97,0.90)" text-anchor="middle" clip-path="url(#gc)">Stockholm</text>
-
-                <!-- Atmosphere + limb darkening overlays -->
-                <circle cx="105" cy="105" r="100" fill="url(#gAtmo)"/>
-                <circle cx="105" cy="105" r="100" fill="url(#gLimb)"/>
-                <!-- Rim highlight -->
-                <circle cx="105" cy="105" r="100" fill="none" stroke="rgba(141,189,230,0.25)" stroke-width="1.2"/>
-              </svg>
+              <canvas id="hp-globe" style="border-radius:50%;display:block"></canvas>
             </div>
+            <script>
+(function(){
+  var cv=document.getElementById('hp-globe');
+  if(!cv)return;
+  var dpr=window.devicePixelRatio||1, S=216;
+  cv.width=S*dpr; cv.height=S*dpr;
+  cv.style.width=S+'px'; cv.style.height=S+'px';
+  var g=cv.getContext('2d');
+  g.scale(dpr,dpr);
+  var cx=S/2, cy=S/2, R=S*0.435; // ~94px
+  var D=Math.PI/180;
+  // Centre: Hamburg 10°E, 53.5°N
+  var l0=10*D, p0=53.5*D, c0=Math.cos(p0), s0=Math.sin(p0);
+
+  function pr(phi,lam){
+    var dl=lam-l0;
+    return {
+      x: cx + R*Math.cos(phi)*Math.sin(dl),
+      y: cy - R*(c0*Math.sin(phi) - s0*Math.cos(phi)*Math.cos(dl)),
+      v: c0*Math.cos(phi)*Math.cos(dl) + s0*Math.sin(phi)
+    };
+  }
+
+  /* ── Sphere background ── */
+  var bg=g.createRadialGradient(cx-R*.28, cy-R*.30, R*.04, cx, cy, R*1.02);
+  bg.addColorStop(0,'#1B4878'); bg.addColorStop(.40,'#0C2642'); bg.addColorStop(1,'#040A1C');
+  g.beginPath(); g.arc(cx,cy,R,0,6.28); g.fillStyle=bg; g.fill();
+
+  /* ── Clip to sphere ── */
+  g.save(); g.beginPath(); g.arc(cx,cy,R,0,6.28); g.clip();
+
+  /* ── Dot grid (10° lat × 10° lon) ── */
+  for(var la=-80; la<=80; la+=10){
+    var phi=la*D;
+    for(var lo=0; lo<360; lo+=10){
+      var p=pr(phi, lo*D);
+      if(p.v>0.04){
+        // dots fade gently at the limb
+        var a=Math.min(0.60, p.v*0.52+0.14);
+        g.beginPath(); g.arc(p.x, p.y, 1.45, 0, 6.28);
+        g.fillStyle='rgba(88,158,218,'+a.toFixed(2)+')';
+        g.fill();
+      }
+    }
+  }
+
+  /* ── Arc Hamburg → Stockholm ── */
+  var ph1=53.5*D, ll1=10*D, ph2=59.3*D, ll2=18.1*D;
+  // glow pass
+  g.save();
+  g.shadowColor='rgba(201,169,97,.55)'; g.shadowBlur=7;
+  g.strokeStyle='rgba(201,169,97,.32)'; g.lineWidth=5.5;
+  g.beginPath();
+  for(var i=0;i<=32;i++){var t=i/32,pt=pr(ph1+t*(ph2-ph1),ll1+t*(ll2-ll1));i?g.lineTo(pt.x,pt.y):g.moveTo(pt.x,pt.y);}
+  g.stroke(); g.restore();
+  // dashed pass
+  g.setLineDash([4,3.5]); g.strokeStyle='#C9A961'; g.lineWidth=2.0;
+  g.beginPath();
+  for(var i=0;i<=32;i++){var t=i/32,pt=pr(ph1+t*(ph2-ph1),ll1+t*(ll2-ll1));i?g.lineTo(pt.x,pt.y):g.moveTo(pt.x,pt.y);}
+  g.stroke(); g.setLineDash([]);
+
+  /* ── Hamburg origin dot (blue) ── */
+  var hb=pr(ph1,ll1);
+  g.save(); g.shadowColor='rgba(141,189,230,.95)'; g.shadowBlur=10;
+  g.fillStyle='#6BADD6'; g.beginPath(); g.arc(hb.x,hb.y,4.5,0,6.28); g.fill();
+  g.restore();
+  g.fillStyle='#fff'; g.beginPath(); g.arc(hb.x,hb.y,2,0,6.28); g.fill();
+
+  /* ── Stockholm destination dot (gold, with rings) ── */
+  var sk=pr(ph2,ll2);
+  g.fillStyle='rgba(201,169,97,.09)'; g.beginPath(); g.arc(sk.x,sk.y,15,0,6.28); g.fill();
+  g.fillStyle='rgba(201,169,97,.20)'; g.beginPath(); g.arc(sk.x,sk.y,9,0,6.28);  g.fill();
+  g.save(); g.shadowColor='rgba(201,169,97,.95)'; g.shadowBlur=12;
+  g.fillStyle='#C9A961'; g.beginPath(); g.arc(sk.x,sk.y,4.5,0,6.28); g.fill();
+  g.restore();
+  g.fillStyle='#fff'; g.beginPath(); g.arc(sk.x,sk.y,2,0,6.28); g.fill();
+
+  g.restore(); /* end clip */
+
+  /* ── Limb darkening ── */
+  var li=g.createRadialGradient(cx,cy,R*.60,cx,cy,R);
+  li.addColorStop(0,'transparent');
+  li.addColorStop(.70,'rgba(3,8,22,.52)');
+  li.addColorStop(1,'rgba(3,8,22,.20)');
+  g.beginPath(); g.arc(cx,cy,R,0,6.28); g.fillStyle=li; g.fill();
+
+  /* ── Rim ── */
+  g.beginPath(); g.arc(cx,cy,R,0,6.28);
+  g.strokeStyle='rgba(100,162,224,.32)'; g.lineWidth=1.5; g.stroke();
+
+  /* ── City labels (outside clip) ── */
+  g.font='600 7.5px Inter,sans-serif'; g.textAlign='center';
+  g.fillStyle='rgba(141,189,230,.82)';
+  g.fillText('Hamburg', hb.x, hb.y+15);
+  g.fillStyle='rgba(201,169,97,.92)';
+  g.fillText('Stockholm', sk.x, sk.y-17);
+})();
+            </script>
 
             <!-- Details table -->
             <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:20px">

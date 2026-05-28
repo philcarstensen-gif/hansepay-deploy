@@ -172,6 +172,19 @@ a { color: inherit; text-decoration: none; }
 }
 .btn-cancel:hover { color: var(--ink2); background: rgba(11,25,41,0.04); }
 
+/* IMAGE UPLOAD */
+.image-upload-area { border: 2px dashed rgba(11,25,41,0.15); border-radius: var(--r-md); padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s; background: var(--off); position: relative; }
+.image-upload-area:hover, .image-upload-area.drag-over { border-color: var(--n400); background: var(--n050); }
+.image-upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.image-upload-icon { color: var(--ink3); margin-bottom: 8px; }
+.image-upload-label { font-size: 0.8125rem; font-weight: 500; color: var(--ink2); }
+.image-upload-hint { font-size: 0.6875rem; color: var(--ink3); margin-top: 4px; }
+.image-preview { position: relative; border-radius: var(--r-md); overflow: hidden; }
+.image-preview img { width: 100%; height: 140px; object-fit: cover; display: block; border-radius: var(--r-md); }
+.image-preview-remove { position: absolute; top: 8px; right: 8px; background: rgba(6,13,26,0.75); color: #fff; border: none; border-radius: var(--r-pill); padding: 4px 10px; font-size: 0.6875rem; font-weight: 600; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.15s; }
+.image-preview-remove:hover { background: rgba(6,13,26,0.95); }
+.image-uploading { font-size: 0.8125rem; color: var(--ink3); text-align: center; padding: 12px; }
+
 /* TOAST */
 .toast { position:fixed; bottom:24px; right:24px; background:var(--n800); color:#fff; padding:12px 20px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; z-index:1000; opacity:0; transform:translateY(8px); transition:all 0.25s; pointer-events:none; }
 .toast.show { opacity:1; transform:none; }
@@ -311,6 +324,25 @@ a { color: inherit; text-decoration: none; }
           <label for="f-featured">Featured post</label>
         </div>
 
+        <!-- Header Image -->
+        <div style="margin-top:20px;padding-top:20px;border-top:1px solid rgba(11,25,41,0.07)">
+          <div style="font-size:0.875rem;font-weight:600;color:var(--n800);margin-bottom:12px">Header Image</div>
+          <div id="image-upload-wrap">
+            <div class="image-upload-area" id="upload-area">
+              <input type="file" id="f-image-file" accept="image/*" onchange="handleImageUpload(this)" />
+              <div class="image-upload-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              </div>
+              <div class="image-upload-label">Click to upload image</div>
+              <div class="image-upload-hint">JPG, PNG, WebP · Max 8 MB</div>
+            </div>
+          </div>
+          <input type="hidden" id="f-image-url" />
+          <div style="margin-top:8px">
+            <input type="text" id="f-image-url-input" placeholder="Or paste an image URL…" style="width:100%;padding:8px 12px;border:1px solid rgba(11,25,41,0.15);border-radius:var(--r-md);font-size:0.8125rem;font-family:'Inter',sans-serif;color:var(--ink);outline:none" oninput="handleImageUrl(this.value)" />
+          </div>
+        </div>
+
         <button class="btn-save" id="save-btn" onclick="savePost()">Save Post</button>
         <a href="/hansepay/admin/posts.html" class="btn-cancel">Cancel</a>
       </div>
@@ -378,6 +410,7 @@ if (editId) {
       document.getElementById('f-readtime').value = p.readTime || '';
       document.getElementById('f-featured').checked = !!p.featured;
       updateWordCount();
+      if (p.featuredImage) { setImagePreview(p.featuredImage); document.getElementById('f-image-url-input').value = p.featuredImage; }
     })
     .catch(function() {
       // Fallback: try listing all posts
@@ -397,6 +430,7 @@ if (editId) {
           document.getElementById('f-readtime').value = p.readTime || '';
           document.getElementById('f-featured').checked = !!p.featured;
           updateWordCount();
+          if (p.featuredImage) { setImagePreview(p.featuredImage); document.getElementById('f-image-url-input').value = p.featuredImage; }
         });
     });
 }
@@ -492,7 +526,8 @@ function savePost() {
     category: document.getElementById('f-category').value,
     tags: tags,
     readTime: parseInt(document.getElementById('f-readtime').value) || null,
-    featured: document.getElementById('f-featured').checked
+    featured: document.getElementById('f-featured').checked,
+    featuredImage: document.getElementById('f-image-url').value || null
   };
 
   var url = editId ? '/api/posts/' + editId : '/api/posts';
@@ -515,6 +550,87 @@ function savePost() {
       btn.textContent = 'Save Post';
     });
 }
+
+// ── Image upload ──────────────────────────────────────────────────────────────
+function handleImageUpload(input) {
+  if (!input.files || !input.files[0]) return;
+  var file = input.files[0];
+  var wrap = document.getElementById('image-upload-wrap');
+  wrap.innerHTML = '<div class="image-uploading">Uploading…</div>';
+
+  var formData = new FormData();
+  formData.append('image', file);
+
+  var token = localStorage.getItem('hp_token');
+  fetch('/api/upload', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + token },
+    body: formData
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.url) {
+      document.getElementById('f-image-url').value = data.url;
+      setImagePreview(data.url);
+    } else {
+      wrap.innerHTML = '<div style="color:red;font-size:0.8125rem">Upload failed. Try a URL instead.</div>';
+      restoreUploadArea();
+    }
+  })
+  .catch(function() {
+    showToast('Upload failed — try pasting a URL instead.', 'error');
+    restoreUploadArea();
+  });
+}
+
+function handleImageUrl(val) {
+  document.getElementById('f-image-url').value = val;
+  if (val && val.match(/^https?:\/\/.+/)) {
+    setImagePreview(val);
+  }
+}
+
+function setImagePreview(url) {
+  var wrap = document.getElementById('image-upload-wrap');
+  wrap.innerHTML =
+    '<div class="image-preview">' +
+    '<img src="' + url + '" alt="Header image" onerror="this.parentNode.innerHTML=\'<div style=\\\"color:red;font-size:0.8125rem;padding:8px\\\">Could not load image</div>\'">' +
+    '<button class="image-preview-remove" onclick="removeImage()">✕ Remove</button>' +
+    '</div>';
+  document.getElementById('f-image-url').value = url;
+  document.getElementById('f-image-url-input').value = url;
+}
+
+function removeImage() {
+  document.getElementById('f-image-url').value = '';
+  document.getElementById('f-image-url-input').value = '';
+  restoreUploadArea();
+}
+
+function restoreUploadArea() {
+  var wrap = document.getElementById('image-upload-wrap');
+  wrap.innerHTML =
+    '<div class="image-upload-area" id="upload-area">' +
+    '<input type="file" id="f-image-file" accept="image/*" onchange="handleImageUpload(this)" />' +
+    '<div class="image-upload-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>' +
+    '<div class="image-upload-label">Click to upload image</div>' +
+    '<div class="image-upload-hint">JPG, PNG, WebP · Max 8 MB</div>' +
+    '</div>';
+}
+
+// Populate image field when editing existing post
+(function() {
+  var origLoad = window.onload;
+  var origInit = typeof initEdit === 'function' ? initEdit : null;
+  // Hook into post load to populate image preview
+  var _origPopulate = window.populateForm;
+  window.populateFormImage = function(post) {
+    if (post.featuredImage) {
+      setImagePreview(post.featuredImage);
+      document.getElementById('f-image-url-input').value = post.featuredImage;
+    }
+  };
+})();
 </script>
 </body>
 </html>

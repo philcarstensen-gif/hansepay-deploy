@@ -54,6 +54,10 @@ nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80
   background-image:radial-gradient(rgba(141,189,230,.04) 1px,transparent 1px);
   background-size:28px 28px}
 .article-hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:rgba(255,255,255,.06)}
+.article-hero.has-image{padding:120px 0 80px}
+.article-hero.has-image::before{background-image:none}
+.article-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;z-index:0}
+.article-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, rgba(6,13,26,.55) 0%, rgba(6,13,26,.72) 60%, rgba(6,13,26,.88) 100%)}
 .article-hero-inner{max-width:860px;margin:0 auto;padding:0 clamp(20px,5vw,80px);position:relative;z-index:1}
 .article-cat-pill{display:inline-flex;align-items:center;padding:5px 14px;border-radius:var(--r-pill);border:1.5px solid var(--gold);color:var(--gold);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:22px}
 .article-hero h1{font-family:var(--font-display);font-size:clamp(32px,5vw,52px);font-weight:400;line-height:1.1;letter-spacing:-.02em;color:#fff;margin-bottom:20px;max-width:760px}
@@ -233,22 +237,25 @@ footer{background:var(--n800);padding:36px 0}
 
   /* ── render article hero ── */
   function renderHero(post) {
-    document.getElementById('articleHero').innerHTML = `
-      <section class="article-hero">
-        <div class="article-hero-inner">
-          <span class="article-cat-pill">${esc(post.category || 'Insights')}</span>
-          <h1>${esc(post.title)}</h1>
-          ${post.excerpt ? `<p class="article-excerpt">${esc(post.excerpt)}</p>` : ''}
-          <div class="article-meta">
-            <span class="article-meta-author">${esc(post.author || 'HansePay Editorial')}</span>
-            <span class="article-meta-sep"></span>
-            <span>${esc(post.readTime || '5 min read')}</span>
-            <span class="article-meta-sep"></span>
-            <span>${fmtDate(post.publishedAt || post.date)}</span>
-          </div>
-        </div>
-      </section>`;
-    document.title = `${post.title} — HansePay Insights`;
+    var hasImage = !!(post.featuredImage);
+    var imgStyle = hasImage
+      ? `background-image:url('${esc(post.featuredImage)}')`
+      : '';
+    document.getElementById('articleHero').innerHTML =
+      '<section class="article-hero' + (hasImage ? ' has-image' : '') + '">' +
+      (hasImage ? '<div class="article-hero-bg" style="' + imgStyle + '"></div>' : '') +
+      '<div class="article-hero-inner">' +
+      '<span class="article-cat-pill">' + esc(post.category || 'Insights') + '</span>' +
+      '<h1>' + esc(post.title) + '</h1>' +
+      (post.excerpt ? '<p class="article-excerpt">' + esc(post.excerpt) + '</p>' : '') +
+      '<div class="article-meta">' +
+      '<span class="article-meta-author">' + esc(post.authorName || post.author || 'HansePay Editorial') + '</span>' +
+      '<span class="article-meta-sep"></span>' +
+      '<span>' + esc(String(post.readTime || 5) + ' min read') + '</span>' +
+      '<span class="article-meta-sep"></span>' +
+      '<span>' + fmtDate(post.publishedAt || post.createdAt) + '</span>' +
+      '</div></div></section>';
+    document.title = post.title + ' — HansePay Insights';
   }
 
   /* ── render article body ── */

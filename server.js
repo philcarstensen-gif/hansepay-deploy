@@ -7,11 +7,33 @@ const cors = require('cors');
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const path = require('path');
+const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 4200;
 const JWT_SECRET = 'hansepay-cms-secret-2024';
 const DATA_DIR = path.join(__dirname, 'data');
+const UPLOADS_DIR = path.join(__dirname, 'uploads');
+
+// Ensure uploads directory exists
+if (!fs.existsSync(UPLOADS_DIR)) fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+
+// Multer — store uploads with original extension
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, UPLOADS_DIR),
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname).toLowerCase();
+    cb(null, uuidv4() + ext);
+  }
+});
+const upload = multer({
+  storage,
+  limits: { fileSize: 8 * 1024 * 1024 }, // 8 MB max
+  fileFilter: (req, file, cb) => {
+    if (file.mimetype.startsWith('image/')) cb(null, true);
+    else cb(new Error('Only image files allowed'));
+  }
+});
 
 // Middleware
 app.use(cors({ origin: '*' }));
@@ -21,6 +43,8 @@ app.use(express.json());
 app.use(express.static(__dirname));
 // Also serve under /hansepay/ prefix for compatibility with landing page links
 app.use('/hansepay', express.static(__dirname));
+// Serve uploads
+app.use('/uploads', express.static(UPLOADS_DIR));
 
 // ─── Data helpers ───────────────────────────────────────────────────────────
 
@@ -82,6 +106,20 @@ app.get('/api/auth/me', authenticateToken, (req, res) => {
   if (!user) return res.status(404).json({ error: 'User not found' });
   const { passwordHash, ...userSafe } = user;
   res.json(userSafe);
+});
+
+// ─── Image upload ─────────────────────────────────────────────────────────────
+
+app.post('/api/upload', authenticateToken, upload.single('image'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: 'No image provided' });
+  const url = `/uploads/${req.file.filename}`;
+  res.json({ url, filename: req.file.filename });
+});
+
+app.delete('/api/upload/:filename', authenticateToken, (req, res) => {
+  const fp = path.join(UPLOADS_DIR, path.basename(req.params.filename));
+  if (fs.existsSync(fp)) fs.unlinkSync(fp);
+  res.json({ success: true });
 });
 
 // ─── Posts routes ─────────────────────────────────────────────────────────────

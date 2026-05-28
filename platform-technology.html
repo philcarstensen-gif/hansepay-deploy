@@ -136,24 +136,40 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 /* SECTION INTRO */
 .sec-intro{max-width:640px;margin-bottom:52px}
 
-/* FLOW */
-.flow-col-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid rgba(11,25,41,.07)}
-.flow-col-label.bank{color:var(--ink3)}
-.flow-col-label.hp{color:var(--n400)}
-.flow-step-row{display:flex;align-items:flex-start;gap:14px;padding:11px 0;border-bottom:1px solid rgba(11,25,41,.05)}
-.flow-step-row:last-of-type{border-bottom:none}
-.flow-num{width:24px;height:24px;border-radius:50%;background:var(--n050);border:1px solid rgba(11,25,41,.08);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--n400);flex-shrink:0;margin-top:2px}
-.flow-num.hp{background:rgba(30,78,128,.1);border-color:rgba(30,78,128,.18);color:var(--n500)}
-.flow-step-info{flex:1;min-width:0}
-.flow-step-name{font-size:14px;font-weight:600;color:var(--n800);line-height:1.3}
-.flow-step-note{font-size:12px;color:var(--ink3);margin-top:1px}
-.flow-cost-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
-.flow-chip{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 7px;border-radius:var(--r-pill);background:rgba(160,78,78,.07);color:#9b3535;border:1px solid rgba(160,78,78,.14)}
+/* FLOW CHIPS (shared) */
+.flow-chip{display:inline-flex;align-items:center;font-size:10px;font-weight:700;padding:2px 7px;border-radius:var(--r-pill);background:rgba(160,78,78,.07);color:#9b3535;border:1px solid rgba(160,78,78,.14);white-space:nowrap}
 .flow-chip.time{background:rgba(120,100,60,.07);color:#7a6230;border-color:rgba(120,100,60,.14)}
-.flow-summary{padding:13px 16px;border-radius:var(--r-sm);background:rgba(11,25,41,.03);border:1px solid rgba(11,25,41,.06)}
-.flow-summary.hp{background:rgba(30,78,128,.04);border-color:rgba(30,78,128,.1)}
-.flow-summary-stat{font-size:13px;font-weight:600;color:var(--ink2);line-height:1.5}
-.flow-summary-stat.hp{color:var(--n500)}
+
+/* HORIZONTAL FLOW CHART */
+.hflow-section{border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(11,25,41,.08)}
+.hflow-track{padding:32px 36px 28px;display:flex;flex-direction:column;gap:12px}
+.hflow-track.bank{background:#fff}
+.hflow-track.hp{background:var(--n050)}
+.hflow-divider{height:1px;background:rgba(11,25,41,.07)}
+.hflow-track-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+.hflow-track-label.bank{color:var(--ink3)}
+.hflow-track-label.hp{color:var(--n400)}
+/* The chain scrolls horizontally on small screens */
+.hflow-chain{display:flex;align-items:stretch;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:2px;scrollbar-width:none}
+.hflow-chain::-webkit-scrollbar{display:none}
+/* Node */
+.hflow-node{flex-shrink:0;background:#fff;border:1px solid rgba(11,25,41,.1);border-radius:var(--r-md);padding:10px 14px;min-width:96px;max-width:120px;display:flex;flex-direction:column;gap:3px;justify-content:center}
+.hflow-node.hp{background:rgba(30,78,128,.05);border-color:rgba(30,78,128,.16)}
+.hflow-node-name{font-size:12px;font-weight:600;color:var(--n800);line-height:1.3}
+.hflow-node-sub{font-size:10px;color:var(--ink3);line-height:1.3}
+.hflow-node-sub.hp{color:var(--n400)}
+/* Connector: flex:1 so HP connectors stretch wide, showing visual simplicity */
+.hflow-connector{flex:1;min-width:28px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;padding:0 4px;position:relative}
+.hflow-chips{display:flex;flex-wrap:nowrap;gap:3px;justify-content:center}
+.hflow-arrow{display:flex;align-items:center;width:100%}
+.hflow-line{flex:1;height:1.5px;background:rgba(11,25,41,.14)}
+.hflow-line.hp{background:var(--n300)}
+.hflow-arrowhead{flex-shrink:0;color:rgba(11,25,41,.2)}
+.hflow-arrowhead.hp{color:var(--n300)}
+/* Footer summary */
+.hflow-foot{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:500;color:var(--ink3);padding-top:14px;border-top:1px solid rgba(11,25,41,.07);margin-top:4px}
+.hflow-foot.hp{color:var(--n500);border-color:rgba(30,78,128,.1)}
+@media(max-width:560px){.hflow-track{padding:24px 20px 20px}}
 
 /* MONEY SPECTRUM */
 .spectrum-tile{background:#fff;padding:28px 24px;display:flex;flex-direction:column;gap:8px;transition:background .2s}
@@ -416,98 +432,144 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
       <p class="lede" style="margin-top:20px">Every bank in the correspondent chain adds a fee, a spread, and a day of delay. EMT settlement collapses the entire chain into a single atomic step.</p>
     </div>
 
-    <div class="tile-grid-2">
-      <!-- Bank tile -->
-      <div class="tile" style="gap:0;justify-content:space-between">
-        <div>
-          <div class="flow-col-label bank">Today, with a bank</div>
-          <div class="flow-step-row">
-            <div class="flow-num">1</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">Sender bank</div>
-              <div class="flow-step-note">Initiates the international wire</div>
+    <div class="hflow-section">
+
+      <!-- BANK TRACK -->
+      <div class="hflow-track bank">
+        <div class="hflow-track-label bank">Today, with a bank</div>
+        <div class="hflow-chain">
+
+          <div class="hflow-node">
+            <div class="hflow-node-name">Sender bank</div>
+            <div class="hflow-node-sub">Wire initiated</div>
+          </div>
+
+          <div class="hflow-connector">
+            <div class="hflow-chips">
+              <span class="flow-chip">+0.20%</span>
+              <span class="flow-chip">+€25</span>
+            </div>
+            <div class="hflow-arrow">
+              <div class="hflow-line"></div>
+              <svg class="hflow-arrowhead" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="flow-step-row">
-            <div class="flow-num">2</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">Correspondent bank 1</div>
-              <div class="flow-cost-chips">
-                <span class="flow-chip">+0.20% FX spread</span>
-                <span class="flow-chip">+€25 wire fee</span>
-              </div>
+
+          <div class="hflow-node">
+            <div class="hflow-node-name">Correspondent 1</div>
+            <div class="hflow-node-sub">FX spread added</div>
+          </div>
+
+          <div class="hflow-connector">
+            <div class="hflow-chips">
+              <span class="flow-chip">+0.15%</span>
+              <span class="flow-chip time">+1 day</span>
+            </div>
+            <div class="hflow-arrow">
+              <div class="hflow-line"></div>
+              <svg class="hflow-arrowhead" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="flow-step-row">
-            <div class="flow-num">3</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">Correspondent bank 2</div>
-              <div class="flow-cost-chips">
-                <span class="flow-chip">+0.15% margin</span>
-                <span class="flow-chip time">+1 day</span>
-              </div>
+
+          <div class="hflow-node">
+            <div class="hflow-node-name">Correspondent 2</div>
+            <div class="hflow-node-sub">Margin applied</div>
+          </div>
+
+          <div class="hflow-connector">
+            <div class="hflow-chips" style="min-height:18px"></div>
+            <div class="hflow-arrow">
+              <div class="hflow-line"></div>
+              <svg class="hflow-arrowhead" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="flow-step-row">
-            <div class="flow-num">4</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">SWIFT network</div>
-              <div class="flow-step-note">Routing and messaging layer</div>
+
+          <div class="hflow-node">
+            <div class="hflow-node-name">SWIFT network</div>
+            <div class="hflow-node-sub">Routing layer</div>
+          </div>
+
+          <div class="hflow-connector">
+            <div class="hflow-chips">
+              <span class="flow-chip">+€30</span>
+              <span class="flow-chip time">+1–2 days</span>
+            </div>
+            <div class="hflow-arrow">
+              <div class="hflow-line"></div>
+              <svg class="hflow-arrowhead" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="flow-step-row">
-            <div class="flow-num">5</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">Correspondent bank 3</div>
-              <div class="flow-cost-chips">
-                <span class="flow-chip">+€30 wire fee</span>
-                <span class="flow-chip time">+1–2 days</span>
-              </div>
+
+          <div class="hflow-node">
+            <div class="hflow-node-name">Correspondent 3</div>
+            <div class="hflow-node-sub">Final leg fee</div>
+          </div>
+
+          <div class="hflow-connector">
+            <div class="hflow-chips" style="min-height:18px"></div>
+            <div class="hflow-arrow">
+              <div class="hflow-line"></div>
+              <svg class="hflow-arrowhead" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="flow-step-row" style="border-bottom:none">
-            <div class="flow-num">6</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">Recipient bank</div>
-              <div class="flow-step-note">Funds credited — eventually</div>
-            </div>
+
+          <div class="hflow-node">
+            <div class="hflow-node-name">Recipient bank</div>
+            <div class="hflow-node-sub">Funds credited — eventually</div>
           </div>
+
         </div>
-        <div class="flow-summary" style="margin-top:20px">
-          <div class="flow-summary-stat">3–5 business days &middot; €60–€180 fees &middot; 1.2% spread typical</div>
+        <div class="hflow-foot bank">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          3–5 business days &nbsp;&middot;&nbsp; €60–€180 fees &nbsp;&middot;&nbsp; ~1.2% spread
         </div>
       </div>
 
-      <!-- HansePay tile -->
-      <div class="tile" style="gap:0;justify-content:space-between">
-        <div>
-          <div class="flow-col-label hp">With HansePay</div>
-          <div class="flow-step-row">
-            <div class="flow-num hp">1</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">Sender bank</div>
-              <div class="flow-step-note">EUR debited, FX rate locked instantly</div>
+      <div class="hflow-divider"></div>
+
+      <!-- HANSEPAY TRACK -->
+      <div class="hflow-track hp">
+        <div class="hflow-track-label hp">With HansePay</div>
+        <div class="hflow-chain">
+
+          <div class="hflow-node hp">
+            <div class="hflow-node-name">Sender bank</div>
+            <div class="hflow-node-sub hp">Rate locked instantly</div>
+          </div>
+
+          <div class="hflow-connector">
+            <div class="hflow-chips" style="min-height:18px"></div>
+            <div class="hflow-arrow">
+              <div class="hflow-line hp"></div>
+              <svg class="hflow-arrowhead hp" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="flow-step-row">
-            <div class="flow-num hp">2</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">EMT settlement layer</div>
-              <div class="flow-step-note">Atomic conversion and transfer at locked rate</div>
+
+          <div class="hflow-node hp">
+            <div class="hflow-node-name">EMT settlement</div>
+            <div class="hflow-node-sub hp">Atomic conversion</div>
+          </div>
+
+          <div class="hflow-connector">
+            <div class="hflow-chips" style="min-height:18px"></div>
+            <div class="hflow-arrow">
+              <div class="hflow-line hp"></div>
+              <svg class="hflow-arrowhead hp" width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
           </div>
-          <div class="flow-step-row" style="border-bottom:none">
-            <div class="flow-num hp">3</div>
-            <div class="flow-step-info">
-              <div class="flow-step-name">Recipient bank</div>
-              <div class="flow-step-note">EUR credited — same session</div>
-            </div>
+
+          <div class="hflow-node hp">
+            <div class="hflow-node-name">Recipient bank</div>
+            <div class="hflow-node-sub hp">Credited same session</div>
           </div>
+
         </div>
-        <div class="flow-summary hp" style="margin-top:20px">
-          <div class="flow-summary-stat hp">Minutes &middot; ~0.1% all-in &middot; Rate locked at quote</div>
+        <div class="hflow-foot hp">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Minutes &nbsp;&middot;&nbsp; ~0.1% all-in &nbsp;&middot;&nbsp; Rate locked at quote
         </div>
       </div>
+
     </div>
   </div>
 </section>

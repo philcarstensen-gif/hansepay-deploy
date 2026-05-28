@@ -388,6 +388,31 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 
 /* ── Global mobile polish ── */
 @media(max-width:768px){
+  /* Prevent horizontal overflow from any negative-inset elements */
+  body{overflow-x:hidden}
+
+  /* NAV — hide CTA button on mobile, keep burger only */
+  .nav-cta{display:none}
+
+  /* HERO — shorter, content-hugging, darker overlay */
+  .hero{min-height:0}
+  .hero-layout{min-height:0;padding:100px clamp(20px,5vw,40px) 72px;justify-content:flex-start}
+  /* Stronger gradient overlay so text pops on the photo */
+  .hero::before{background:
+    linear-gradient(108deg,
+      rgba(6,13,26,.97) 0%,
+      rgba(6,13,26,.90) 28%,
+      rgba(6,13,26,.70) 52%,
+      rgba(6,13,26,.42) 72%,
+      rgba(6,13,26,.20) 100%),
+    linear-gradient(to top,
+      rgba(6,13,26,.80) 0%,
+      rgba(6,13,26,.30) 22%,
+      transparent 48%),
+    linear-gradient(to bottom,
+      rgba(6,13,26,.55) 0%,
+      transparent 20%)}
+
   .section{padding:64px 0}
   .section-sm{padding:48px 0}
   .cta-band{padding:72px 0}
@@ -405,7 +430,9 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
   .how-step{padding:28px 12px}
   .vp-metric{padding:28px 20px}
   .cred-item{padding:20px 20px}
+  /* Platform showcase — kill the glass frame that causes right-edge overflow */
   .screen-wrap::before{display:none}
+  .showcase-layout{gap:40px}
 }
 @media(max-width:640px){
   .currency-grid{grid-template-columns:repeat(2,1fr)}

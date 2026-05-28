@@ -398,6 +398,9 @@ footer{background:#0A0A0A;padding:96px 0 48px}
 .view-toggle a:not(.active):hover{color:#fff}
 
 @media(max-width:768px){
+  body{overflow-x:hidden}
+  .nav-cta{display:none}
+  .hero-layout{padding:96px clamp(20px,5vw,40px) 60px}
   .section{padding:64px 0}
   .section-sm{padding:48px 0}
   .cta-band{padding:72px 0}
@@ -416,7 +419,7 @@ footer{background:#0A0A0A;padding:96px 0 48px}
   .vp-metric{padding:28px 20px}
   .cred-item{padding:20px 20px}
   .screen-wrap::before{display:none}
-  .hero-layout{padding:96px clamp(20px,5vw,80px) 60px}
+  .showcase-layout{gap:40px}
 }
 @media(max-width:640px){
   .currency-grid{grid-template-columns:repeat(2,1fr)}

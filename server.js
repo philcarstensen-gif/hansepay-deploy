@@ -17,9 +17,10 @@ const DATA_DIR = path.join(__dirname, 'data');
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
-// Static files
-app.use('/hansepay', express.static(path.join(__dirname, 'hansepay')));
+// Static files — files live at repo root in hansepay-deploy
 app.use(express.static(__dirname));
+// Also serve under /hansepay/ prefix for compatibility with landing page links
+app.use('/hansepay', express.static(__dirname));
 
 // ─── Data helpers ───────────────────────────────────────────────────────────
 

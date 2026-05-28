@@ -148,7 +148,7 @@ body {
 (function() {
   var t = localStorage.getItem('hp_token');
   if (t) {
-    fetch('http://localhost:4200/api/auth/me', { headers: { 'Authorization': 'Bearer ' + t } })
+    fetch('https://hansepay-deploy-production-328c.up.railway.app/api/auth/me', { headers: { 'Authorization': 'Bearer ' + t } })
       .then(function(r) { if (r.ok) window.location.href = '/hansepay/admin/'; })
       .catch(function() {});
   }
@@ -172,7 +172,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
   btn.disabled = true;
   btn.textContent = 'Signing in…';
 
-  fetch('http://localhost:4200/api/auth/login', {
+  fetch('https://hansepay-deploy-production-328c.up.railway.app/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: email, password: password })

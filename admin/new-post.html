@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>New Post — HansePay Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+:root {
+  --n900:#060D1A; --n800:#0B1929; --n700:#0F2540; --n600:#163659;
+  --n500:#1E4E80; --n400:#2E6BAD; --n300:#3B7BC4; --n200:#8DBDE6;
+  --n100:#C4DDEF; --n050:#EBF4FB; --off:#F5F1EA; --gold:#C9A961;
+  --ink:#0B1929; --ink2:#3D5A73; --ink3:#7A9AB0;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-pill:100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--ink); display: flex; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+/* SIDEBAR */
+.sidebar { width:240px; min-height:100vh; background:var(--n800); display:flex; flex-direction:column; flex-shrink:0; position:fixed; top:0; left:0; bottom:0; z-index:100; }
+.sidebar-logo { display:flex; align-items:center; gap:10px; padding:28px 20px 22px; border-bottom:1px solid rgba(255,255,255,0.07); }
+.sidebar-brand { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:#fff; letter-spacing:-0.01em; line-height:1; }
+.sidebar-admin-badge { font-family:'Inter',sans-serif; font-size:0.625rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.35); display:block; margin-top:4px; }
+.sidebar-nav { flex:1; padding:18px 12px; }
+.nav-section { font-size:0.6875rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.22); padding:12px 12px 6px; margin-top:4px; display:block; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; color:rgba(255,255,255,0.55); transition:all 0.15s; margin-bottom:2px; border-left:3px solid transparent; }
+.nav-item:hover { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.85); }
+.nav-item.active { background:var(--n600); color:#fff; font-weight:600; border-left-color:var(--gold); }
+.nav-item svg { width:16px; height:16px; flex-shrink:0; }
+.sidebar-footer { padding:16px 12px; border-top:1px solid rgba(255,255,255,0.07); }
+.sidebar-user { display:flex; align-items:center; gap:10px; padding:8px 10px; margin-bottom:8px; }
+.sidebar-avatar { width:30px; height:30px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.6875rem; font-weight:700; color:#fff; flex-shrink:0; }
+.sidebar-user-info { overflow:hidden; }
+.sidebar-user-name { font-size:0.75rem; font-weight:500; color:rgba(255,255,255,0.75); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sidebar-user-email { font-size:0.6875rem; color:rgba(255,255,255,0.35); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.signout-link { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:var(--r-md); font-size:0.75rem; font-weight:500; color:rgba(255,255,255,0.45); cursor:pointer; transition:all 0.15s; background:none; border:none; font-family:'Inter',sans-serif; width:100%; text-align:left; }
+.signout-link:hover { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.75); }
+.signout-link svg { width:14px; height:14px; }
+
+/* MAIN */
+.main { flex:1; margin-left:240px; min-height:100vh; display:flex; flex-direction:column; }
+.topbar { background:#fff; border-bottom:1px solid rgba(11,25,41,0.08); padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.page-title { font-family:'Playfair Display',serif; font-size:1.375rem; font-weight:600; color:var(--n800); }
+.topbar-avatar { display:flex; align-items:center; gap:9px; padding:5px 14px 5px 5px; border-radius:var(--r-pill); border:1px solid rgba(11,25,41,0.09); background:var(--off); }
+.topbar-avatar-circle { width:28px; height:28px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.6875rem; font-weight:700; color:#fff; }
+.topbar-avatar-name { font-size:0.8125rem; font-weight:500; color:var(--ink2); }
+.content { padding:32px; flex:1; }
+
+/* EDITOR LAYOUT */
+.editor-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 1100px) { .editor-layout { grid-template-columns: 1fr; } }
+
+/* LEFT PANEL */
+.left-panel { display: flex; flex-direction: column; gap: 16px; }
+.editor-card { background: #fff; border-radius: var(--r-lg); border: 1px solid rgba(11,25,41,0.08); box-shadow: 0 1px 4px rgba(11,25,41,0.04); padding: 28px; }
+
+.field { margin-bottom: 16px; }
+.field:last-child { margin-bottom: 0; }
+.field label { display:block; font-size:0.8125rem; font-weight:600; color:var(--ink2); margin-bottom:7px; letter-spacing:0.02em; }
+.field label .hint { font-size:0.75rem; font-weight:400; color:var(--ink3); margin-left:6px; }
+.field input, .field textarea, .field select {
+  width: 100%;
+  padding: 10px 13px;
+  border: 1.5px solid rgba(11,25,41,0.1);
+  border-radius: var(--r-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  color: var(--ink);
+  background: #fff;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field input:focus, .field textarea:focus, .field select:focus {
+  border-color: var(--n300);
+  box-shadow: 0 0 0 3px rgba(59,123,196,0.08);
+}
+.field input::placeholder, .field textarea::placeholder { color: var(--ink3); }
+.field textarea { resize: vertical; line-height: 1.6; }
+.title-input { font-family: 'Playfair Display', serif; font-size: 1.375rem; font-weight: 600; }
+.slug-input { font-family: monospace; font-size: 0.8125rem; }
+.content-textarea { min-height: 400px; font-family: monospace; font-size: 0.8125rem; line-height: 1.7; }
+.word-count { font-size: 0.75rem; color: var(--ink3); margin-top: 7px; }
+
+/* Preview toggle */
+.preview-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink2);
+  background: transparent;
+  border: 1.5px solid rgba(11,25,41,0.12);
+  cursor: pointer;
+  margin-top: 10px;
+  font-family: 'Inter', sans-serif;
+  transition: all 0.15s;
+}
+.preview-toggle-btn:hover { border-color: var(--n300); color: var(--n500); }
+.preview-toggle-btn.active { background: var(--n050); border-color: var(--n200); color: var(--n500); }
+
+.md-preview {
+  display: none;
+  margin-top: 16px;
+  padding: 20px;
+  background: var(--off);
+  border-radius: var(--r-md);
+  border: 1px solid rgba(11,25,41,0.08);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+.md-preview.visible { display: block; }
+.md-preview h1, .md-preview h2, .md-preview h3 { font-family: 'Playfair Display', serif; font-weight: 600; color: var(--n800); margin: 20px 0 10px; }
+.md-preview h1 { font-size: 1.75rem; }
+.md-preview h2 { font-size: 1.375rem; }
+.md-preview h3 { font-size: 1.125rem; }
+.md-preview p { margin-bottom: 14px; }
+.md-preview blockquote { border-left: 3px solid var(--n300); padding-left: 16px; margin: 16px 0; font-style: italic; color: var(--ink2); }
+.md-preview code { font-family: monospace; font-size: 0.8125rem; background: rgba(11,25,41,0.06); padding: 2px 5px; border-radius: 3px; }
+.md-preview ul, .md-preview ol { margin: 10px 0 14px 22px; }
+.md-preview li { margin-bottom: 4px; }
+.md-preview strong { font-weight: 600; color: var(--n700); }
+
+/* RIGHT PANEL */
+.right-panel { background: #fff; border-radius: var(--r-lg); border: 1px solid rgba(11,25,41,0.08); box-shadow: 0 1px 4px rgba(11,25,41,0.04); padding: 24px; position: sticky; top: 80px; }
+.right-panel-title { font-size: 0.875rem; font-weight: 600; color: var(--n800); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid rgba(11,25,41,0.07); }
+
+.field select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A9AB0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
+
+.checkbox-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; }
+.checkbox-row input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; accent-color: var(--n500); }
+.checkbox-row label { font-size: 0.875rem; color: var(--ink2); cursor: pointer; font-weight: 500; }
+
+.btn-save {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--r-pill);
+  background: var(--n500);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s;
+  margin-top: 20px;
+}
+.btn-save:hover { background: var(--n600); }
+.btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-cancel {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  color: var(--ink3);
+  font-weight: 500;
+  padding: 8px;
+  border-radius: var(--r-md);
+  transition: all 0.15s;
+}
+.btn-cancel:hover { color: var(--ink2); background: rgba(11,25,41,0.04); }
+
+/* TOAST */
+.toast { position:fixed; bottom:24px; right:24px; background:var(--n800); color:#fff; padding:12px 20px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; z-index:1000; opacity:0; transform:translateY(8px); transition:all 0.25s; pointer-events:none; }
+.toast.show { opacity:1; transform:none; }
+.toast.success { background:#166534; }
+.toast.error { background:#dc2626; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div>
+      <div class="sidebar-brand">HansePay</div>
+      <span class="sidebar-admin-badge">Admin</span>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <span class="nav-section">Main</span>
+    <a href="/hansepay/admin/" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <span class="nav-section">Content</span>
+    <a href="/hansepay/admin/posts.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Posts
+    </a>
+    <a href="/hansepay/admin/new-post.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Post
+    </a>
+    <span class="nav-section">Admin</span>
+    <a href="/hansepay/admin/users.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Users
+    </a>
+    <a href="/hansepay/admin/settings.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M21 12h-2M5 12H3M12 21v-2M12 5V3"/></svg>
+      Settings
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebar-name">Admin</div>
+        <div class="sidebar-user-email" id="sidebar-email">admin@hansepay.com</div>
+      </div>
+    </div>
+    <button class="signout-link" onclick="signOut()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="page-title" id="page-heading">New Post</div>
+    <div class="topbar-avatar">
+      <div class="topbar-avatar-circle" id="topbar-avatar">A</div>
+      <span class="topbar-avatar-name" id="topbar-name">Admin</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="editor-layout">
+
+      <!-- LEFT: main fields -->
+      <div class="left-panel">
+        <div class="editor-card">
+          <div class="field">
+            <label for="f-title">Title</label>
+            <input class="title-input" type="text" id="f-title" placeholder="Article title…" oninput="onTitleInput()" />
+          </div>
+          <div class="field">
+            <label for="f-slug">Slug <span class="hint">(URL path)</span></label>
+            <input class="slug-input" type="text" id="f-slug" placeholder="article-url-slug" />
+          </div>
+          <div class="field">
+            <label for="f-excerpt">Excerpt</label>
+            <textarea id="f-excerpt" rows="2" placeholder="A 2–3 sentence summary…"></textarea>
+          </div>
+        </div>
+
+        <div class="editor-card">
+          <div class="field">
+            <label for="f-content">Content <span class="hint">(Markdown)</span></label>
+            <textarea class="content-textarea" id="f-content" rows="22" placeholder="## Introduction&#10;&#10;Write your article in Markdown…" oninput="onContentInput()"></textarea>
+            <div class="word-count" id="word-count">0 words &middot; ~0 min read</div>
+            <button class="preview-toggle-btn" id="preview-btn" onclick="togglePreview()">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              Preview
+            </button>
+            <div class="md-preview" id="md-preview"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: meta -->
+      <div class="right-panel">
+        <div class="right-panel-title">Post Settings</div>
+
+        <div class="field">
+          <label for="f-status">Status</label>
+          <select id="f-status">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="f-category">Category</label>
+          <select id="f-category">
+            <option value="FX Education">FX Education</option>
+            <option value="Treasury">Treasury</option>
+            <option value="Compliance">Compliance</option>
+            <option value="Market Analysis">Market Analysis</option>
+            <option value="General">General</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="f-tags">Tags <span class="hint">(comma-separated)</span></label>
+          <input type="text" id="f-tags" placeholder="FX, Treasury, Hedging" />
+        </div>
+
+        <div class="field">
+          <label for="f-readtime">Read Time (minutes)</label>
+          <input type="number" id="f-readtime" placeholder="5" min="1" />
+        </div>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="f-featured" />
+          <label for="f-featured">Featured post</label>
+        </div>
+
+        <button class="btn-save" id="save-btn" onclick="savePost()">Save Post</button>
+        <a href="/hansepay/admin/posts.html" class="btn-cancel">Cancel</a>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Auth guard
+var token = localStorage.getItem('hp_token');
+if (!token) { window.location.href = '/hansepay/admin/login.html'; }
+
+// Validate token
+fetch('http://localhost:4200/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) { if (!r.ok) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; } });
+
+var user = JSON.parse(localStorage.getItem('hp_user') || 'null');
+if (user && user.name) {
+  var initials = user.name.split(' ').map(function(w){ return w[0]; }).join('').substring(0, 2).toUpperCase();
+  document.getElementById('sidebar-avatar').textContent = initials;
+  document.getElementById('topbar-avatar').textContent = initials;
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('topbar-name').textContent = user.name;
+  if (user.email) document.getElementById('sidebar-email').textContent = user.email;
+}
+
+function signOut() {
+  localStorage.removeItem('hp_token');
+  localStorage.removeItem('hp_user');
+  window.location.href = '/hansepay/admin/login.html';
+}
+
+function authFetch(url, opts) {
+  opts = opts || {};
+  opts.headers = Object.assign({ 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, opts.headers || {});
+  return fetch('http://localhost:4200' + url, opts);
+}
+
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+
+// Determine edit vs create mode
+var editId = new URLSearchParams(window.location.search).get('id');
+if (editId) {
+  document.getElementById('page-heading').textContent = 'Edit Post';
+  document.title = 'Edit Post — HansePay Admin';
+
+  authFetch('/api/posts/' + editId)
+    .then(function(r) { return r.json(); })
+    .then(function(p) {
+      document.getElementById('f-title').value = p.title || '';
+      document.getElementById('f-slug').value = p.slug || '';
+      document.getElementById('f-excerpt').value = p.excerpt || '';
+      document.getElementById('f-content').value = p.content || '';
+      document.getElementById('f-status').value = p.status || 'draft';
+      document.getElementById('f-category').value = p.category || 'FX Education';
+      document.getElementById('f-tags').value = (p.tags || []).join(', ');
+      document.getElementById('f-readtime').value = p.readTime || '';
+      document.getElementById('f-featured').checked = !!p.featured;
+      updateWordCount();
+    })
+    .catch(function() {
+      // Fallback: try listing all posts
+      authFetch('/api/posts?status=all')
+        .then(function(r) { return r.json(); })
+        .then(function(posts) {
+          var arr = Array.isArray(posts) ? posts : (posts.posts || posts.data || []);
+          var p = arr.find(function(x) { return (x.id || x._id) === editId; });
+          if (!p) { showToast('Post not found', 'error'); return; }
+          document.getElementById('f-title').value = p.title || '';
+          document.getElementById('f-slug').value = p.slug || '';
+          document.getElementById('f-excerpt').value = p.excerpt || '';
+          document.getElementById('f-content').value = p.content || '';
+          document.getElementById('f-status').value = p.status || 'draft';
+          document.getElementById('f-category').value = p.category || 'FX Education';
+          document.getElementById('f-tags').value = (p.tags || []).join(', ');
+          document.getElementById('f-readtime').value = p.readTime || '';
+          document.getElementById('f-featured').checked = !!p.featured;
+          updateWordCount();
+        });
+    });
+}
+
+// Auto-slug
+var slugUserEdited = false;
+document.getElementById('f-slug').addEventListener('input', function() { slugUserEdited = true; });
+
+function slugify(text) {
+  return text.toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function onTitleInput() {
+  if (!slugUserEdited) {
+    document.getElementById('f-slug').value = slugify(document.getElementById('f-title').value);
+  }
+}
+
+// Word count + preview debounce
+var previewTimer;
+function onContentInput() {
+  updateWordCount();
+  if (document.getElementById('md-preview').classList.contains('visible')) {
+    clearTimeout(previewTimer);
+    previewTimer = setTimeout(updatePreview, 300);
+  }
+}
+
+function updateWordCount() {
+  var text = (document.getElementById('f-content').value || '').trim();
+  var words = text ? text.split(/\s+/).filter(Boolean).length : 0;
+  var mins = Math.max(1, Math.ceil(words / 200));
+  document.getElementById('word-count').textContent = words.toLocaleString() + ' words · ~' + mins + ' min read';
+}
+
+function updatePreview() {
+  var content = document.getElementById('f-content').value || '';
+  var el = document.getElementById('md-preview');
+  if (!content.trim()) {
+    el.innerHTML = '<em style="color:var(--ink3)">Nothing to preview yet.</em>';
+    return;
+  }
+  if (typeof marked !== 'undefined') {
+    el.innerHTML = marked.parse(content);
+  } else {
+    el.textContent = content;
+  }
+}
+
+function togglePreview() {
+  var el = document.getElementById('md-preview');
+  var btn = document.getElementById('preview-btn');
+  var visible = el.classList.contains('visible');
+  if (visible) {
+    el.classList.remove('visible');
+    btn.classList.remove('active');
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Preview';
+  } else {
+    el.classList.add('visible');
+    btn.classList.add('active');
+    btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg> Hide Preview';
+    updatePreview();
+  }
+}
+
+function savePost() {
+  var btn = document.getElementById('save-btn');
+  var title = document.getElementById('f-title').value.trim();
+
+  if (!title) {
+    showToast('Title is required.', 'error');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  var tags = document.getElementById('f-tags').value
+    .split(',')
+    .map(function(t) { return t.trim(); })
+    .filter(Boolean);
+
+  var body = {
+    title: title,
+    slug: document.getElementById('f-slug').value.trim() || slugify(title),
+    excerpt: document.getElementById('f-excerpt').value.trim(),
+    content: document.getElementById('f-content').value,
+    status: document.getElementById('f-status').value,
+    category: document.getElementById('f-category').value,
+    tags: tags,
+    readTime: parseInt(document.getElementById('f-readtime').value) || null,
+    featured: document.getElementById('f-featured').checked
+  };
+
+  var url = editId ? '/api/posts/' + editId : '/api/posts';
+  var method = editId ? 'PUT' : 'POST';
+
+  authFetch(url, { method: method, body: JSON.stringify(body) })
+    .then(function(r) {
+      return r.json().then(function(d) { return { ok: r.ok, data: d }; });
+    })
+    .then(function(res) {
+      if (!res.ok) throw new Error(res.data.message || res.data.error || 'Save failed.');
+      showToast('Post saved successfully.', 'success');
+      setTimeout(function() {
+        window.location.href = '/hansepay/admin/posts.html';
+      }, 800);
+    })
+    .catch(function(err) {
+      showToast(err.message || 'Error saving post.', 'error');
+      btn.disabled = false;
+      btn.textContent = 'Save Post';
+    });
+}
+</script>
+</body>
+</html>

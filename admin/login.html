@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay Admin — Sign In</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --n900:#060D1A; --n800:#0B1929; --n700:#0F2540; --n600:#163659;
+  --n500:#1E4E80; --n400:#2E6BAD; --n300:#3B7BC4; --n200:#8DBDE6;
+  --n100:#C4DDEF; --n050:#EBF4FB; --off:#F5F1EA; --gold:#C9A961;
+  --ink:#0B1929; --ink2:#3D5A73; --ink3:#7A9AB0;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-pill:100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(160deg, var(--n900) 0%, var(--n700) 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.logo-wrap { text-align: center; margin-bottom: 36px; }
+.logo-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+  line-height: 1;
+}
+.logo-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--n200);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 8px;
+}
+.card {
+  background: #fff;
+  border-radius: var(--r-lg);
+  box-shadow: 0 28px 72px rgba(0,0,0,0.5), 0 4px 16px rgba(0,0,0,0.2);
+  padding: 44px 40px 40px;
+  width: 100%;
+  max-width: 400px;
+}
+.card-heading {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.field { margin-bottom: 20px; }
+.field label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink2);
+  margin-bottom: 7px;
+  letter-spacing: 0.02em;
+}
+.field input {
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border: 1.5px solid rgba(11,25,41,0.12);
+  border-radius: var(--r-md);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  background: #fff;
+}
+.field input:focus {
+  border-color: var(--n300);
+  box-shadow: 0 0 0 3px rgba(59,123,196,0.1);
+}
+.field input::placeholder { color: var(--ink3); }
+.btn-signin {
+  width: 100%;
+  height: 48px;
+  background: var(--n500);
+  color: #fff;
+  border: none;
+  border-radius: var(--r-pill);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn-signin:hover { background: var(--n600); }
+.btn-signin:disabled { opacity: 0.6; cursor: not-allowed; }
+.error-msg {
+  display: none;
+  margin-top: 16px;
+  padding: 11px 14px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--r-md);
+  font-size: 0.8125rem;
+  color: #dc2626;
+  line-height: 1.4;
+}
+.error-msg.show { display: block; }
+</style>
+</head>
+<body>
+
+<div class="logo-wrap">
+  <div class="logo-brand">HansePay</div>
+  <div class="logo-sub">Admin</div>
+</div>
+
+<div class="card">
+  <div class="card-heading">Sign in to your account</div>
+
+  <div class="error-msg" id="error-msg"></div>
+
+  <form id="login-form">
+    <div class="field">
+      <label for="email">Email address</label>
+      <input type="email" id="email" name="email" placeholder="admin@hansepay.com" autocomplete="email" required />
+    </div>
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+    </div>
+    <button class="btn-signin" type="submit" id="signin-btn">Sign in</button>
+  </form>
+</div>
+
+<script>
+// Redirect if already logged in
+(function() {
+  var t = localStorage.getItem('hp_token');
+  if (t) {
+    fetch('http://localhost:4200/api/auth/me', { headers: { 'Authorization': 'Bearer ' + t } })
+      .then(function(r) { if (r.ok) window.location.href = '/hansepay/admin/'; })
+      .catch(function() {});
+  }
+})();
+
+document.getElementById('login-form').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var btn = document.getElementById('signin-btn');
+  var errEl = document.getElementById('error-msg');
+  var email = document.getElementById('email').value.trim();
+  var password = document.getElementById('password').value;
+
+  errEl.classList.remove('show');
+
+  if (!email || !password) {
+    errEl.textContent = 'Please enter your email and password.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Signing in…';
+
+  fetch('http://localhost:4200/api/auth/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: email, password: password })
+  })
+  .then(function(r) {
+    return r.json().then(function(d) { return { ok: r.ok, data: d }; });
+  })
+  .then(function(res) {
+    if (!res.ok) {
+      throw new Error(res.data.message || res.data.error || 'Invalid email or password.');
+    }
+    var token = res.data.token || res.data.access_token || res.data.accessToken;
+    if (!token) throw new Error('Unexpected server response.');
+    localStorage.setItem('hp_token', token);
+    if (res.data.user) localStorage.setItem('hp_user', JSON.stringify(res.data.user));
+    window.location.href = '/hansepay/admin/';
+  })
+  .catch(function(err) {
+    errEl.textContent = err.message || 'Could not connect to the server.';
+    errEl.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'Sign in';
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Team — HansePay Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --n900:#060D1A; --n800:#0B1929; --n700:#0F2540; --n600:#163659;
+  --n500:#1E4E80; --n400:#2E6BAD; --n300:#3B7BC4; --n200:#8DBDE6;
+  --n100:#C4DDEF; --n050:#EBF4FB; --off:#F5F1EA; --gold:#C9A961;
+  --ink:#0B1929; --ink2:#3D5A73; --ink3:#7A9AB0;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-pill:100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--ink); display: flex; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+.sidebar { width:240px; min-height:100vh; background:var(--n800); display:flex; flex-direction:column; flex-shrink:0; position:fixed; top:0; left:0; bottom:0; z-index:100; }
+.sidebar-logo { display:flex; align-items:center; gap:10px; padding:28px 20px 22px; border-bottom:1px solid rgba(255,255,255,0.07); }
+.sidebar-brand { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:#fff; letter-spacing:-0.01em; line-height:1; }
+.sidebar-admin-badge { font-family:'Inter',sans-serif; font-size:0.625rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.35); display:block; margin-top:4px; }
+.sidebar-nav { flex:1; padding:18px 12px; }
+.nav-section { font-size:0.6875rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.22); padding:12px 12px 6px; margin-top:4px; display:block; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; color:rgba(255,255,255,0.55); transition:all 0.15s; margin-bottom:2px; border-left:3px solid transparent; }
+.nav-item:hover { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.85); }
+.nav-item.active { background:var(--n600); color:#fff; font-weight:600; border-left-color:var(--gold); }
+.nav-item svg { width:16px; height:16px; flex-shrink:0; }
+.sidebar-footer { padding:16px 12px; border-top:1px solid rgba(255,255,255,0.07); }
+.sidebar-user { display:flex; align-items:center; gap:10px; padding:8px 10px; margin-bottom:8px; }
+.sidebar-avatar { width:30px; height:30px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.6875rem; font-weight:700; color:#fff; flex-shrink:0; }
+.sidebar-user-info { overflow:hidden; }
+.sidebar-user-name { font-size:0.75rem; font-weight:500; color:rgba(255,255,255,0.75); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sidebar-user-email { font-size:0.6875rem; color:rgba(255,255,255,0.35); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.signout-link { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:var(--r-md); font-size:0.75rem; font-weight:500; color:rgba(255,255,255,0.45); cursor:pointer; transition:all 0.15s; background:none; border:none; font-family:'Inter',sans-serif; width:100%; text-align:left; }
+.signout-link:hover { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.75); }
+.signout-link svg { width:14px; height:14px; }
+
+.main { flex:1; margin-left:240px; min-height:100vh; display:flex; flex-direction:column; }
+.topbar { background:#fff; border-bottom:1px solid rgba(11,25,41,0.08); padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.page-title { font-family:'Playfair Display',serif; font-size:1.375rem; font-weight:600; color:var(--n800); }
+.topbar-avatar { display:flex; align-items:center; gap:9px; padding:5px 14px 5px 5px; border-radius:var(--r-pill); border:1px solid rgba(11,25,41,0.09); background:var(--off); }
+.topbar-avatar-circle { width:28px; height:28px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.6875rem; font-weight:700; color:#fff; }
+.topbar-avatar-name { font-size:0.8125rem; font-weight:500; color:var(--ink2); }
+.content { padding:32px; flex:1; }
+.page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+.page-heading { font-family:'Playfair Display',serif; font-size:1.625rem; font-weight:600; color:var(--n800); }
+.btn-primary { display:inline-flex; align-items:center; gap:7px; padding:10px 20px; border-radius:var(--r-pill); background:var(--n500); color:#fff; font-family:'Inter',sans-serif; font-size:0.875rem; font-weight:600; border:none; cursor:pointer; transition:background 0.15s; }
+.btn-primary:hover { background:var(--n600); }
+
+.table-card { background:#fff; border-radius:var(--r-lg); border:1px solid rgba(11,25,41,0.08); box-shadow:0 1px 4px rgba(11,25,41,0.04); overflow:hidden; }
+.data-table { width:100%; border-collapse:collapse; }
+.data-table th { font-size:0.6875rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink3); padding:12px 18px; text-align:left; border-bottom:1px solid rgba(11,25,41,0.06); background:#fafbfc; white-space:nowrap; }
+.data-table td { padding:14px 18px; font-size:0.875rem; color:var(--ink2); border-bottom:1px solid rgba(11,25,41,0.04); vertical-align:middle; }
+.data-table tr:last-child td { border-bottom:none; }
+.data-table tr:hover td { background:var(--n050); }
+.user-cell { display:flex; align-items:center; gap:12px; }
+.user-initials { width:34px; height:34px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; color:#fff; flex-shrink:0; }
+.user-name-text { font-weight:600; color:var(--ink); font-size:0.875rem; }
+.badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:var(--r-pill); font-size:0.6875rem; font-weight:600; }
+.badge-admin { background:var(--n500); color:#fff; }
+.badge-editor { background:var(--n050); color:var(--ink2); }
+.actions { display:flex; align-items:center; gap:4px; }
+.btn-act { padding:5px 10px; border-radius:var(--r-sm); font-size:0.75rem; font-weight:600; background:transparent; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; }
+.btn-act-edit { color:var(--n400); } .btn-act-edit:hover { background:var(--n050); color:var(--n600); }
+.btn-act-delete { color:#dc2626; } .btn-act-delete:hover { background:#fef2f2; }
+.btn-act-save { color:#166534; background:#dcfce7; } .btn-act-save:hover { background:#bbf7d0; }
+.btn-act-cancel { color:var(--ink3); } .btn-act-cancel:hover { background:rgba(11,25,41,0.05); color:var(--ink2); }
+.inline-input { padding:5px 9px; border:1.5px solid rgba(11,25,41,0.12); border-radius:var(--r-sm); font-family:'Inter',sans-serif; font-size:0.8125rem; color:var(--ink); outline:none; width:100%; }
+.inline-input:focus { border-color:var(--n300); }
+.inline-select { padding:5px 9px; border:1.5px solid rgba(11,25,41,0.12); border-radius:var(--r-sm); font-family:'Inter',sans-serif; font-size:0.8125rem; color:var(--ink); outline:none; cursor:pointer; background:#fff; }
+
+/* MODAL */
+.modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:200; display:flex; align-items:center; justify-content:center; opacity:0; visibility:hidden; transition:all 0.2s; }
+.modal-overlay.open { opacity:1; visibility:visible; }
+.modal { background:#fff; border-radius:var(--r-lg); padding:36px; width:100%; max-width:460px; box-shadow:0 24px 64px rgba(0,0,0,0.3); transform:translateY(16px); transition:transform 0.2s; }
+.modal-overlay.open .modal { transform:none; }
+.modal-title { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:600; color:var(--n800); margin-bottom:24px; }
+.modal-field { margin-bottom:18px; }
+.modal-field label { display:block; font-size:0.8125rem; font-weight:600; color:var(--ink2); margin-bottom:6px; }
+.modal-field input, .modal-field select { width:100%; padding:10px 13px; border:1.5px solid rgba(11,25,41,0.1); border-radius:var(--r-md); font-family:'Inter',sans-serif; font-size:0.875rem; color:var(--ink); outline:none; transition:border-color 0.15s; background:#fff; }
+.modal-field input:focus, .modal-field select:focus { border-color:var(--n300); box-shadow:0 0 0 3px rgba(59,123,196,0.08); }
+.modal-field select { appearance:none; cursor:pointer; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237A9AB0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; padding-right:34px; }
+.modal-actions { display:flex; gap:10px; margin-top:8px; }
+.btn-modal-primary { flex:1; padding:11px; background:var(--n500); color:#fff; border:none; border-radius:var(--r-pill); font-family:'Inter',sans-serif; font-size:0.9375rem; font-weight:600; cursor:pointer; transition:background 0.15s; }
+.btn-modal-primary:hover { background:var(--n600); }
+.btn-modal-primary:disabled { opacity:0.6; cursor:not-allowed; }
+.btn-modal-ghost { padding:11px 20px; background:transparent; color:var(--ink2); border:1.5px solid rgba(11,25,41,0.12); border-radius:var(--r-pill); font-family:'Inter',sans-serif; font-size:0.9375rem; font-weight:600; cursor:pointer; transition:all 0.15s; }
+.btn-modal-ghost:hover { border-color:var(--n300); color:var(--n500); }
+
+.toast { position:fixed; bottom:24px; right:24px; background:var(--n800); color:#fff; padding:12px 20px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; z-index:1000; opacity:0; transform:translateY(8px); transition:all 0.25s; pointer-events:none; }
+.toast.show { opacity:1; transform:none; }
+.toast.success { background:#166534; }
+.toast.error { background:#dc2626; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div>
+      <div class="sidebar-brand">HansePay</div>
+      <span class="sidebar-admin-badge">Admin</span>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <span class="nav-section">Main</span>
+    <a href="/hansepay/admin/" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <span class="nav-section">Content</span>
+    <a href="/hansepay/admin/posts.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Posts
+    </a>
+    <a href="/hansepay/admin/new-post.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Post
+    </a>
+    <span class="nav-section">Admin</span>
+    <a href="/hansepay/admin/users.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Users
+    </a>
+    <a href="/hansepay/admin/settings.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M21 12h-2M5 12H3M12 21v-2M12 5V3"/></svg>
+      Settings
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebar-name">Admin</div>
+        <div class="sidebar-user-email" id="sidebar-email">admin@hansepay.com</div>
+      </div>
+    </div>
+    <button class="signout-link" onclick="signOut()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="page-title">Team</div>
+    <div class="topbar-avatar">
+      <div class="topbar-avatar-circle" id="topbar-avatar">A</div>
+      <span class="topbar-avatar-name" id="topbar-name">Admin</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-header">
+      <h1 class="page-heading">Team</h1>
+      <button class="btn-primary" onclick="openModal()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add User
+      </button>
+    </div>
+
+    <div class="table-card">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Last Login</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="users-tbody">
+          <tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:36px">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- ADD USER MODAL -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal">
+    <div class="modal-title">Add Team Member</div>
+    <div class="modal-field">
+      <label for="m-name">Full Name</label>
+      <input type="text" id="m-name" placeholder="Jane Smith" />
+    </div>
+    <div class="modal-field">
+      <label for="m-email">Email address</label>
+      <input type="email" id="m-email" placeholder="jane@hansepay.com" />
+    </div>
+    <div class="modal-field">
+      <label for="m-password">Password</label>
+      <input type="password" id="m-password" placeholder="••••••••" />
+    </div>
+    <div class="modal-field">
+      <label for="m-role">Role</label>
+      <select id="m-role">
+        <option value="editor">Editor</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-primary" id="modal-submit-btn" onclick="submitNewUser()">Add User</button>
+      <button class="btn-modal-ghost" onclick="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var token = localStorage.getItem('hp_token');
+if (!token) { window.location.href = '/hansepay/admin/login.html'; }
+
+fetch('http://localhost:4200/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) { if (!r.ok) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; } });
+
+var user = JSON.parse(localStorage.getItem('hp_user') || 'null');
+if (user && user.name) {
+  var initials = user.name.split(' ').map(function(w){ return w[0]; }).join('').substring(0, 2).toUpperCase();
+  document.getElementById('sidebar-avatar').textContent = initials;
+  document.getElementById('topbar-avatar').textContent = initials;
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('topbar-name').textContent = user.name;
+  if (user.email) document.getElementById('sidebar-email').textContent = user.email;
+}
+
+function signOut() {
+  localStorage.removeItem('hp_token');
+  localStorage.removeItem('hp_user');
+  window.location.href = '/hansepay/admin/login.html';
+}
+
+function authFetch(url, opts) {
+  opts = opts || {};
+  opts.headers = Object.assign({ 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, opts.headers || {});
+  return fetch('http://localhost:4200' + url, opts);
+}
+
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+
+function formatDate(iso) {
+  if (!iso) return '—';
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+function getInitials(name) {
+  return (name || 'U').split(' ').map(function(w){ return w[0]; }).join('').substring(0, 2).toUpperCase();
+}
+
+var allUsers = [];
+
+function renderUsers(users) {
+  var tbody = document.getElementById('users-tbody');
+  if (!users.length) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--ink3);padding:36px">No team members yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = users.map(function(u) {
+    var id = u.id || u._id || '';
+    var safeName = (u.name || '').replace(/</g, '&lt;');
+    var safeEmail = (u.email || '').replace(/</g, '&lt;');
+    var role = u.role || 'editor';
+    return '<tr id="row-' + id + '">' +
+      '<td><div class="user-cell"><div class="user-initials">' + getInitials(u.name) + '</div><span class="user-name-text">' + safeName + '</span></div></td>' +
+      '<td>' + safeEmail + '</td>' +
+      '<td><span class="badge ' + (role === 'admin' ? 'badge-admin' : 'badge-editor') + '">' + role.charAt(0).toUpperCase() + role.slice(1) + '</span></td>' +
+      '<td>' + formatDate(u.lastLogin) + '</td>' +
+      '<td><div class="actions">' +
+        '<button class="btn-act btn-act-edit" onclick="startEdit(\'' + id + '\')">Edit</button>' +
+        '<button class="btn-act btn-act-delete" onclick="deleteUser(\'' + id + '\', \'' + safeName.replace(/'/g, "\\'") + '\')">Delete</button>' +
+      '</div></td>' +
+    '</tr>';
+  }).join('');
+}
+
+function startEdit(id) {
+  var u = allUsers.find(function(x) { return (x.id || x._id) === id; });
+  if (!u) return;
+  var row = document.getElementById('row-' + id);
+  var safeLastLogin = formatDate(u.lastLogin);
+  row.innerHTML =
+    '<td><input class="inline-input" id="ei-name-' + id + '" value="' + (u.name || '').replace(/"/g, '&quot;') + '" style="max-width:180px" /></td>' +
+    '<td><input class="inline-input" id="ei-email-' + id + '" type="email" value="' + (u.email || '').replace(/"/g, '&quot;') + '" style="max-width:200px" /></td>' +
+    '<td><select class="inline-select" id="ei-role-' + id + '">' +
+      '<option value="editor"' + (u.role === 'editor' ? ' selected' : '') + '>Editor</option>' +
+      '<option value="admin"' + (u.role === 'admin' ? ' selected' : '') + '>Admin</option>' +
+    '</select></td>' +
+    '<td>' + safeLastLogin + '</td>' +
+    '<td><div class="actions">' +
+      '<button class="btn-act btn-act-save" onclick="saveEdit(\'' + id + '\')">Save</button>' +
+      '<button class="btn-act btn-act-cancel" onclick="renderUsers(allUsers)">Cancel</button>' +
+    '</div></td>';
+}
+
+function saveEdit(id) {
+  var name = document.getElementById('ei-name-' + id).value.trim();
+  var email = document.getElementById('ei-email-' + id).value.trim();
+  var role = document.getElementById('ei-role-' + id).value;
+  if (!name || !email) { showToast('Name and email are required.', 'error'); return; }
+
+  authFetch('/api/users/' + id, { method: 'PUT', body: JSON.stringify({ name: name, email: email, role: role }) })
+    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+    .then(function(res) {
+      if (!res.ok) throw new Error(res.data.message || 'Update failed.');
+      allUsers = allUsers.map(function(u) {
+        return (u.id || u._id) === id ? Object.assign({}, u, { name: name, email: email, role: role }) : u;
+      });
+      renderUsers(allUsers);
+      showToast('User updated.', 'success');
+    })
+    .catch(function(err) { showToast(err.message || 'Error updating user.', 'error'); });
+}
+
+function deleteUser(id, name) {
+  if (!confirm('Delete user "' + name + '"? This cannot be undone.')) return;
+  authFetch('/api/users/' + id, { method: 'DELETE' })
+    .then(function(r) {
+      if (!r.ok) throw new Error('Delete failed');
+      allUsers = allUsers.filter(function(u) { return (u.id || u._id) !== id; });
+      renderUsers(allUsers);
+      showToast('User deleted.', 'success');
+    })
+    .catch(function() { showToast('Error deleting user.', 'error'); });
+}
+
+function openModal() {
+  document.getElementById('m-name').value = '';
+  document.getElementById('m-email').value = '';
+  document.getElementById('m-password').value = '';
+  document.getElementById('m-role').value = 'editor';
+  document.getElementById('add-modal').classList.add('open');
+  setTimeout(function() { document.getElementById('m-name').focus(); }, 100);
+}
+
+function closeModal() {
+  document.getElementById('add-modal').classList.remove('open');
+}
+
+document.getElementById('add-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+function submitNewUser() {
+  var name = document.getElementById('m-name').value.trim();
+  var email = document.getElementById('m-email').value.trim();
+  var password = document.getElementById('m-password').value;
+  var role = document.getElementById('m-role').value;
+
+  if (!name || !email || !password) {
+    showToast('All fields are required.', 'error');
+    return;
+  }
+
+  var btn = document.getElementById('modal-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Adding…';
+
+  authFetch('/api/users', { method: 'POST', body: JSON.stringify({ name: name, email: email, password: password, role: role }) })
+    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+    .then(function(res) {
+      if (!res.ok) throw new Error(res.data.message || res.data.error || 'Failed to create user.');
+      var newUser = res.data.user || res.data;
+      allUsers.push(newUser);
+      renderUsers(allUsers);
+      closeModal();
+      showToast('User added.', 'success');
+    })
+    .catch(function(err) { showToast(err.message || 'Error creating user.', 'error'); })
+    .finally(function() { btn.disabled = false; btn.textContent = 'Add User'; });
+}
+
+authFetch('/api/users')
+  .then(function(r) {
+    if (r.status === 401) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; }
+    return r.json();
+  })
+  .then(function(data) {
+    allUsers = Array.isArray(data) ? data : (data.users || data.data || []);
+    renderUsers(allUsers);
+  })
+  .catch(function() { renderUsers([]); });
+</script>
+</body>
+</html>

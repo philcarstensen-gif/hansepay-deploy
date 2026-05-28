@@ -1,0 +1,11 @@
+{
+  "siteName": "HansePay",
+  "siteUrl": "https://hansepay.com",
+  "blogTitle": "HansePay Insights",
+  "blogDescription": "FX education, market analysis, and treasury best practices for European businesses.",
+  "contactEmail": "hello@hansepay.com",
+  "defaultAuthor": "HansePay Team",
+  "postsPerPage": 9,
+  "maintenanceMode": false,
+  "googleAnalyticsId": ""
+}

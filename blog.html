@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay Insights — FX Knowledge for European Finance Teams</title>
+<meta name="description" content="Market analysis, treasury best practices, and FX education for European finance teams." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --n900:#060D1A;--n800:#0B1929;--n700:#0F2540;--n600:#163659;
+  --n500:#1E4E80;--n400:#2E6BAD;--n300:#3B7BC4;--n200:#8DBDE6;
+  --n100:#C4DDEF;--n050:#EBF4FB;--off:#F5F1EA;--gold:#C9A961;
+  --ink:#0B1929;--ink2:#3D5A73;--ink3:#7A9AB0;
+  --font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-display:'Playfair Display',Georgia,serif;
+  --r-pill:100px;--r-lg:16px;--r-md:10px;--r-sm:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-ui);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* ── NAV ── */
+nav{position:sticky;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80px);height:68px;display:flex;align-items:center;background:rgba(255,255,255,.97);box-shadow:0 1px 0 rgba(11,25,41,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;margin-right:40px}
+.nav-logo-text{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:-.02em;color:var(--n800);line-height:1}
+.nav-links{display:flex;align-items:stretch;gap:0;list-style:none;flex:1;height:68px}
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-link{display:flex;align-items:center;font-size:14px;font-weight:500;color:rgba(11,25,41,.62);transition:color .15s;white-space:nowrap;padding:0 16px;height:100%;cursor:pointer;text-decoration:none}
+.nav-link:hover{color:var(--n700)}
+.nav-link.active-page{color:var(--n500);font-weight:600;position:relative}
+.nav-link.active-page::after{content:'';position:absolute;bottom:0;left:16px;right:16px;height:2px;background:var(--n400);border-radius:2px 2px 0 0}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.nav-cta{background:var(--n800);color:#fff;border:none;padding:9px 22px;font-size:13px;font-weight:600;border-radius:var(--r-pill);text-decoration:none;transition:background .18s;display:inline-flex;align-items:center}
+.nav-cta:hover{background:var(--n700)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none;margin-left:12px}
+.nav-burger span{display:block;width:22px;height:2px;border-radius:2px;background:var(--n700);transition:all .22s ease}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(11,25,41,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:24px clamp(20px,5vw,80px);z-index:199;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu-link{font-size:16px;font-weight:500;color:rgba(255,255,255,.75);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07);text-decoration:none}
+.mobile-menu-link:last-of-type{border-bottom:none}
+.mobile-menu-cta{margin-top:16px;display:inline-flex;align-items:center;padding:12px 24px;background:var(--n500);color:#fff;border-radius:var(--r-pill);font-weight:600;font-size:14px}
+@media(max-width:768px){.nav-links{display:none}.nav-burger{display:flex}}
+
+/* ── BLOG HERO ── */
+.blog-hero{background:#fff;padding:72px 0 52px;border-bottom:1px solid rgba(11,25,41,.07)}
+.blog-hero-inner{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+.eyebrow{display:inline-block;font-family:var(--font-ui);font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.blog-hero h1{font-family:var(--font-display);font-size:clamp(34px,4vw,54px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:var(--ink);margin-bottom:16px;max-width:620px}
+.blog-hero p{font-size:17px;font-weight:300;color:var(--ink2);line-height:1.65;max-width:520px}
+
+/* ── FILTER BAR ── */
+.filter-bar{background:#fff;padding:22px 0;border-bottom:1px solid rgba(11,25,41,.07);position:sticky;top:68px;z-index:100}
+.filter-bar-inner{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px);display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filter-pill{display:inline-flex;align-items:center;padding:8px 18px;border-radius:var(--r-pill);font-size:13px;font-weight:500;color:var(--ink2);background:#fff;border:1.5px solid rgba(11,25,41,.12);cursor:pointer;transition:all .18s ease;white-space:nowrap;font-family:var(--font-ui)}
+.filter-pill:hover{border-color:var(--n400);color:var(--n500)}
+.filter-pill.active{background:var(--n800);color:#fff;border-color:var(--n800)}
+
+/* ── MAIN ── */
+.blog-main{max-width:1200px;margin:0 auto;padding:52px clamp(20px,5vw,80px) 80px}
+
+/* ── FEATURED CARD ── */
+.featured-card{display:grid;grid-template-columns:3fr 2fr;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 4px 24px rgba(11,25,41,.10);margin-bottom:52px;background:#fff;border:1px solid rgba(11,25,41,.07);transition:box-shadow .22s,transform .22s;text-decoration:none;color:inherit}
+.featured-card:hover{transform:translateY(-2px);box-shadow:0 8px 40px rgba(11,25,41,.16)}
+.featured-image{min-height:360px;position:relative;overflow:hidden}
+.featured-image img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.featured-image-label{position:absolute;top:20px;left:20px;padding:5px 12px;border-radius:var(--r-pill);background:rgba(201,169,97,.18);border:1px solid rgba(201,169,97,.40);font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--gold)}
+.featured-content{padding:40px 40px 36px;display:flex;flex-direction:column;justify-content:space-between}
+.featured-tag{display:inline-flex;align-items:center;padding:4px 12px;border-radius:var(--r-pill);background:var(--n050);color:var(--n500);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:16px;width:fit-content}
+.featured-content h2{font-family:var(--font-display);font-size:clamp(22px,2.2vw,30px);font-weight:400;line-height:1.2;color:var(--ink);margin-bottom:14px;letter-spacing:-.01em}
+.featured-excerpt{font-size:15px;color:var(--ink2);line-height:1.7;margin-bottom:24px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.post-meta{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--ink3);flex-wrap:wrap}
+.post-meta-sep{width:3px;height:3px;border-radius:50%;background:var(--ink3);flex-shrink:0}
+.post-meta-author{font-weight:600;color:var(--ink2)}
+.featured-read-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--n500);transition:color .18s;margin-top:20px}
+.featured-read-link:hover{color:var(--n400)}
+.featured-read-link svg{transition:transform .18s}
+.featured-card:hover .featured-read-link svg{transform:translateX(3px)}
+@media(max-width:900px){
+  .featured-card{grid-template-columns:1fr}
+  .featured-image{min-height:220px}
+  .featured-content{padding:28px 28px 24px}
+}
+
+/* ── POST GRID ── */
+.posts-section-label{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);margin-bottom:22px}
+.post-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-bottom:52px}
+@media(max-width:900px){.post-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.post-grid{grid-template-columns:1fr}}
+
+.post-card{background:#fff;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 2px 12px rgba(11,25,41,.06);transition:transform .22s,box-shadow .22s;display:flex;flex-direction:column}
+.post-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(11,25,41,.13)}
+.post-card-image{height:188px;position:relative;overflow:hidden;flex-shrink:0}
+.post-card-image img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.post-card-body{padding:22px 22px 20px;flex:1;display:flex;flex-direction:column}
+.post-tag{display:inline-flex;align-items:center;padding:3px 10px;border-radius:var(--r-pill);background:var(--n050);color:var(--n500);font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:12px;width:fit-content}
+.post-card-title{font-family:var(--font-display);font-size:18px;font-weight:400;line-height:1.3;color:var(--ink);margin-bottom:10px;letter-spacing:-.01em}
+.post-card-title a{color:inherit;transition:color .18s}
+.post-card-title a:hover{color:var(--n400)}
+.post-card-excerpt{font-size:14px;color:var(--ink2);line-height:1.65;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;flex:1;margin-bottom:16px}
+.post-card-footer{border-top:1px solid rgba(11,25,41,.06);padding-top:14px;display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink3);flex-wrap:wrap}
+.post-card-footer .author{font-weight:600;color:var(--ink2)}
+.footer-sep{width:3px;height:3px;border-radius:50%;background:var(--ink3);flex-shrink:0}
+
+/* ── PAGINATION ── */
+.pagination{display:flex;align-items:center;justify-content:center;gap:10px;padding-top:16px}
+.pag-btn{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:var(--r-pill);font-size:13px;font-weight:600;color:var(--n500);background:#fff;border:1.5px solid rgba(11,25,41,.12);cursor:pointer;transition:all .18s;font-family:var(--font-ui)}
+.pag-btn:hover:not(:disabled){background:var(--n050);border-color:var(--n300)}
+.pag-btn:disabled{opacity:.38;cursor:not-allowed}
+.pag-info{font-size:13px;color:var(--ink3);padding:0 8px}
+
+/* ── EMPTY / ERROR ── */
+.empty-state{text-align:center;padding:80px 20px}
+.empty-state h3{font-family:var(--font-display);font-size:26px;font-weight:400;color:var(--ink);margin-bottom:10px}
+.empty-state p{font-size:15px;color:var(--ink2)}
+
+/* ── FOOTER ── */
+footer{background:var(--n800);padding:36px 0}
+.footer-inner{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px);display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer-copy{font-size:13px;color:rgba(255,255,255,.42)}
+.footer-links{display:flex;gap:24px}
+.footer-links a{font-size:13px;color:rgba(255,255,255,.42);transition:color .18s}
+.footer-links a:hover{color:rgba(255,255,255,.82)}
+
+/* ── GRADIENT HELPERS ── */
+.grad-fx{background:linear-gradient(135deg,#0F2540,#1E4E80)}
+.grad-treasury{background:linear-gradient(135deg,#163659,#2E6BAD)}
+.grad-compliance{background:linear-gradient(135deg,#0B1929,#163659)}
+.grad-market{background:linear-gradient(135deg,#1E4E80,#3B7BC4)}
+.grad-default{background:linear-gradient(135deg,#0F2540,#2E6BAD)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="/hansepay/" class="nav-logo">
+      <span class="nav-logo-text">HansePay</span>
+    </a>
+    <ul class="nav-links">
+      <li class="nav-item"><a href="/hansepay/#platform" class="nav-link">Platform</a></li>
+      <li class="nav-item"><a href="/hansepay/#currencies" class="nav-link">Currencies</a></li>
+      <li class="nav-item"><a href="/hansepay/#calculator" class="nav-link">Pricing</a></li>
+      <li class="nav-item"><a href="/hansepay/blog.html" class="nav-link active-page">Insights</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="/hansepay/#cta" class="nav-cta">Get started</a>
+    </div>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/hansepay/#platform" class="mobile-menu-link">Platform</a>
+  <a href="/hansepay/#currencies" class="mobile-menu-link">Currencies</a>
+  <a href="/hansepay/#calculator" class="mobile-menu-link">Pricing</a>
+  <a href="/hansepay/blog.html" class="mobile-menu-link">Insights</a>
+  <a href="/hansepay/#cta" class="mobile-menu-cta">Get started</a>
+</div>
+
+<!-- HERO -->
+<section class="blog-hero">
+  <div class="blog-hero-inner">
+    <span class="eyebrow">HansePay Insights</span>
+    <h1>FX knowledge that moves your business.</h1>
+    <p>Market analysis, treasury best practices, and FX education for European finance teams.</p>
+  </div>
+</section>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-bar-inner" id="filterBar">
+    <button class="filter-pill active" data-category="all">All</button>
+    <button class="filter-pill" data-category="FX Education">FX Education</button>
+    <button class="filter-pill" data-category="Treasury">Treasury</button>
+    <button class="filter-pill" data-category="Compliance">Compliance</button>
+    <button class="filter-pill" data-category="Market Analysis">Market Analysis</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="blog-main">
+  <div id="blogContent">
+    <div class="empty-state"><p style="color:var(--ink3)">Loading posts&hellip;</p></div>
+  </div>
+  <div id="pagination" class="pagination" style="display:none">
+    <button class="pag-btn" id="pagPrev">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M8.5 3L5 7l3.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Previous
+    </button>
+    <span class="pag-info" id="pagInfo"></span>
+    <button class="pag-btn" id="pagNext">
+      Next
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5.5 3L9 7l-3.5 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="footer-copy">&copy; 2025 HansePay GmbH &middot; Hamburg</span>
+    <nav class="footer-links">
+      <a href="/hansepay/privacy">Privacy</a>
+      <a href="/hansepay/imprint">Imprint</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const PER_PAGE = 9;
+  let allPosts = [];
+  let filtered = [];
+  let page = 1;
+  let category = 'all';
+
+  /* mobile menu */
+  const burger = document.getElementById('navBurger');
+  const mm = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => {
+    burger.classList.toggle('open');
+    mm.classList.toggle('open');
+  });
+
+  /* filter pills */
+  document.getElementById('filterBar').addEventListener('click', (e) => {
+    const pill = e.target.closest('.filter-pill');
+    if (!pill) return;
+    document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    category = pill.dataset.category;
+    page = 1;
+    applyFilter();
+  });
+
+  /* pagination */
+  document.getElementById('pagPrev').addEventListener('click', () => changePage(-1));
+  document.getElementById('pagNext').addEventListener('click', () => changePage(1));
+
+  function changePage(delta) {
+    const total = Math.ceil(filtered.length / PER_PAGE);
+    page = Math.max(1, Math.min(total, page + delta));
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function esc(s) {
+    if (s == null) return '';
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function fmtDate(s) {
+    if (!s) return '';
+    const d = new Date(s);
+    if (isNaN(d)) return String(s);
+    return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+
+  function catGrad(cat) {
+    const m = { 'FX Education': 'grad-fx', 'Treasury': 'grad-treasury', 'Compliance': 'grad-compliance', 'Market Analysis': 'grad-market' };
+    return m[cat] || 'grad-default';
+  }
+
+  function imgTag(post) {
+    if (post.featuredImage) return `<img src="${esc(post.featuredImage)}" alt="${esc(post.title)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">`;
+    return '';
+  }
+
+  function metaRow(post) {
+    return `
+      <span class="post-meta-author">${esc(post.author || 'HansePay Editorial')}</span>
+      <span class="post-meta-sep"></span>
+      <span>${esc(post.readTime || '5 min read')}</span>
+      <span class="post-meta-sep"></span>
+      <span>${fmtDate(post.publishedAt || post.date)}</span>`;
+  }
+
+  function featuredCardHTML(post) {
+    return `
+      <a href="/hansepay/blog-post.html?slug=${esc(post.slug)}" class="featured-card">
+        <div class="featured-image ${catGrad(post.category)}">
+          ${imgTag(post)}
+          <span class="featured-image-label">Featured</span>
+        </div>
+        <div class="featured-content">
+          <div>
+            <span class="featured-tag">${esc(post.category || 'Insights')}</span>
+            <h2>${esc(post.title)}</h2>
+            <p class="featured-excerpt">${esc(post.excerpt || '')}</p>
+          </div>
+          <div>
+            <div class="post-meta">${metaRow(post)}</div>
+            <span class="featured-read-link">
+              Read article
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M8 4l3 3-3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </div>
+      </a>`;
+  }
+
+  function postCardHTML(post) {
+    return `
+      <article class="post-card">
+        <a href="/hansepay/blog-post.html?slug=${esc(post.slug)}" style="display:block">
+          <div class="post-card-image ${catGrad(post.category)}">${imgTag(post)}</div>
+        </a>
+        <div class="post-card-body">
+          <span class="post-tag">${esc(post.category || 'Insights')}</span>
+          <h2 class="post-card-title"><a href="/hansepay/blog-post.html?slug=${esc(post.slug)}">${esc(post.title)}</a></h2>
+          <p class="post-card-excerpt">${esc(post.excerpt || '')}</p>
+          <div class="post-card-footer">
+            <span class="author">${esc(post.author || 'HansePay Editorial')}</span>
+            <span class="footer-sep"></span>
+            <span>${esc(post.readTime || '5 min read')}</span>
+            <span class="footer-sep"></span>
+            <span>${fmtDate(post.publishedAt || post.date)}</span>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function applyFilter() {
+    filtered = category === 'all' ? [...allPosts] : allPosts.filter(p => p.category === category);
+    render();
+  }
+
+  function render() {
+    const content = document.getElementById('blogContent');
+    const pag = document.getElementById('pagination');
+
+    if (filtered.length === 0) {
+      content.innerHTML = `<div class="empty-state"><h3>No posts found</h3><p>Try selecting a different category or check back soon.</p></div>`;
+      pag.style.display = 'none';
+      return;
+    }
+
+    const total = Math.ceil(filtered.length / PER_PAGE);
+    const start = (page - 1) * PER_PAGE;
+    const slice = filtered.slice(start, start + PER_PAGE);
+    let html = '';
+
+    if (page === 1) {
+      const [first, ...rest] = slice;
+      html += featuredCardHTML(first);
+      if (rest.length) {
+        html += `<p class="posts-section-label">Latest articles</p><div class="post-grid">${rest.map(postCardHTML).join('')}</div>`;
+      }
+    } else {
+      html += `<div class="post-grid">${slice.map(postCardHTML).join('')}</div>`;
+    }
+
+    content.innerHTML = html;
+
+    if (total > 1) {
+      pag.style.display = 'flex';
+      document.getElementById('pagPrev').disabled = page <= 1;
+      document.getElementById('pagNext').disabled = page >= total;
+      document.getElementById('pagInfo').textContent = `Page ${page} of ${total}`;
+    } else {
+      pag.style.display = 'none';
+    }
+  }
+
+  async function init() {
+    try {
+      const res = await fetch('/api/posts');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const data = await res.json();
+      allPosts = Array.isArray(data) ? data : (data.posts || []);
+      filtered = [...allPosts];
+      render();
+    } catch (err) {
+      console.error(err);
+      document.getElementById('blogContent').innerHTML = `
+        <div class="empty-state">
+          <h3>Unable to load posts</h3>
+          <p>Please try refreshing the page.</p>
+        </div>`;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();
+</script>
+</body>
+</html>

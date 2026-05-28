@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dashboard — HansePay Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+:root {
+  --n900:#060D1A; --n800:#0B1929; --n700:#0F2540; --n600:#163659;
+  --n500:#1E4E80; --n400:#2E6BAD; --n300:#3B7BC4; --n200:#8DBDE6;
+  --n100:#C4DDEF; --n050:#EBF4FB; --off:#F5F1EA; --gold:#C9A961;
+  --ink:#0B1929; --ink2:#3D5A73; --ink3:#7A9AB0;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-pill:100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--ink); display: flex; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  min-height: 100vh;
+  background: var(--n800);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  z-index: 100;
+}
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 28px 20px 22px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.sidebar-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.sidebar-admin-badge {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  display: block;
+  margin-top: 4px;
+}
+.sidebar-nav { flex: 1; padding: 18px 12px; }
+.nav-section {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.22);
+  padding: 12px 12px 6px;
+  margin-top: 4px;
+  display: block;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: var(--r-md);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  transition: all 0.15s;
+  margin-bottom: 2px;
+  border-left: 3px solid transparent;
+}
+.nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.85); }
+.nav-item.active {
+  background: var(--n600);
+  color: #fff;
+  font-weight: 600;
+  border-left-color: var(--gold);
+}
+.nav-item svg { width: 16px; height: 16px; flex-shrink: 0; }
+.sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255,255,255,0.07);
+}
+.sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+.sidebar-avatar {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--n500);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.sidebar-user-info { overflow: hidden; }
+.sidebar-user-name {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.75);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sidebar-user-email {
+  font-size: 0.6875rem;
+  color: rgba(255,255,255,0.35);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.signout-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--r-md);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  transition: all 0.15s;
+  background: none;
+  border: none;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  text-align: left;
+}
+.signout-link:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.75); }
+.signout-link svg { width: 14px; height: 14px; }
+
+/* MAIN */
+.main { flex: 1; margin-left: 240px; min-height: 100vh; display: flex; flex-direction: column; }
+.topbar {
+  background: #fff;
+  border-bottom: 1px solid rgba(11,25,41,0.08);
+  padding: 0 32px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.page-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.375rem;
+  font-weight: 600;
+  color: var(--n800);
+}
+.topbar-avatar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 5px 14px 5px 5px;
+  border-radius: var(--r-pill);
+  border: 1px solid rgba(11,25,41,0.09);
+  background: var(--off);
+}
+.topbar-avatar-circle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--n500);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: #fff;
+}
+.topbar-avatar-name { font-size: 0.8125rem; font-weight: 500; color: var(--ink2); }
+.content { padding: 32px; flex: 1; }
+
+/* STAT CARDS */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.stat-card {
+  background: #fff;
+  border-radius: var(--r-lg);
+  padding: 24px;
+  border: 1px solid rgba(11,25,41,0.08);
+  box-shadow: 0 1px 4px rgba(11,25,41,0.04);
+}
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.25rem;
+  font-weight: 400;
+  color: var(--n800);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.stat-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ink3);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* CHART CARD */
+.chart-card {
+  background: #fff;
+  border-radius: var(--r-lg);
+  padding: 28px;
+  border: 1px solid rgba(11,25,41,0.08);
+  box-shadow: 0 1px 4px rgba(11,25,41,0.04);
+  margin-bottom: 28px;
+}
+.card-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--n800);
+  margin-bottom: 22px;
+}
+
+/* BOTTOM COLUMNS */
+.bottom-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.table-card {
+  background: #fff;
+  border-radius: var(--r-lg);
+  border: 1px solid rgba(11,25,41,0.08);
+  box-shadow: 0 1px 4px rgba(11,25,41,0.04);
+  overflow: hidden;
+}
+.table-card-header {
+  padding: 18px 22px;
+  border-bottom: 1px solid rgba(11,25,41,0.06);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.table-card-title { font-size: 0.875rem; font-weight: 600; color: var(--n800); }
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink3);
+  padding: 10px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(11,25,41,0.06);
+  background: #fafbfc;
+}
+.data-table td {
+  padding: 12px 16px;
+  font-size: 0.8125rem;
+  color: var(--ink2);
+  border-bottom: 1px solid rgba(11,25,41,0.04);
+}
+.data-table tr:last-child td { border-bottom: none; }
+.data-table tr:hover td { background: var(--n050); }
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: var(--r-pill);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+.badge-published { background: #dcfce7; color: #166534; }
+.badge-draft { background: #f3f4f6; color: #6b7280; }
+
+/* TOP POSTS LIST */
+.top-posts-list { padding: 12px 0; }
+.top-post-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 22px;
+  transition: background 0.15s;
+}
+.top-post-item:hover { background: var(--n050); }
+.top-post-rank {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: var(--n200);
+  width: 28px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.top-post-title {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.top-post-views { font-size: 0.75rem; color: var(--ink3); flex-shrink: 0; }
+
+@media (max-width: 1200px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 900px) { .bottom-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div>
+      <div class="sidebar-brand">HansePay</div>
+      <span class="sidebar-admin-badge">Admin</span>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <span class="nav-section">Main</span>
+    <a href="/hansepay/admin/" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <span class="nav-section">Content</span>
+    <a href="/hansepay/admin/posts.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Posts
+    </a>
+    <a href="/hansepay/admin/new-post.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Post
+    </a>
+    <span class="nav-section">Admin</span>
+    <a href="/hansepay/admin/users.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Users
+    </a>
+    <a href="/hansepay/admin/settings.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M21 12h-2M5 12H3M12 21v-2M12 5V3"/></svg>
+      Settings
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebar-name">Admin</div>
+        <div class="sidebar-user-email" id="sidebar-email">admin@hansepay.com</div>
+      </div>
+    </div>
+    <button class="signout-link" onclick="signOut()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="page-title">Dashboard</div>
+    <div class="topbar-avatar">
+      <div class="topbar-avatar-circle" id="topbar-avatar">A</div>
+      <span class="topbar-avatar-name" id="topbar-name">Admin</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Stat cards -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-value" id="stat-pageviews">—</div>
+        <div class="stat-label">Total Pageviews</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-published">—</div>
+        <div class="stat-label">Published Posts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-draft">—</div>
+        <div class="stat-label">Draft Posts</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value" id="stat-users">—</div>
+        <div class="stat-label">Team Members</div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="chart-card">
+      <div class="card-title">Traffic — last 30 days</div>
+      <canvas id="traffic-chart" height="90"></canvas>
+    </div>
+
+    <!-- Bottom columns -->
+    <div class="bottom-grid">
+      <!-- Recent Posts -->
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="table-card-title">Recent Posts</span>
+          <a href="/hansepay/admin/posts.html" style="font-size:0.8125rem;color:var(--n400);font-weight:500;">View all</a>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Status</th>
+              <th>Views</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="recent-posts-body">
+            <tr><td colspan="4" style="text-align:center;color:var(--ink3);padding:28px">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Top Posts -->
+      <div class="table-card">
+        <div class="table-card-header">
+          <span class="table-card-title">Top Posts by Views</span>
+        </div>
+        <div class="top-posts-list" id="top-posts-list">
+          <div style="text-align:center;color:var(--ink3);padding:28px;font-size:0.8125rem">Loading…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// Auth guard
+var token = localStorage.getItem('hp_token');
+if (!token) { window.location.href = '/hansepay/admin/login.html'; }
+
+var user = JSON.parse(localStorage.getItem('hp_user') || 'null');
+
+// Validate token on load
+fetch('http://localhost:4200/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) {
+    if (!r.ok) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; }
+    return r.json();
+  })
+  .then(function(me) {
+    if (me && me.name) {
+      var initials = me.name.split(' ').map(function(w){ return w[0]; }).join('').substring(0, 2).toUpperCase();
+      document.getElementById('sidebar-avatar').textContent = initials;
+      document.getElementById('topbar-avatar').textContent = initials;
+      document.getElementById('sidebar-name').textContent = me.name;
+      document.getElementById('topbar-name').textContent = me.name;
+      if (me.email) document.getElementById('sidebar-email').textContent = me.email;
+    }
+  })
+  .catch(function() {});
+
+// Populate from localStorage immediately
+if (user && user.name) {
+  var initials = user.name.split(' ').map(function(w){ return w[0]; }).join('').substring(0, 2).toUpperCase();
+  document.getElementById('sidebar-avatar').textContent = initials;
+  document.getElementById('topbar-avatar').textContent = initials;
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('topbar-name').textContent = user.name;
+  if (user.email) document.getElementById('sidebar-email').textContent = user.email;
+}
+
+function signOut() {
+  localStorage.removeItem('hp_token');
+  localStorage.removeItem('hp_user');
+  window.location.href = '/hansepay/admin/login.html';
+}
+
+function authFetch(url, opts) {
+  opts = opts || {};
+  opts.headers = Object.assign({ 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, opts.headers || {});
+  return fetch('http://localhost:4200' + url, opts);
+}
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// Load analytics summary
+authFetch('/api/analytics/summary')
+  .then(function(r) {
+    if (r.status === 401) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; }
+    return r.json();
+  })
+  .then(function(data) {
+    document.getElementById('stat-pageviews').textContent = (data.totalPageviews || 0).toLocaleString();
+    document.getElementById('stat-published').textContent = data.postsPublished || 0;
+    document.getElementById('stat-draft').textContent = data.postsDraft || 0;
+    document.getElementById('stat-users').textContent = data.totalUsers || 0;
+
+    var days = data.viewsLast30Days || [];
+    var labels = days.map(function(d) {
+      var dt = new Date(d.date);
+      return dt.toLocaleDateString('en-GB', { month: 'short', day: 'numeric' });
+    });
+    var counts = days.map(function(d) { return d.count || 0; });
+
+    var ctx = document.getElementById('traffic-chart').getContext('2d');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Page Views',
+          data: counts,
+          borderColor: 'var(--n400)',
+          backgroundColor: 'rgba(46,107,173,0.08)',
+          borderWidth: 2,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 3,
+          pointBackgroundColor: 'var(--n400)'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { font: { size: 11, family: 'Inter' }, color: 'var(--ink3)', maxTicksLimit: 10 }
+          },
+          y: {
+            grid: { color: 'rgba(11,25,41,0.05)' },
+            ticks: { font: { size: 11, family: 'Inter' }, color: 'var(--ink3)' },
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  })
+  .catch(function() {});
+
+// Load recent posts
+authFetch('/api/posts?status=all')
+  .then(function(r) {
+    if (r.status === 401) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; }
+    return r.json();
+  })
+  .then(function(posts) {
+    var tbody = document.getElementById('recent-posts-body');
+    var topEl = document.getElementById('top-posts-list');
+
+    if (!posts || !posts.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--ink3);padding:28px">No posts yet.</td></tr>';
+      topEl.innerHTML = '<div style="text-align:center;color:var(--ink3);padding:28px;font-size:0.8125rem">No posts yet.</div>';
+      return;
+    }
+
+    var recent = posts.slice(0, 6);
+    tbody.innerHTML = recent.map(function(p) {
+      return '<tr>' +
+        '<td style="font-weight:500;color:var(--ink);max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + (p.title || '') + '</td>' +
+        '<td><span class="badge ' + (p.status === 'published' ? 'badge-published' : 'badge-draft') + '">' + (p.status || 'draft') + '</span></td>' +
+        '<td>' + (p.viewCount || 0).toLocaleString() + '</td>' +
+        '<td style="white-space:nowrap">' + formatDate(p.createdAt) + '</td>' +
+      '</tr>';
+    }).join('');
+
+    var sorted = posts.slice().sort(function(a, b) { return (b.viewCount || 0) - (a.viewCount || 0); });
+    topEl.innerHTML = sorted.slice(0, 6).map(function(p, i) {
+      return '<div class="top-post-item">' +
+        '<span class="top-post-rank">' + (i + 1) + '</span>' +
+        '<span class="top-post-title">' + (p.title || '') + '</span>' +
+        '<span class="top-post-views">' + (p.viewCount || 0).toLocaleString() + ' views</span>' +
+      '</div>';
+    }).join('');
+  })
+  .catch(function() {});
+</script>
+</body>
+</html>

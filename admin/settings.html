@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Settings — HansePay Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --n900:#060D1A; --n800:#0B1929; --n700:#0F2540; --n600:#163659;
+  --n500:#1E4E80; --n400:#2E6BAD; --n300:#3B7BC4; --n200:#8DBDE6;
+  --n100:#C4DDEF; --n050:#EBF4FB; --off:#F5F1EA; --gold:#C9A961;
+  --ink:#0B1929; --ink2:#3D5A73; --ink3:#7A9AB0;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-pill:100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--ink); display: flex; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+.sidebar { width:240px; min-height:100vh; background:var(--n800); display:flex; flex-direction:column; flex-shrink:0; position:fixed; top:0; left:0; bottom:0; z-index:100; }
+.sidebar-logo { display:flex; align-items:center; gap:10px; padding:28px 20px 22px; border-bottom:1px solid rgba(255,255,255,0.07); }
+.sidebar-brand { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:#fff; letter-spacing:-0.01em; line-height:1; }
+.sidebar-admin-badge { font-family:'Inter',sans-serif; font-size:0.625rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.35); display:block; margin-top:4px; }
+.sidebar-nav { flex:1; padding:18px 12px; }
+.nav-section { font-size:0.6875rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.22); padding:12px 12px 6px; margin-top:4px; display:block; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; color:rgba(255,255,255,0.55); transition:all 0.15s; margin-bottom:2px; border-left:3px solid transparent; }
+.nav-item:hover { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.85); }
+.nav-item.active { background:var(--n600); color:#fff; font-weight:600; border-left-color:var(--gold); }
+.nav-item svg { width:16px; height:16px; flex-shrink:0; }
+.sidebar-footer { padding:16px 12px; border-top:1px solid rgba(255,255,255,0.07); }
+.sidebar-user { display:flex; align-items:center; gap:10px; padding:8px 10px; margin-bottom:8px; }
+.sidebar-avatar { width:30px; height:30px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.6875rem; font-weight:700; color:#fff; flex-shrink:0; }
+.sidebar-user-info { overflow:hidden; }
+.sidebar-user-name { font-size:0.75rem; font-weight:500; color:rgba(255,255,255,0.75); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sidebar-user-email { font-size:0.6875rem; color:rgba(255,255,255,0.35); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.signout-link { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:var(--r-md); font-size:0.75rem; font-weight:500; color:rgba(255,255,255,0.45); cursor:pointer; transition:all 0.15s; background:none; border:none; font-family:'Inter',sans-serif; width:100%; text-align:left; }
+.signout-link:hover { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.75); }
+.signout-link svg { width:14px; height:14px; }
+
+.main { flex:1; margin-left:240px; min-height:100vh; display:flex; flex-direction:column; }
+.topbar { background:#fff; border-bottom:1px solid rgba(11,25,41,0.08); padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.page-title { font-family:'Playfair Display',serif; font-size:1.375rem; font-weight:600; color:var(--n800); }
+.topbar-avatar { display:flex; align-items:center; gap:9px; padding:5px 14px 5px 5px; border-radius:var(--r-pill); border:1px solid rgba(11,25,41,0.09); background:var(--off); }
+.topbar-avatar-circle { width:28px; height:28px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.6875rem; font-weight:700; color:#fff; }
+.topbar-avatar-name { font-size:0.8125rem; font-weight:500; color:var(--ink2); }
+.content { padding:32px; flex:1; max-width:760px; }
+
+.page-heading { font-family:'Playfair Display',serif; font-size:1.625rem; font-weight:600; color:var(--n800); margin-bottom:28px; }
+
+/* SETTINGS CARDS */
+.settings-card { background:#fff; border-radius:var(--r-lg); border:1px solid rgba(11,25,41,0.08); box-shadow:0 1px 4px rgba(11,25,41,0.04); padding:28px; margin-bottom:20px; }
+.settings-card-title { font-size:1rem; font-weight:600; color:var(--n800); margin-bottom:4px; }
+.settings-card-desc { font-size:0.8125rem; color:var(--ink3); margin-bottom:24px; line-height:1.5; }
+.settings-divider { height:1px; background:rgba(11,25,41,0.06); margin-bottom:24px; }
+
+.field { margin-bottom:20px; }
+.field:last-child { margin-bottom:0; }
+.field label { display:block; font-size:0.8125rem; font-weight:600; color:var(--ink2); margin-bottom:7px; letter-spacing:0.02em; }
+.field label .hint { font-size:0.75rem; font-weight:400; color:var(--ink3); margin-left:6px; }
+.field input { width:100%; padding:10px 13px; border:1.5px solid rgba(11,25,41,0.1); border-radius:var(--r-md); font-family:'Inter',sans-serif; font-size:0.875rem; color:var(--ink); background:#fff; outline:none; transition:border-color 0.15s, box-shadow 0.15s; }
+.field input:focus { border-color:var(--n300); box-shadow:0 0 0 3px rgba(59,123,196,0.08); }
+.field input::placeholder { color:var(--ink3); }
+.field textarea { width:100%; padding:10px 13px; border:1.5px solid rgba(11,25,41,0.1); border-radius:var(--r-md); font-family:'Inter',sans-serif; font-size:0.875rem; color:var(--ink); background:#fff; outline:none; resize:vertical; line-height:1.6; transition:border-color 0.15s; }
+.field textarea:focus { border-color:var(--n300); box-shadow:0 0 0 3px rgba(59,123,196,0.08); }
+.field input[type="number"] { max-width:120px; }
+
+.fields-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width: 600px) { .fields-row { grid-template-columns: 1fr; } }
+
+/* INTEGRATIONS */
+.integration-item { display:flex; align-items:center; gap:20px; padding:18px 0; border-bottom:1px solid rgba(11,25,41,0.05); }
+.integration-item:last-child { border-bottom:none; padding-bottom:0; }
+.integration-icon { width:40px; height:40px; border-radius:var(--r-md); background:var(--n050); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1.25rem; }
+.integration-info { flex:1; }
+.integration-name { font-size:0.875rem; font-weight:600; color:var(--ink); margin-bottom:2px; }
+.integration-desc { font-size:0.8125rem; color:var(--ink3); }
+.integration-input { width:200px; padding:8px 12px; border:1.5px solid rgba(11,25,41,0.1); border-radius:var(--r-md); font-family:'Inter',sans-serif; font-size:0.8125rem; color:var(--ink); background:#fff; outline:none; transition:border-color 0.15s; }
+.integration-input:focus { border-color:var(--n300); }
+.integration-input::placeholder { color:var(--ink3); }
+.coming-soon { font-size:0.75rem; font-weight:600; color:var(--ink3); background:#f3f4f6; padding:4px 10px; border-radius:var(--r-pill); }
+
+/* SAVE BAR */
+.save-bar { padding-top:8px; display:flex; align-items:center; gap:14px; }
+.btn-save { padding:12px 32px; background:var(--n500); color:#fff; border:none; border-radius:var(--r-pill); font-family:'Inter',sans-serif; font-size:0.9375rem; font-weight:600; cursor:pointer; transition:background 0.15s; }
+.btn-save:hover { background:var(--n600); }
+.btn-save:disabled { opacity:0.6; cursor:not-allowed; }
+
+/* TOAST */
+.toast { position:fixed; bottom:24px; right:24px; background:var(--n800); color:#fff; padding:12px 20px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; z-index:1000; opacity:0; transform:translateY(8px); transition:all 0.25s; pointer-events:none; min-width:200px; text-align:center; }
+.toast.show { opacity:1; transform:none; }
+.toast.success { background:#166534; }
+.toast.error { background:#dc2626; }
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div>
+      <div class="sidebar-brand">HansePay</div>
+      <span class="sidebar-admin-badge">Admin</span>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <span class="nav-section">Main</span>
+    <a href="/hansepay/admin/" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <span class="nav-section">Content</span>
+    <a href="/hansepay/admin/posts.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Posts
+    </a>
+    <a href="/hansepay/admin/new-post.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Post
+    </a>
+    <span class="nav-section">Admin</span>
+    <a href="/hansepay/admin/users.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Users
+    </a>
+    <a href="/hansepay/admin/settings.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M21 12h-2M5 12H3M12 21v-2M12 5V3"/></svg>
+      Settings
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebar-name">Admin</div>
+        <div class="sidebar-user-email" id="sidebar-email">admin@hansepay.com</div>
+      </div>
+    </div>
+    <button class="signout-link" onclick="signOut()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </button>
+  </div>
+</aside>
+
+<main class="main">
+  <div class="topbar">
+    <div class="page-title">Settings</div>
+    <div class="topbar-avatar">
+      <div class="topbar-avatar-circle" id="topbar-avatar">A</div>
+      <span class="topbar-avatar-name" id="topbar-name">Admin</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <h1 class="page-heading">Settings</h1>
+
+    <!-- Site Settings -->
+    <div class="settings-card">
+      <div class="settings-card-title">Site Settings</div>
+      <div class="settings-card-desc">Configure your site identity and content defaults.</div>
+      <div class="settings-divider"></div>
+
+      <div class="fields-row">
+        <div class="field">
+          <label for="s-site-name">Site Name</label>
+          <input type="text" id="s-site-name" placeholder="HansePay" />
+        </div>
+        <div class="field">
+          <label for="s-contact-email">Contact Email</label>
+          <input type="email" id="s-contact-email" placeholder="hello@hansepay.com" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="s-blog-title">Blog Title</label>
+        <input type="text" id="s-blog-title" placeholder="HansePay Insights" />
+      </div>
+
+      <div class="field">
+        <label for="s-blog-desc">Blog Description</label>
+        <textarea id="s-blog-desc" rows="3" placeholder="Expert insights on FX, treasury, and international payments."></textarea>
+      </div>
+
+      <div class="field">
+        <label for="s-posts-per-page">Posts per Page <span class="hint">(pagination)</span></label>
+        <input type="number" id="s-posts-per-page" placeholder="10" min="1" max="100" />
+      </div>
+    </div>
+
+    <!-- Integrations -->
+    <div class="settings-card">
+      <div class="settings-card-title">Integrations</div>
+      <div class="settings-card-desc">Connect third-party services to extend your site's capabilities.</div>
+      <div class="settings-divider"></div>
+
+      <div class="integration-item">
+        <div class="integration-icon">G</div>
+        <div class="integration-info">
+          <div class="integration-name">Google Analytics</div>
+          <div class="integration-desc">Track visitors and page performance via Google Analytics 4.</div>
+        </div>
+        <input class="integration-input" type="text" id="s-ga-id" placeholder="G-XXXXXXXXXX" />
+      </div>
+
+      <div class="integration-item">
+        <div class="integration-icon" style="background:#fef9c3">M</div>
+        <div class="integration-info">
+          <div class="integration-name">Mailchimp</div>
+          <div class="integration-desc">Sync subscriber lists and newsletter automation.</div>
+        </div>
+        <span class="coming-soon">Coming soon</span>
+      </div>
+
+      <div class="integration-item">
+        <div class="integration-icon" style="background:#f3e8ff">S</div>
+        <div class="integration-info">
+          <div class="integration-name">Slack Notifications</div>
+          <div class="integration-desc">Post alerts to a Slack channel when new content is published.</div>
+        </div>
+        <span class="coming-soon">Coming soon</span>
+      </div>
+    </div>
+
+    <!-- Save -->
+    <div class="save-bar">
+      <button class="btn-save" id="save-btn" onclick="saveSettings()">Save Settings</button>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var token = localStorage.getItem('hp_token');
+if (!token) { window.location.href = '/hansepay/admin/login.html'; }
+
+fetch('http://localhost:4200/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) { if (!r.ok) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; } });
+
+var user = JSON.parse(localStorage.getItem('hp_user') || 'null');
+if (user && user.name) {
+  var initials = user.name.split(' ').map(function(w){ return w[0]; }).join('').substring(0, 2).toUpperCase();
+  document.getElementById('sidebar-avatar').textContent = initials;
+  document.getElementById('topbar-avatar').textContent = initials;
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('topbar-name').textContent = user.name;
+  if (user.email) document.getElementById('sidebar-email').textContent = user.email;
+}
+
+function signOut() {
+  localStorage.removeItem('hp_token');
+  localStorage.removeItem('hp_user');
+  window.location.href = '/hansepay/admin/login.html';
+}
+
+function authFetch(url, opts) {
+  opts = opts || {};
+  opts.headers = Object.assign({ 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, opts.headers || {});
+  return fetch('http://localhost:4200' + url, opts);
+}
+
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+
+function populateForm(s) {
+  if (!s) return;
+  if (s.siteName !== undefined) document.getElementById('s-site-name').value = s.siteName || '';
+  if (s.blogTitle !== undefined) document.getElementById('s-blog-title').value = s.blogTitle || '';
+  if (s.blogDescription !== undefined) document.getElementById('s-blog-desc').value = s.blogDescription || '';
+  if (s.contactEmail !== undefined) document.getElementById('s-contact-email').value = s.contactEmail || '';
+  if (s.postsPerPage !== undefined) document.getElementById('s-posts-per-page').value = s.postsPerPage || '';
+  if (s.googleAnalyticsId !== undefined) document.getElementById('s-ga-id').value = s.googleAnalyticsId || '';
+}
+
+// Load settings on page load
+authFetch('/api/settings')
+  .then(function(r) {
+    if (r.status === 401) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; }
+    return r.json();
+  })
+  .then(function(data) { populateForm(data); })
+  .catch(function() {});
+
+function saveSettings() {
+  var btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+
+  var body = {
+    siteName: document.getElementById('s-site-name').value.trim(),
+    blogTitle: document.getElementById('s-blog-title').value.trim(),
+    blogDescription: document.getElementById('s-blog-desc').value.trim(),
+    contactEmail: document.getElementById('s-contact-email').value.trim(),
+    postsPerPage: parseInt(document.getElementById('s-posts-per-page').value) || 10,
+    googleAnalyticsId: document.getElementById('s-ga-id').value.trim()
+  };
+
+  authFetch('/api/settings', { method: 'PUT', body: JSON.stringify(body) })
+    .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+    .then(function(res) {
+      if (!res.ok) throw new Error(res.data.message || 'Save failed.');
+      showToast('Settings saved', 'success');
+    })
+    .catch(function(err) { showToast(err.message || 'Error saving settings.', 'error'); })
+    .finally(function() { btn.disabled = false; btn.textContent = 'Save Settings'; });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1987 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay — Devisen­zahlungen für den Mittelstand</title>
+<meta name="description" content="Commercial FX für deutsche Unternehmen. Mid-market-Kurse, BaFin-reguliert, persönlicher Expertenservice." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+
+<style>
+/* ──────────────────────────────────────────────────────────
+   TOKENS
+────────────────────────────────────────────────────────── */
+:root {
+  /* Navy scale */
+  --n900: #060D1A;
+  --n800: #0B1929;
+  --n700: #0F2540;
+  --n600: #163659;
+  --n500: #1E4E80;
+  --n400: #2E6BAD;
+  --n300: #3B7BC4;
+  --n200: #8DBDE6;
+  --n100: #C4DDEF;
+  --n050: #EBF4FB;
+
+  /* Neutrals */
+  --off: #F5F1EA;
+  --white: #FFFFFF;
+  --ink: #0B1929;
+  --ink2: #3D5A73;
+  --ink3: #7A9AB0;
+
+  /* Typography */
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Libre Baskerville', Georgia, serif;
+
+  /* Spacing base 8 */
+  --s1: 8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 32px;
+  --s5: 40px;
+  --s6: 48px;
+  --s8: 64px;
+  --s10: 80px;
+  --s12: 96px;
+  --s16: 128px;
+
+  /* Container */
+  --container: 1200px;
+  --container-pad: clamp(20px, 5vw, 80px);
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 16px;
+  --r-pill: 100px;
+
+  /* Signature gradient */
+  --gradient-navy:
+    radial-gradient(ellipse at 18% 40%, #0F2540 0%, transparent 55%),
+    radial-gradient(ellipse at 82% 25%, #2E6BAD 0%, transparent 50%),
+    radial-gradient(ellipse at 60% 80%, #163659 0%, transparent 45%),
+    #060D1A;
+}
+
+/* ──────────────────────────────────────────────────────────
+   RESET & BASE
+────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-ui);
+  color: var(--ink);
+  background: var(--white);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--container-pad);
+}
+
+/* ──────────────────────────────────────────────────────────
+   TYPOGRAPHY HELPERS
+────────────────────────────────────────────────────────── */
+.eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--n300);
+}
+
+.display-head {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.025em;
+  color: var(--n800);
+}
+.display-head em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--n400);
+}
+
+.section-head {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.5vw, 46px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--n800);
+}
+.section-head em {
+  font-style: italic;
+  color: var(--n400);
+}
+
+.lede {
+  font-size: 16px;
+  font-weight: 300;
+  color: var(--ink2);
+  line-height: 1.65;
+}
+
+/* ──────────────────────────────────────────────────────────
+   BUTTONS
+────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--n500);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--n600); }
+
+.btn-ghost-white {
+  background: transparent;
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.7);
+}
+.btn-ghost-white:hover { background: rgba(255,255,255,0.1); }
+
+.btn-ghost-navy {
+  background: transparent;
+  color: var(--n600);
+  border: 1.5px solid rgba(11,25,41,0.2);
+}
+.btn-ghost-navy:hover { background: var(--n050); border-color: var(--n300); }
+
+.btn-white-fill {
+  background: #fff;
+  color: var(--n500);
+}
+.btn-white-fill:hover { background: var(--n050); }
+
+/* ──────────────────────────────────────────────────────────
+   NAV
+────────────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 var(--container-pad);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  transition: background 0.25s, box-shadow 0.25s;
+}
+nav.scrolled {
+  background: rgba(255,255,255,0.97);
+  box-shadow: 0 1px 0 rgba(11,25,41,0.08);
+  backdrop-filter: blur(8px);
+}
+nav.scrolled .nav-logo-text,
+nav.scrolled .nav-link { color: var(--n800); }
+nav.scrolled .nav-cta { background: var(--n500); color: #fff; }
+nav.scrolled .nav-cta:hover { background: var(--n600); }
+
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--s4);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.nav-logo-icon {
+  width: 28px;
+  height: 28px;
+}
+.nav-logo-text {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #fff;
+  line-height: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  margin-left: var(--s3);
+  flex: 1;
+  list-style: none;
+}
+.nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.85);
+  padding: 4px 0;
+  transition: color 0.15s;
+  position: relative;
+  white-space: nowrap;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transition: transform 0.18s;
+}
+.nav-link:hover { color: #fff; }
+.nav-link:hover::after { transform: scaleX(1); }
+
+.nav-spacer { flex: 1; }
+
+.nav-cta {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.4);
+  padding: 8px 20px;
+  font-size: 13px;
+}
+.nav-cta:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ──────────────────────────────────────────────────────────
+   HERO
+────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1567521464027-f127ff144326?w=1800&q=80');
+  background-size: cover;
+  background-position: center 30%;
+}
+/* Tint + gradient for readability */
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, rgba(6,13,26,0.80) 0%, rgba(11,25,41,0.55) 50%, rgba(11,25,41,0.30) 100%),
+    radial-gradient(ellipse at 70% 50%, rgba(46,107,173,0.25) 0%, transparent 60%);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 120px 0 80px;
+  max-width: 620px;
+}
+
+.hero-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--r-pill);
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.25);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+  margin-bottom: var(--s4);
+}
+.hero-chip-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--n200);
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(46px, 6vw, 86px);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: #fff;
+  margin-bottom: var(--s4);
+}
+.hero-headline em {
+  font-style: italic;
+  color: var(--n100);
+}
+
+.hero-sub {
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 300;
+  color: rgba(255,255,255,0.82);
+  line-height: 1.65;
+  max-width: 500px;
+  margin-bottom: var(--s6);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  animation: bounce 2s infinite;
+  color: rgba(255,255,255,0.5);
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.hero-scroll svg { width: 20px; height: 20px; }
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ──────────────────────────────────────────────────────────
+   TRUST STRIP
+────────────────────────────────────────────────────────── */
+.trust-strip {
+  background: var(--n800);
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.trust-strip-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+.trust-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 32px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+.trust-item:last-child { border-right: none; }
+.trust-item svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  color: var(--n200);
+}
+.trust-text-main {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+.trust-text-sub {
+  font-size: 11px;
+  color: rgba(255,255,255,0.45);
+}
+
+/* ──────────────────────────────────────────────────────────
+   SECTION SPACING
+────────────────────────────────────────────────────────── */
+.section {
+  padding: var(--s16) 0;
+}
+.section-md {
+  padding: var(--s10) 0;
+}
+
+/* ──────────────────────────────────────────────────────────
+   WHAT WE OFFER
+────────────────────────────────────────────────────────── */
+.offer-section {
+  background: var(--white);
+}
+
+.section-label-wrap {
+  margin-bottom: var(--s3);
+}
+
+.section-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--s8);
+  align-items: end;
+  margin-bottom: var(--s10);
+}
+@media (max-width: 768px) {
+  .section-intro { grid-template-columns: 1fr; gap: var(--s4); }
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: rgba(11,25,41,0.06);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+}
+@media (max-width: 900px) {
+  .features-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .features-grid { grid-template-columns: 1fr; }
+}
+
+.feature-card {
+  background: var(--white);
+  padding: var(--s6) var(--s5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--s3);
+}
+.feature-card:hover { background: var(--n050); }
+.feature-card:hover .feature-icon-wrap { background: var(--n500); }
+.feature-card:hover .feature-icon { color: #fff; }
+
+.feature-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--r-md);
+  background: var(--n050);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.feature-icon {
+  width: 20px;
+  height: 20px;
+  color: var(--n400);
+  transition: color 0.2s;
+}
+
+.feature-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--n800);
+  letter-spacing: -0.01em;
+}
+
+.feature-desc {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+
+.feature-link {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--n400);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: auto;
+  padding-top: var(--s1);
+}
+.feature-link:hover { color: var(--n500); }
+.feature-link svg { width: 14px; height: 14px; }
+
+/* ──────────────────────────────────────────────────────────
+   HOW IT WORKS
+────────────────────────────────────────────────────────── */
+.how-section {
+  background: var(--off);
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--s3);
+  position: relative;
+}
+@media (max-width: 900px) {
+  .how-grid { grid-template-columns: 1fr 1fr; gap: var(--s4); }
+}
+@media (max-width: 560px) {
+  .how-grid { grid-template-columns: 1fr; }
+}
+
+/* connector line */
+.how-grid::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  left: calc(12.5% + 20px);
+  right: calc(12.5% + 20px);
+  height: 1px;
+  background: linear-gradient(90deg, var(--n200), var(--n300), var(--n200));
+  z-index: 0;
+}
+@media (max-width: 900px) {
+  .how-grid::before { display: none; }
+}
+
+.how-step {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--s5) var(--s3);
+}
+
+.how-num {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 2px solid var(--n100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--s4);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--n400);
+  box-shadow: 0 4px 16px rgba(11,25,41,0.06);
+}
+
+.how-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--n800);
+  margin-bottom: var(--s1);
+}
+.how-desc {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+
+/* ──────────────────────────────────────────────────────────
+   CALCULATOR
+────────────────────────────────────────────────────────── */
+.calc-section {
+  background: #FAFAFA;
+  border-top: 1px solid rgba(11,25,41,0.06);
+  border-bottom: 1px solid rgba(11,25,41,0.06);
+}
+
+.calc-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: var(--s12);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .calc-layout { grid-template-columns: 1fr; gap: var(--s8); }
+}
+
+.calc-intro { padding-top: var(--s2); }
+
+.calc-card {
+  background: var(--white);
+  border: 1px solid rgba(11,25,41,0.08);
+  border-radius: var(--r-lg);
+  padding: var(--s6);
+  box-shadow: 0 4px 32px rgba(11,25,41,0.06);
+}
+
+.calc-row {
+  margin-bottom: var(--s4);
+}
+
+.calc-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--s1);
+}
+.calc-label-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--n800);
+  letter-spacing: 0.01em;
+}
+.calc-label-sub {
+  font-size: 11px;
+  color: var(--ink3);
+}
+
+.calc-input-wrap {
+  position: relative;
+}
+.calc-currency {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink3);
+  pointer-events: none;
+}
+.calc-input {
+  width: 100%;
+  padding: 12px 14px 12px 44px;
+  border: 1.5px solid rgba(11,25,41,0.1);
+  border-radius: var(--r-sm);
+  font-family: var(--font-ui);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--n800);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.calc-input:focus { border-color: var(--n300); }
+
+.calc-select-wrap {
+  position: relative;
+}
+.calc-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(11,25,41,0.1);
+  border-radius: var(--r-sm);
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--n800);
+  background: var(--white);
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.calc-select:focus { border-color: var(--n300); }
+.calc-select-arrow {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--ink3);
+}
+
+.calc-divider {
+  height: 1px;
+  background: rgba(11,25,41,0.06);
+  margin: var(--s5) 0;
+}
+
+.calc-result {
+  background: linear-gradient(135deg, var(--n700) 0%, var(--n500) 100%);
+  border-radius: var(--r-md);
+  padding: var(--s4) var(--s5);
+  color: #fff;
+}
+
+.calc-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: var(--s2);
+}
+.calc-result-row:last-child { margin-bottom: 0; }
+.calc-result-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.calc-result-val {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  color: #fff;
+}
+.calc-result-highlight {
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.calc-saving-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--n100);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.calc-saving-amount {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 28px;
+  color: #fff;
+}
+
+.calc-disclaimer {
+  font-size: 11px;
+  color: var(--ink3);
+  margin-top: var(--s3);
+  line-height: 1.55;
+}
+
+/* ──────────────────────────────────────────────────────────
+   WHO IT'S FOR (Segments)
+────────────────────────────────────────────────────────── */
+.segments-section {
+  background: var(--white);
+}
+
+.segments-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s3);
+}
+@media (max-width: 900px) {
+  .segments-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .segments-grid { grid-template-columns: 1fr; }
+}
+
+.segment-card {
+  border: 1px solid rgba(11,25,41,0.07);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.segment-card:hover {
+  box-shadow: 0 8px 32px rgba(11,25,41,0.1);
+  transform: translateY(-3px);
+}
+
+.segment-img {
+  height: 160px;
+  background: var(--n600);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+.segment-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(6,13,26,0.5) 100%);
+}
+
+.segment-body {
+  padding: var(--s4);
+}
+
+.segment-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--n400);
+  background: var(--n050);
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+  margin-bottom: var(--s2);
+}
+
+.segment-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--n800);
+  margin-bottom: var(--s1);
+  letter-spacing: -0.01em;
+}
+
+.segment-desc {
+  font-size: 13px;
+  color: var(--ink2);
+  line-height: 1.6;
+}
+
+/* ──────────────────────────────────────────────────────────
+   ABOUT / CREDENTIALS
+────────────────────────────────────────────────────────── */
+.about-section {
+  background: var(--n800);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 40%, rgba(46,107,173,0.35) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 70%, rgba(14,36,64,0.8) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--s12);
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 900px) {
+  .about-layout { grid-template-columns: 1fr; gap: var(--s8); }
+}
+
+.about-eyebrow { color: var(--n200); }
+.about-head {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: #fff;
+  margin: var(--s3) 0 var(--s4);
+}
+.about-head em { font-style: italic; color: var(--n200); }
+
+.about-body {
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.7;
+  margin-bottom: var(--s6);
+}
+
+.cred-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-lg);
+  padding: var(--s1);
+  overflow: hidden;
+}
+
+.cred-item {
+  padding: var(--s4) var(--s5);
+  display: flex;
+  gap: var(--s4);
+  align-items: flex-start;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+.cred-item:last-child { border-bottom: none; }
+
+.cred-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--r-md);
+  background: rgba(59,123,196,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.cred-icon {
+  width: 18px;
+  height: 18px;
+  color: var(--n200);
+}
+
+.cred-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 4px;
+}
+.cred-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.55;
+}
+
+/* ──────────────────────────────────────────────────────────
+   INSIGHTS
+────────────────────────────────────────────────────────── */
+.insights-section {
+  background: var(--white);
+}
+
+.insights-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s4);
+}
+@media (max-width: 900px) {
+  .insights-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .insights-grid { grid-template-columns: 1fr; }
+}
+
+.insight-card {
+  border: 1px solid rgba(11,25,41,0.07);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.insight-card:hover {
+  box-shadow: 0 8px 32px rgba(11,25,41,0.08);
+  transform: translateY(-2px);
+}
+
+.insight-thumb {
+  height: 140px;
+  background: var(--n050);
+  position: relative;
+  overflow: hidden;
+}
+.insight-thumb-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--n400), var(--n200));
+}
+
+.insight-body { padding: var(--s4); }
+
+.insight-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--r-pill);
+  background: var(--n050);
+  color: var(--n400);
+  margin-bottom: var(--s2);
+}
+
+.insight-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--n800);
+  line-height: 1.35;
+  margin-bottom: var(--s2);
+  letter-spacing: -0.01em;
+}
+
+.insight-meta {
+  font-size: 11px;
+  color: var(--ink3);
+}
+
+/* ──────────────────────────────────────────────────────────
+   CTA BAND
+────────────────────────────────────────────────────────── */
+.cta-band {
+  background: var(--gradient-navy);
+  padding: var(--s16) 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-band::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+  pointer-events: none;
+}
+
+.cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.cta-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--n200);
+  margin-bottom: var(--s4);
+}
+
+.cta-headline {
+  font-family: var(--font-display);
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: #fff;
+  margin-bottom: var(--s4);
+}
+.cta-headline em {
+  font-style: italic;
+  color: var(--n100);
+}
+
+.cta-sub {
+  font-size: 16px;
+  font-weight: 300;
+  color: rgba(255,255,255,0.68);
+  line-height: 1.65;
+  margin-bottom: var(--s8);
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* ──────────────────────────────────────────────────────────
+   FOOTER
+────────────────────────────────────────────────────────── */
+footer {
+  background: var(--n900);
+  padding: var(--s16) 0 var(--s8);
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: var(--s8);
+  margin-bottom: var(--s12);
+}
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: var(--s8) var(--s6); }
+}
+@media (max-width: 560px) {
+  .footer-grid { grid-template-columns: 1fr; }
+}
+
+.footer-brand-wordmark {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: var(--s3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+  max-width: 260px;
+  margin-bottom: var(--s3);
+}
+
+.footer-legal-note {
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  line-height: 1.6;
+}
+
+.footer-col-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  margin-bottom: var(--s4);
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-link {
+  font-size: 13px;
+  color: rgba(255,255,255,0.45);
+  transition: color 0.15s;
+}
+.footer-link:hover { color: rgba(255,255,255,0.9); }
+
+.footer-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin-bottom: var(--s6);
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--s3);
+}
+.footer-copyright {
+  font-size: 12px;
+  color: rgba(255,255,255,0.25);
+}
+.footer-bafin {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  padding: 5px 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--r-pill);
+}
+.footer-bafin svg {
+  width: 12px;
+  height: 12px;
+  color: var(--n200);
+}
+
+/* ──────────────────────────────────────────────────────────
+   RESPONSIVE
+────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero-content { padding: 100px 0 60px; }
+  .trust-item { padding: 10px 16px; }
+  .trust-text-sub { display: none; }
+}
+
+/* ──────────────────────────────────────────────────────────
+   SCROLL REVEAL (lightweight)
+────────────────────────────────────────────────────────── */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+</style>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     NAV
+══════════════════════════════════════════════════════ -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo">
+      <!-- Hanseatic arcade icon (simple arch mark in SVG) -->
+      <svg class="nav-logo-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="32" height="32" rx="6" fill="rgba(255,255,255,0.15)"/>
+        <path d="M5 26V14a11 11 0 0 1 22 0v12" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <rect x="13" y="18" width="6" height="8" rx="1" fill="#fff" opacity="0.9"/>
+        <circle cx="10" cy="19" r="2" fill="rgba(255,255,255,0.5)"/>
+        <circle cx="22" cy="19" r="2" fill="rgba(255,255,255,0.5)"/>
+      </svg>
+      <span class="nav-logo-text">HansePay</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a class="nav-link" href="#product">Produkt</a></li>
+      <li><a class="nav-link" href="#calculator">Kalkulator</a></li>
+      <li><a class="nav-link" href="#loesungen">Lösungen</a></li>
+      <li><a class="nav-link" href="#ueber-uns">Über uns</a></li>
+      <li><a class="nav-link" href="#insights">Insights</a></li>
+    </ul>
+
+    <div class="nav-spacer"></div>
+
+    <a href="#kontakt" class="btn nav-cta">Konto eröffnen</a>
+  </div>
+</nav>
+
+
+<!-- ══════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-chip">
+        <span class="hero-chip-dot"></span>
+        Commercial FX · Hamburg
+      </div>
+
+      <h1 class="hero-headline">
+        Devisen&shy;zahlungen, <em>neu gedacht.</em>
+      </h1>
+
+      <p class="hero-sub">
+        Internationale Zahlungen zum Mid-Market-Kurs — transparent, schnell, BaFin-reguliert.
+        Für Unternehmen, die echte Devisen&shy;kosten in echte Einsparungen verwandeln wollen.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn btn-primary">Konto eröffnen</a>
+        <a href="#kontakt" class="btn btn-ghost-white">Mit Experten sprechen</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+    Entdecken
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     TRUST STRIP
+══════════════════════════════════════════════════════ -->
+<div class="trust-strip">
+  <div class="container">
+    <div class="trust-strip-inner">
+
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div>
+          <div class="trust-text-main">BaFin-reguliert</div>
+          <div class="trust-text-sub">EU-zugelassenes E-Geld-Institut</div>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <div>
+          <div class="trust-text-main">Mid-Market-Kurs</div>
+          <div class="trust-text-sub">Keine versteckten Aufschläge</div>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <div>
+          <div class="trust-text-main">Echtzeit-Kurse</div>
+          <div class="trust-text-sub">Live-Preisstellung rund um die Uhr</div>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div>
+          <div class="trust-text-main">Persönlicher Experte</div>
+          <div class="trust-text-sub">Direkte Ansprechpartner, kein Callcenter</div>
+        </div>
+      </div>
+
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <div>
+          <div class="trust-text-main">Hamburg, seit 2023</div>
+          <div class="trust-text-sub">Backed by Innovationsstarter Fonds HH</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════════
+     PRODUCT FEATURES
+══════════════════════════════════════════════════════ -->
+<section class="section offer-section" id="product">
+  <div class="container">
+
+    <div class="section-intro">
+      <div>
+        <div class="section-label-wrap">
+          <span class="eyebrow">Das Produkt</span>
+        </div>
+        <h2 class="section-head reveal">
+          Alles was Sie für internationale Zahlungen <em>brauchen.</em>
+        </h2>
+      </div>
+      <p class="lede reveal reveal-delay-1">
+        Von der einmaligen Zahlung bis zum komplexen Devisen-Hedging —
+        HansePay bietet die Infrastruktur, auf die mittelständische Unternehmen gewartet haben.
+      </p>
+    </div>
+
+    <div class="features-grid">
+
+      <div class="feature-card reveal">
+        <div class="feature-icon-wrap">
+          <!-- Globe icon -->
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="feature-title">Internationale Zahlungen</div>
+        <div class="feature-desc">Überweisungen in über 35 Währungen — direkt und ohne Bankumwege. Abrechnung transparent, Transaktionen nachverfolgbar.</div>
+        <a href="#" class="feature-link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon-wrap">
+          <!-- Lock icon -->
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <div class="feature-title">Kurs-Sicherung (Forward)</div>
+        <div class="feature-desc">Heutigen Kurs für zukünftige Zahlungen fixieren. Kein Wechselkursrisiko, planbare Kosten — ideal bei regelmäßigen Auslandsverbindlichkeiten.</div>
+        <a href="#" class="feature-link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon-wrap">
+          <!-- Zap icon -->
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div class="feature-title">Spot FX</div>
+        <div class="feature-desc">Sofortige Ausführung zum Live-Mid-Market-Kurs. Was Sie sehen, zahlen Sie — kein Aufschlag, kein Kleingedrucktes.</div>
+        <a href="#" class="feature-link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon-wrap">
+          <!-- List icon -->
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        </div>
+        <div class="feature-title">Massenzahlungen</div>
+        <div class="feature-desc">Hunderte von Auslandszahlungen auf Knopfdruck — per CSV-Upload oder API. Für Unternehmen mit regelmäßigen Lieferanten- oder Lohnzahlungen im Ausland.</div>
+        <a href="#" class="feature-link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-4">
+        <div class="feature-icon-wrap">
+          <!-- User icon -->
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div class="feature-title">Persönlicher FX-Experte</div>
+        <div class="feature-desc">Kein Callcenter. Ein direkter Ansprechpartner, der Ihr Geschäft kennt und Sie bei Marktbewegungen proaktiv berät.</div>
+        <a href="#" class="feature-link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="feature-card reveal reveal-delay-5">
+        <div class="feature-icon-wrap">
+          <!-- Code icon -->
+          <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div class="feature-title">API-Integration</div>
+        <div class="feature-desc">Direkte Einbindung in ERP, Buchhaltungssoftware oder eigene Systeme. Vollständige Dokumentation, Sandbox-Zugang und Dev-Support inklusive.</div>
+        <a href="#" class="feature-link">Mehr erfahren <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════════════════════════ -->
+<section class="section how-section" id="so-funktionierts">
+  <div class="container">
+
+    <div style="text-align:center; max-width:600px; margin:0 auto var(--s12);">
+      <span class="eyebrow reveal">So funktioniert's</span>
+      <h2 class="section-head reveal reveal-delay-1" style="margin-top:var(--s2);">
+        In vier Schritten zur <em>ersten Zahlung.</em>
+      </h2>
+    </div>
+
+    <div class="how-grid">
+
+      <div class="how-step reveal">
+        <div class="how-num">1</div>
+        <div class="how-title">Konto eröffnen</div>
+        <div class="how-desc">Online-Antrag in unter 10 Minuten. Kein Papierkram, keine Banktermine — digitale Identifizierung inklusive.</div>
+      </div>
+
+      <div class="how-step reveal reveal-delay-1">
+        <div class="how-num">2</div>
+        <div class="how-title">Kurs anfragen</div>
+        <div class="how-desc">Live-Kurs im Dashboard oder direkt bei Ihrem Experten anfragen. Transparent, in Echtzeit, ohne Überraschungen.</div>
+      </div>
+
+      <div class="how-step reveal reveal-delay-2">
+        <div class="how-num">3</div>
+        <div class="how-title">Zahlung auslösen</div>
+        <div class="how-desc">Zahlung mit einem Klick bestätigen oder per API automatisieren. Empfänger-Validierung und IBAN-Check inklusive.</div>
+      </div>
+
+      <div class="how-step reveal reveal-delay-3">
+        <div class="how-num">4</div>
+        <div class="how-title">Echtzeit-Tracking</div>
+        <div class="how-desc">Jede Transaktion vollständig nachverfolgbar. Automatische Bestätigung und Buchungsbeleg per E-Mail.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     CALCULATOR
+══════════════════════════════════════════════════════ -->
+<section class="section calc-section" id="calculator">
+  <div class="container">
+    <div class="calc-layout">
+
+      <div class="calc-intro">
+        <span class="eyebrow reveal">Kalkulator</span>
+        <h2 class="section-head reveal reveal-delay-1" style="margin-top:var(--s2);">
+          Wie viel kostet Sie Ihre Bank <em>wirklich?</em>
+        </h2>
+        <p class="lede reveal reveal-delay-2" style="margin-top:var(--s4);">
+          Banken erheben durchschnittlich 2–4 % auf den Wechselkurs —
+          auf 500.000 € Jahresvolumen sind das bis zu 20.000 € versteckte Kosten.
+          Berechnen Sie Ihre potenzielle Ersparnis in 30 Sekunden.
+        </p>
+
+        <div style="margin-top:var(--s8); display:flex; flex-direction:column; gap:var(--s3);">
+          <div style="display:flex; align-items:flex-start; gap:var(--s3);">
+            <div style="width:36px; height:36px; border-radius:50%; background:var(--n050); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg style="width:16px;height:16px;color:var(--n400);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:600; font-size:14px; color:var(--n800);">Keine versteckten Aufschläge</div>
+              <div style="font-size:13px; color:var(--ink2); margin-top:2px;">Wir berechnen nur eine transparente Transaktionsgebühr.</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:var(--s3);">
+            <div style="width:36px; height:36px; border-radius:50%; background:var(--n050); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg style="width:16px;height:16px;color:var(--n400);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:600; font-size:14px; color:var(--n800);">Mid-Market-Kurs garantiert</div>
+              <div style="font-size:13px; color:var(--ink2); margin-top:2px;">Der echte Marktpreis — kein Bankaufschlag.</div>
+            </div>
+          </div>
+          <div style="display:flex; align-items:flex-start; gap:var(--s3);">
+            <div style="width:36px; height:36px; border-radius:50%; background:var(--n050); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+              <svg style="width:16px;height:16px;color:var(--n400);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <div>
+              <div style="font-weight:600; font-size:14px; color:var(--n800);">Konservative Schätzung</div>
+              <div style="font-size:13px; color:var(--ink2); margin-top:2px;">Realistische Vergleichswerte aus dem deutschen Geschäftsbankensektor.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Calculator Card -->
+      <div class="calc-card reveal">
+
+        <div class="calc-row">
+          <div class="calc-label">
+            <span class="calc-label-text">Jährliches Devisenvolumen</span>
+          </div>
+          <div class="calc-input-wrap">
+            <span class="calc-currency">€</span>
+            <input
+              type="number"
+              class="calc-input"
+              id="calc-volume"
+              value="250000"
+              min="10000"
+              max="50000000"
+              step="10000"
+            />
+          </div>
+        </div>
+
+        <div class="calc-row">
+          <div class="calc-label">
+            <span class="calc-label-text">Zielwährung</span>
+          </div>
+          <div class="calc-select-wrap">
+            <select class="calc-select" id="calc-currency">
+              <option value="USD">US-Dollar (USD)</option>
+              <option value="GBP">Britisches Pfund (GBP)</option>
+              <option value="CHF">Schweizer Franken (CHF)</option>
+              <option value="JPY">Japanischer Yen (JPY)</option>
+              <option value="CNY">Chinesischer Yuan (CNY)</option>
+              <option value="PLN">Polnischer Zloty (PLN)</option>
+              <option value="CZK">Tschechische Krone (CZK)</option>
+              <option value="HUF">Ungarischer Forint (HUF)</option>
+            </select>
+            <svg class="calc-select-arrow" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+
+        <div class="calc-row">
+          <div class="calc-label">
+            <span class="calc-label-text">Aktueller Bankanbieter</span>
+          </div>
+          <div class="calc-select-wrap">
+            <select class="calc-select" id="calc-bank">
+              <option value="2.5">Typische Hausbank (≈ 2,5 %)</option>
+              <option value="3.5">Große Geschäftsbank (≈ 3,5 %)</option>
+              <option value="1.5">Online-Bank (≈ 1,5 %)</option>
+              <option value="4.0">Regionalbank (≈ 4,0 %)</option>
+            </select>
+            <svg class="calc-select-arrow" style="width:16px;height:16px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </div>
+        </div>
+
+        <div class="calc-divider"></div>
+
+        <div class="calc-result" id="calc-result">
+          <div class="calc-result-row">
+            <span class="calc-result-label">Bankkosten pro Jahr</span>
+            <span class="calc-result-val" id="result-bank-cost">6.250 €</span>
+          </div>
+          <div class="calc-result-row">
+            <span class="calc-result-label">HansePay-Kosten pro Jahr</span>
+            <span class="calc-result-val" id="result-hp-cost">1.250 €</span>
+          </div>
+          <div class="calc-result-highlight">
+            <span class="calc-saving-label">Ihre Ersparnis</span>
+            <span class="calc-saving-amount" id="result-saving">5.000 €</span>
+          </div>
+        </div>
+
+        <p class="calc-disclaimer">
+          Schätzung basiert auf typischen Bankmargen im deutschen Geschäftsbankensektor (Quelle: BIS, 2024).
+          HansePay-Kosten bei 0,5 % Transaktionsgebühr. Individuelle Konditionen auf Anfrage.
+        </p>
+
+        <a href="#kontakt" class="btn btn-primary" style="width:100%; justify-content:center; margin-top:var(--s4);">
+          Genaues Angebot anfragen
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     SEGMENTS / LÖSUNGEN
+══════════════════════════════════════════════════════ -->
+<section class="section segments-section" id="loesungen">
+  <div class="container">
+
+    <div style="max-width:600px; margin-bottom:var(--s10);">
+      <span class="eyebrow reveal">Für wen</span>
+      <h2 class="section-head reveal reveal-delay-1" style="margin-top:var(--s2);">
+        Lösungen für <em>jede Branche.</em>
+      </h2>
+      <p class="lede reveal reveal-delay-2" style="margin-top:var(--s3);">
+        Ob Import, Export, E-Commerce oder professionelle Dienstleister —
+        wir kennen die spezifischen Anforderungen Ihrer Branche.
+      </p>
+    </div>
+
+    <div class="segments-grid">
+
+      <a href="#" class="segment-card reveal">
+        <div class="segment-img" style="background: linear-gradient(135deg, #1E4E80 0%, #2E6BAD 100%);">
+          <svg style="position:absolute;bottom:16px;left:16px;width:32px;height:32px;color:rgba(255,255,255,0.4);z-index:1;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <div class="segment-body">
+          <span class="segment-tag">Import &amp; Produktion</span>
+          <div class="segment-title">Importeure &amp; Hersteller</div>
+          <div class="segment-desc">Rohstoffeinkauf, Lieferantenrechnungen, Komponentenbeschaffung — planbar und kostenoptimiert.</div>
+        </div>
+      </a>
+
+      <a href="#" class="segment-card reveal reveal-delay-1">
+        <div class="segment-img" style="background: linear-gradient(135deg, #163659 0%, #1E4E80 100%);">
+          <svg style="position:absolute;bottom:16px;left:16px;width:32px;height:32px;color:rgba(255,255,255,0.4);z-index:1;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        </div>
+        <div class="segment-body">
+          <span class="segment-tag">E-Commerce</span>
+          <div class="segment-title">Online-Händler</div>
+          <div class="segment-desc">Zahlungen an internationale Marktplätze, Lieferanten und Payment-Provider ohne Wechselkurs-Überraschungen.</div>
+        </div>
+      </a>
+
+      <a href="#" class="segment-card reveal reveal-delay-2">
+        <div class="segment-img" style="background: linear-gradient(135deg, #0F2540 0%, #163659 100%);">
+          <svg style="position:absolute;bottom:16px;left:16px;width:32px;height:32px;color:rgba(255,255,255,0.4);z-index:1;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+        </div>
+        <div class="segment-body">
+          <span class="segment-tag">Logistik &amp; Spedition</span>
+          <div class="segment-title">Logistik &amp; Spedition</div>
+          <div class="segment-desc">Hafen­gebühren, Fracht­rechnungen, internationale Subunternehmer — alle Währungen, eine Plattform.</div>
+        </div>
+      </a>
+
+      <a href="#" class="segment-card reveal reveal-delay-3">
+        <div class="segment-img" style="background: linear-gradient(135deg, #2E6BAD 0%, #3B7BC4 100%);">
+          <svg style="position:absolute;bottom:16px;left:16px;width:32px;height:32px;color:rgba(255,255,255,0.4);z-index:1;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div class="segment-body">
+          <span class="segment-tag">Professional Services</span>
+          <div class="segment-title">Dienstleister &amp; Agenturen</div>
+          <div class="segment-desc">Internationale Projekte, ausländische Honorare, Remote-Teams — einfach und compliant abrechnen.</div>
+        </div>
+      </a>
+
+      <a href="#" class="segment-card reveal reveal-delay-4">
+        <div class="segment-img" style="background: linear-gradient(135deg, #1E4E80 0%, #0F2540 100%);">
+          <svg style="position:absolute;bottom:16px;left:16px;width:32px;height:32px;color:rgba(255,255,255,0.4);z-index:1;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        </div>
+        <div class="segment-body">
+          <span class="segment-tag">Mid &amp; Large Corporate</span>
+          <div class="segment-title">Mittelgroße Unternehmen</div>
+          <div class="segment-desc">Komplexe FX-Strukturen, Treasury-Integration, maßgeschneiderte Hedging-Strategien für größere Volumina.</div>
+        </div>
+      </a>
+
+      <a href="#" class="segment-card reveal reveal-delay-5">
+        <div class="segment-img" style="background: linear-gradient(135deg, #163659 0%, #2E6BAD 100%);">
+          <svg style="position:absolute;bottom:16px;left:16px;width:32px;height:32px;color:rgba(255,255,255,0.4);z-index:1;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="segment-body">
+          <span class="segment-tag">Kleinunternehmen</span>
+          <div class="segment-title">Kleinunternehmen &amp; Freelancer</div>
+          <div class="segment-desc">Einfaches Onboarding, faire Konditionen — auch für kleinere Volumina. Wachsen Sie mit uns.</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     ABOUT / CREDENTIALS
+══════════════════════════════════════════════════════ -->
+<section class="section about-section" id="ueber-uns">
+  <div class="container">
+    <div class="about-layout">
+
+      <div>
+        <span class="eyebrow about-eyebrow reveal">Über HansePay</span>
+        <h2 class="about-head reveal reveal-delay-1">
+          Die europäische Alternative <em>für den Mittelstand.</em>
+        </h2>
+        <p class="about-body reveal reveal-delay-2">
+          Gegründet 2023 in Hamburg — Deutschlands Tor zur Welt — schließt HansePay die Lücke zwischen
+          komplexen institutionellen FX-Plattformen und den unzureichenden Devisenangeboten der Hausbanken.
+          BaFin-reguliert, von Hamburg öffentlich gefördert, von institutionellen Experten beraten.
+        </p>
+        <div class="reveal reveal-delay-3">
+          <a href="#" class="btn btn-ghost-white">Mehr über uns</a>
+        </div>
+      </div>
+
+      <div class="cred-card reveal reveal-delay-1">
+
+        <div class="cred-item">
+          <div class="cred-icon-wrap">
+            <svg class="cred-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <div class="cred-title">BaFin-zugelassen</div>
+            <div class="cred-desc">EU-reguliertes E-Geld-Institut nach MiCAR. Direkte deutsche Aufsicht durch die Bundesanstalt für Finanzdienstleistungsaufsicht.</div>
+          </div>
+        </div>
+
+        <div class="cred-item">
+          <div class="cred-icon-wrap">
+            <svg class="cred-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="cred-title">Made in Hamburg</div>
+            <div class="cred-desc">Hauptsitz in Deutschlands Tor zur Welt, seit 2023. Gefördert durch den Innovationsstarter Fonds Hamburg — den städtischen Innovationsfonds.</div>
+          </div>
+        </div>
+
+        <div class="cred-item">
+          <div class="cred-icon-wrap">
+            <svg class="cred-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div>
+            <div class="cred-title">Institutionelle Expertise</div>
+            <div class="cred-desc">Gegründet und beraten von erfahrenen FX- und Finanzexperten mit Hintergrund bei führenden institutionellen Häusern.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     INSIGHTS
+══════════════════════════════════════════════════════ -->
+<section class="section insights-section" id="insights">
+  <div class="container">
+
+    <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:var(--s10); flex-wrap:wrap; gap:var(--s4);">
+      <div>
+        <span class="eyebrow reveal">Market Insights</span>
+        <h2 class="section-head reveal reveal-delay-1" style="margin-top:var(--s2);">
+          Marktanalysen von <em>unserem Desk.</em>
+        </h2>
+      </div>
+      <a href="#" class="btn btn-ghost-navy reveal reveal-delay-2">Alle Insights</a>
+    </div>
+
+    <div class="insights-grid">
+
+      <div class="insight-card reveal">
+        <div class="insight-thumb" style="background: linear-gradient(135deg, var(--n050) 0%, #dce8f5 100%);">
+          <div style="padding:24px; font-family:var(--font-display); font-style:italic; font-size:28px; color:var(--n300); line-height:1.1;">EUR/USD</div>
+          <div class="insight-thumb-bar"></div>
+        </div>
+        <div class="insight-body">
+          <span class="insight-tag">Wochenausblick</span>
+          <div class="insight-title">EUR/USD Ausblick, April 2026</div>
+          <div class="insight-meta">21. Apr. 2026 · 4 Min. Lesezeit</div>
+        </div>
+      </div>
+
+      <div class="insight-card reveal reveal-delay-1">
+        <div class="insight-thumb" style="background: linear-gradient(135deg, #dce8f5 0%, var(--n050) 100%);">
+          <div style="padding:24px; font-family:var(--font-display); font-style:italic; font-size:22px; color:var(--n300); line-height:1.3; max-width:180px;">FX-Kosten im Mittelstand</div>
+          <div class="insight-thumb-bar"></div>
+        </div>
+        <div class="insight-body">
+          <span class="insight-tag">Strategie</span>
+          <div class="insight-title">Wie Unternehmen FX-Kosten 2026 richtig einschätzen</div>
+          <div class="insight-meta">18. Apr. 2026 · 6 Min. Lesezeit</div>
+        </div>
+      </div>
+
+      <div class="insight-card reveal reveal-delay-2">
+        <div class="insight-thumb" style="background: linear-gradient(135deg, var(--n100) 0%, var(--n050) 100%);">
+          <div style="padding:24px; font-family:var(--font-display); font-style:italic; font-size:22px; color:var(--n400); line-height:1.3; max-width:200px;">Aktives Währungsrisiko&shy;management</div>
+          <div class="insight-thumb-bar"></div>
+        </div>
+        <div class="insight-body">
+          <span class="insight-tag">Deep Dive</span>
+          <div class="insight-title">Der Fall für aktives FX-Risikomanagement</div>
+          <div class="insight-meta">14. Apr. 2026 · 8 Min. Lesezeit</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     CTA BAND
+══════════════════════════════════════════════════════ -->
+<section class="cta-band" id="kontakt">
+  <div class="container">
+    <div class="cta-inner">
+      <span class="cta-eyebrow">Jetzt starten</span>
+      <h2 class="cta-headline">
+        Bereit für ein echtes <em>FX-Team?</em>
+      </h2>
+      <p class="cta-sub">
+        Konto in wenigen Minuten eröffnen oder direkt mit einem Devisenexperten sprechen.
+        Keine Mindestvolumina, keine Vertragsbindung.
+      </p>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-white-fill">Geschäftskonto eröffnen</a>
+        <a href="#" class="btn btn-ghost-white">Mit Experten sprechen</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div>
+        <div class="footer-brand-wordmark">
+          <svg style="width:24px;height:24px;" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 26V14a11 11 0 0 1 22 0v12" stroke="rgba(255,255,255,0.6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <rect x="13" y="18" width="6" height="8" rx="1" fill="rgba(255,255,255,0.5)"/>
+            <circle cx="10" cy="19" r="2" fill="rgba(255,255,255,0.25)"/>
+            <circle cx="22" cy="19" r="2" fill="rgba(255,255,255,0.25)"/>
+          </svg>
+          HansePay
+        </div>
+        <p class="footer-tagline">Commercial FX, made in Hamburg.</p>
+        <p class="footer-legal-note">© 2026 Caplend Technologies GmbH<br/>HansePay ist eine Marke der Caplend Technologies GmbH</p>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Produkt</div>
+        <ul class="footer-links">
+          <li><a class="footer-link" href="#">Zahlungen</a></li>
+          <li><a class="footer-link" href="#">Kurs-Sicherung</a></li>
+          <li><a class="footer-link" href="#">Spot FX</a></li>
+          <li><a class="footer-link" href="#">Massenzahlungen</a></li>
+          <li><a class="footer-link" href="#">API</a></li>
+          <li><a class="footer-link" href="#">Sicherheit</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Unternehmen</div>
+        <ul class="footer-links">
+          <li><a class="footer-link" href="#">Über uns</a></li>
+          <li><a class="footer-link" href="#">Team</a></li>
+          <li><a class="footer-link" href="#">Insights</a></li>
+          <li><a class="footer-link" href="#">Karriere</a></li>
+          <li><a class="footer-link" href="#">Kontakt</a></li>
+          <li><a class="footer-link" href="#">Presse</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="footer-col-title">Rechtliches</div>
+        <ul class="footer-links">
+          <li><a class="footer-link" href="#">Impressum</a></li>
+          <li><a class="footer-link" href="#">Datenschutz</a></li>
+          <li><a class="footer-link" href="#">AGB</a></li>
+          <li><a class="footer-link" href="#">Beschwerden</a></li>
+          <li><a class="footer-link" href="#">Regulatorik</a></li>
+          <li><a class="footer-link" href="#">Lizenzen</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-divider"></div>
+
+    <div class="footer-bottom">
+      <span class="footer-copyright">
+        HansePay · Hamburg, Deutschland · Reguliert durch die BaFin
+      </span>
+      <span class="footer-bafin">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        BaFin-reguliert · EU E-Geld-Institut
+      </span>
+    </div>
+
+  </div>
+</footer>
+
+
+<!-- ══════════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+// ── Nav scroll behavior ──────────────────────────────
+const nav = document.getElementById('main-nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ── Calculator ───────────────────────────────────────
+const volumeInput = document.getElementById('calc-volume');
+const currencySelect = document.getElementById('calc-currency');
+const bankSelect = document.getElementById('calc-bank');
+const bankCostEl = document.getElementById('result-bank-cost');
+const hpCostEl = document.getElementById('result-hp-cost');
+const savingEl = document.getElementById('result-saving');
+
+function fmt(n) {
+  return new Intl.NumberFormat('de-DE', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0
+  }).format(n);
+}
+
+function updateCalc() {
+  const vol = parseFloat(volumeInput.value) || 0;
+  const bankRate = parseFloat(bankSelect.value) / 100;
+  const hpRate = 0.005; // 0.5% HansePay fee
+
+  const bankCost = vol * bankRate;
+  const hpCost = vol * hpRate;
+  const saving = bankCost - hpCost;
+
+  bankCostEl.textContent = fmt(bankCost);
+  hpCostEl.textContent = fmt(hpCost);
+  savingEl.textContent = fmt(saving);
+}
+
+volumeInput.addEventListener('input', updateCalc);
+currencySelect.addEventListener('change', updateCalc);
+bankSelect.addEventListener('change', updateCalc);
+updateCalc();
+
+// ── Scroll reveal ────────────────────────────────────
+const revealEls = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach(el => observer.observe(el));
+
+// ── Smooth scroll for nav links ──────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>

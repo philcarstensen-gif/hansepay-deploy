@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay — Cross-border payments, reimagined.</title>
+<meta name="description" content="Global payment infrastructure for modern business. Mid-market rates, BaFin-regulated, dedicated expert service." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS — identical to Version A ── */
+:root {
+  --n900:#060D1A;--n800:#0B1929;--n700:#0F2540;--n600:#163659;
+  --n500:#1E4E80;--n400:#2E6BAD;--n300:#3B7BC4;--n200:#8DBDE6;
+  --n100:#C4DDEF;--n050:#EBF4FB;--off:#F5F1EA;--gold:#C9A961;
+  --gold2:#E0C27A;--gold3:#F0D99A;
+  --ink:#0B1929;--ink2:#3D5A73;--ink3:#7A9AB0;
+  --font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-display:Georgia,'Times New Roman',serif;
+  --font-logo:'Libre Baskerville',Georgia,serif;
+  --r-pill:100px;--r-lg:16px;--r-md:10px;--r-sm:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-ui);color:#fff;background:var(--n800);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.btn-gold{background:var(--gold);color:var(--n800)}.btn-gold:hover{background:var(--gold2)}
+.btn-ghost-white{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.38)}.btn-ghost-white:hover{background:rgba(255,255,255,.08)}
+.btn-primary{background:var(--n500);color:#fff}.btn-primary:hover{background:var(--n600)}
+
+/* ── NAV — dark glass, always ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80px);height:68px;display:flex;align-items:center;transition:background .25s,box-shadow .25s}
+nav.scrolled{background:rgba(6,13,26,.92);box-shadow:0 1px 0 rgba(255,255,255,.06);backdrop-filter:blur(20px) saturate(1.4);-webkit-backdrop-filter:blur(20px) saturate(1.4)}
+.nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;gap:0}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;margin-right:40px}
+.nav-logo img{height:28px;width:28px;object-fit:contain}
+.nav-logo-text{font-family:var(--font-logo);font-size:19px;font-weight:400;letter-spacing:-.02em;color:#fff;line-height:1}
+.nav-links{display:flex;align-items:stretch;gap:0;list-style:none;flex:1;height:68px}
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-link{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:500;color:rgba(255,255,255,.52);transition:color .15s;white-space:nowrap;padding:0 16px;height:100%;cursor:pointer}
+.nav-link:hover{color:#fff}
+.nav-link svg{transition:transform .2s ease;flex-shrink:0}
+.nav-item:hover .nav-link svg{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:calc(100% + 1px);left:50%;transform:translateX(-50%);width:260px;
+  background:rgba(6,13,26,.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.1);border-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.08);
+  padding:10px;opacity:0;pointer-events:none;transform:translateX(-50%) translateY(-6px);
+  transition:opacity .18s ease,transform .18s ease}
+.nav-item:hover .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-dropdown-section{padding:6px 0 2px}
+.nav-dropdown-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.25);padding:4px 12px 8px;display:block}
+.nav-dd-link{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:9px;text-decoration:none;transition:background .14s}
+.nav-dd-link:hover{background:rgba(255,255,255,.06)}
+.nav-dd-icon{width:32px;height:32px;border-radius:8px;background:rgba(201,169,97,.10);border:1px solid rgba(201,169,97,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-dd-icon svg{width:14px;height:14px;color:var(--gold)}
+.nav-dd-text{flex:1;min-width:0}
+.nav-dd-title{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.nav-dd-sub{font-size:11px;color:rgba(255,255,255,.35);margin-top:1px}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:16px;flex-shrink:0}
+.nav-cta{background:var(--gold);color:var(--n800);border:none;padding:8px 20px;font-size:13px;font-weight:600;border-radius:var(--r-pill)}
+.nav-cta:hover{background:var(--gold2)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;border-radius:2px;background:rgba(255,255,255,.75);transition:all .22s ease}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(6,13,26,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.06);padding:24px clamp(20px,5vw,80px);z-index:199;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu-link{font-size:16px;font-weight:500;color:rgba(255,255,255,.7);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mobile-menu-sub{font-size:14px;color:rgba(255,255,255,.4);padding:8px 0 8px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+.mobile-menu-cta{margin-top:16px}
+@media(max-width:768px){.nav-links{display:none}.nav-burger{display:flex}}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:var(--n800);
+  overflow:hidden;
+}
+/* Subtle radial highlights */
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(30,78,128,.22) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(201,169,97,.06) 0%, transparent 55%);
+  pointer-events:none;
+}
+
+/* Bridge SVG — full width, bottom-anchored */
+.bridge-scene{
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  width:100%;
+  height:78%;
+  pointer-events:none;
+}
+
+/* Text over bridge */
+.hero-inner{
+  position:relative;
+  z-index:2;
+  max-width:1240px;
+  margin:0 auto;
+  width:100%;
+  padding:120px clamp(20px,5vw,80px) 0;
+}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:var(--r-pill);background:rgba(201,169,97,.10);border:1px solid rgba(201,169,97,.22);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:28px}
+.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.hero-headline{font-family:var(--font-display);font-size:clamp(44px,5.4vw,80px);font-weight:400;line-height:1.04;letter-spacing:-.03em;color:#fff;margin-bottom:22px;max-width:640px}
+.hero-headline em{font-style:italic;color:var(--gold2)}
+.hero-sub{font-size:clamp(15px,1.4vw,17px);font-weight:300;color:rgba(255,255,255,.58);line-height:1.7;max-width:480px;margin-bottom:36px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}
+.hero-stats{display:flex;flex-wrap:wrap;gap:40px;align-items:center;padding-bottom:clamp(300px,38vw,420px)}
+.stat-val{font-family:var(--font-display);font-size:28px;font-weight:400;color:#fff;letter-spacing:-.02em;line-height:1.1}
+.stat-val em{font-style:italic;color:var(--gold2)}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.38);margin-top:3px;letter-spacing:.06em;text-transform:uppercase}
+.stat-sep{width:1px;height:44px;background:rgba(255,255,255,.1)}
+
+/* ── TRUST STRIP ── */
+.trust-strip{background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);padding:0}
+.trust-inner{display:grid;grid-template-columns:repeat(4,1fr);align-items:center;max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+.trust-item{display:flex;align-items:center;gap:12px;padding:16px 24px;border-right:1px solid rgba(255,255,255,.07);justify-content:center}
+.trust-item:last-child{border-right:none}
+.trust-item svg{width:18px;height:18px;flex-shrink:0;color:var(--gold)}
+.trust-txt-main{font-size:13px;font-weight:600;color:#fff;white-space:nowrap}
+.trust-txt-sub{font-size:11px;color:rgba(255,255,255,.35);white-space:nowrap}
+@media(max-width:900px){.trust-inner{grid-template-columns:repeat(2,1fr)}.trust-item:nth-child(2){border-right:none}.trust-item:nth-child(3){border-top:1px solid rgba(255,255,255,.07)}.trust-item:nth-child(4){border-top:1px solid rgba(255,255,255,.07);border-right:none}}
+
+/* ── FEATURES ── */
+.section{padding:96px 0}
+.eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.section-head{font-family:var(--font-display);font-size:clamp(30px,3.5vw,46px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:#fff}
+.section-head em{font-style:italic;color:var(--gold2)}
+.lede{font-size:16px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.65}
+.section-intro{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:end;margin-bottom:64px}
+@media(max-width:768px){.section-intro{grid-template-columns:1fr;gap:24px}}
+
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:var(--r-lg);overflow:hidden}
+@media(max-width:900px){.features-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.features-grid{grid-template-columns:1fr}}
+.feat-card{background:rgba(255,255,255,.03);padding:40px;display:flex;flex-direction:column;gap:16px;transition:background .2s}
+.feat-card:hover{background:rgba(255,255,255,.06)}
+.feat-icon-wrap{width:44px;height:44px;border-radius:var(--r-md);background:rgba(201,169,97,.08);border:1px solid rgba(201,169,97,.16);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.feat-icon{width:20px;height:20px;color:var(--gold)}
+.feat-title{font-family:var(--font-display);font-size:18px;font-weight:400;color:#fff;letter-spacing:-.01em}
+.feat-desc{font-size:14px;color:rgba(255,255,255,.5);line-height:1.6;flex:1}
+.feat-link{font-size:13px;font-weight:600;color:var(--gold);display:inline-flex;align-items:center;gap:4px;margin-top:auto;padding-top:4px;opacity:.8}
+.feat-link:hover{opacity:1}
+.feat-link svg{width:14px;height:14px}
+
+/* ── HOW IT WORKS ── */
+.how-section{background:rgba(255,255,255,.025);border-top:1px solid rgba(255,255,255,.06)}
+.how-intro{text-align:center;max-width:600px;margin:0 auto 64px}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative}
+.how-grid::before{content:'';position:absolute;top:68px;left:calc(12.5% + 28px);right:calc(12.5% + 28px);height:1px;background:linear-gradient(90deg,rgba(201,169,97,.2),rgba(201,169,97,.6),rgba(201,169,97,.2));z-index:0}
+@media(max-width:900px){.how-grid{grid-template-columns:1fr 1fr}.how-grid::before{display:none}}
+@media(max-width:560px){.how-grid{grid-template-columns:1fr}}
+.how-step{position:relative;z-index:1;text-align:center;padding:40px 20px}
+.how-num{width:56px;height:56px;border-radius:50%;background:rgba(201,169,97,.08);border:1px solid rgba(201,169,97,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--font-display);font-style:italic;font-size:22px;font-weight:400;color:var(--gold)}
+.how-title{font-size:15px;font-weight:600;color:#fff;margin-bottom:8px}
+.how-desc{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6}
+
+/* ── CTA ── */
+.cta-band{padding:128px 0;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 0%,rgba(201,169,97,.12) 0%,transparent 60%),var(--n900)}
+.cta-inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
+.cta-eyebrow{color:var(--gold);margin-bottom:20px;display:block}
+.cta-head{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);font-weight:400;line-height:1.1;letter-spacing:-.025em;color:#fff;margin-bottom:20px}
+.cta-head em{font-style:italic;color:var(--gold2)}
+.cta-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.65;margin-bottom:48px}
+.cta-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+
+/* ── FOOTER ── */
+footer{background:#040a10;padding:96px 0 48px;border-top:1px solid rgba(255,255,255,.05)}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:64px;margin-bottom:80px}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:48px}}
+@media(max-width:560px){.footer-grid{grid-template-columns:1fr}}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.footer-logo img{height:28px;width:28px;object-fit:contain}
+.footer-logo-text{font-family:var(--font-logo);font-size:18px;font-weight:400;color:#fff;letter-spacing:-.02em}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,.35);line-height:1.6;max-width:240px;margin-bottom:12px}
+.footer-legal{font-size:11px;color:rgba(255,255,255,.2);line-height:1.6}
+.footer-col-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75);margin-bottom:20px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-link{font-size:13px;color:rgba(255,255,255,.35);transition:color .15s}.footer-link:hover{color:rgba(255,255,255,.85)}
+.footer-hr{height:1px;background:rgba(255,255,255,.06);margin-bottom:28px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.2)}
+.bafin-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.3);padding:5px 12px;border:1px solid rgba(255,255,255,.08);border-radius:var(--r-pill)}
+.bafin-badge svg{width:12px;height:12px;color:var(--gold)}
+
+/* ── VIEW TOGGLE ── */
+.view-toggle{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;background:rgba(6,13,26,.88);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:4px;gap:2px;box-shadow:0 4px 24px rgba(0,0,0,.35)}
+.view-toggle a{font-size:12px;font-weight:600;letter-spacing:.04em;padding:6px 14px;border-radius:var(--r-pill);text-decoration:none;transition:all .18s ease;white-space:nowrap}
+.view-toggle a.active{background:#fff;color:var(--n800)}
+.view-toggle a:not(.active){color:rgba(255,255,255,.45)}
+.view-toggle a:not(.active):hover{color:#fff}
+
+@media(max-width:768px){
+  .section{padding:64px 0}
+  .cta-band{padding:80px 0}
+  footer{padding:64px 0 40px}
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .hero-stats{padding-bottom:clamp(200px,50vw,320px);gap:24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay" />
+      <span class="nav-logo-text">HansePay</span>
+    </a>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <span class="nav-link">
+          Product
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Features</span>
+            <a href="index.html#product" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">FX Execution</div><div class="nav-dd-sub">Mid-market rates, zero markup</div></div>
+            </a>
+            <a href="index.html#transfers" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Global Payments</div><div class="nav-dd-sub">Send to 35+ currencies in minutes</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="platform.html">
+          Platform
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Platform</span>
+            <a href="platform.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Overview</div><div class="nav-dd-sub">See the full platform</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="index.html#calculator">Pricing</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#solutions">Solutions</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="index.html#contact" class="btn nav-cta">Open an account</a>
+      <button class="nav-burger" id="nav-burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a class="mobile-menu-link" href="index.html#product" onclick="closeMobileMenu()">Product</a>
+  <a class="mobile-menu-sub" href="index.html#transfers" onclick="closeMobileMenu()">FX Execution</a>
+  <a class="mobile-menu-link" href="platform.html" onclick="closeMobileMenu()">Platform</a>
+  <a class="mobile-menu-link" href="index.html#calculator" onclick="closeMobileMenu()">Pricing</a>
+  <a class="mobile-menu-link" href="index.html#solutions" onclick="closeMobileMenu()">Solutions</a>
+  <a class="mobile-menu-link" href="index.html#about" onclick="closeMobileMenu()">About</a>
+  <a href="index.html#contact" class="btn btn-gold mobile-menu-cta" onclick="closeMobileMenu()">Open an account</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+
+  <!-- Full-width bridge SVG, bottom-anchored -->
+  <svg class="bridge-scene" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <!-- Gold cable gradient — brighter at top, dimmer at deck -->
+      <linearGradient id="cableGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#C9A961" stop-opacity="0.90"/>
+        <stop offset="100%" stop-color="#C9A961" stop-opacity="0.45"/>
+      </linearGradient>
+      <!-- Water shimmer gradient -->
+      <linearGradient id="waterGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#0B1929" stop-opacity="0"/>
+        <stop offset="40%" stop-color="#0A1622" stop-opacity="0.85"/>
+        <stop offset="100%" stop-color="#060D1A" stop-opacity="1"/>
+      </linearGradient>
+      <!-- Pylon gradient — darker at base -->
+      <linearGradient id="pylonGrad" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#C9A961" stop-opacity="0.95"/>
+        <stop offset="100%" stop-color="#C9A961" stop-opacity="0.55"/>
+      </linearGradient>
+    </defs>
+
+    <!-- ── CONSTRUCTION / GUIDE LINES (very faint, architectural feel) ── -->
+    <!-- Horizontal axis through pylon tops -->
+    <line x1="0" y1="118" x2="1440" y2="118" stroke="#C9A961" stroke-width="0.4" opacity="0.12" stroke-dasharray="6,8"/>
+    <!-- Vertical axis through each pylon -->
+    <line x1="420" y1="0" x2="420" y2="600" stroke="#C9A961" stroke-width="0.4" opacity="0.10" stroke-dasharray="6,8"/>
+    <line x1="1020" y1="0" x2="1020" y2="600" stroke="#C9A961" stroke-width="0.4" opacity="0.10" stroke-dasharray="6,8"/>
+    <!-- Horizontal deck axis -->
+    <line x1="0" y1="420" x2="1440" y2="420" stroke="#C9A961" stroke-width="0.3" opacity="0.10" stroke-dasharray="8,10"/>
+
+    <!-- ── WATER ── -->
+    <rect x="0" y="440" width="1440" height="160" fill="#070f18" opacity="0.7"/>
+    <!-- Water shimmer lines -->
+    <line x1="80" y1="462" x2="320" y2="462" stroke="#C9A961" stroke-width="0.6" opacity="0.06"/>
+    <line x1="400" y1="470" x2="680" y2="470" stroke="#C9A961" stroke-width="0.5" opacity="0.05"/>
+    <line x1="720" y1="458" x2="1000" y2="458" stroke="#C9A961" stroke-width="0.6" opacity="0.06"/>
+    <line x1="1040" y1="475" x2="1340" y2="475" stroke="#C9A961" stroke-width="0.5" opacity="0.05"/>
+    <line x1="160" y1="490" x2="500" y2="490" stroke="#C9A961" stroke-width="0.4" opacity="0.04"/>
+    <line x1="600" y1="484" x2="900" y2="484" stroke="#C9A961" stroke-width="0.4" opacity="0.04"/>
+    <line x1="950" y1="495" x2="1280" y2="495" stroke="#C9A961" stroke-width="0.4" opacity="0.04"/>
+    <!-- Bridge deck water reflection (mirror) -->
+    <line x1="60" y1="442" x2="1380" y2="442" stroke="#C9A961" stroke-width="1.0" opacity="0.18"/>
+
+    <!-- ── BRIDGE DECK ── -->
+    <!-- Lower chord / road surface -->
+    <rect x="60" y="418" width="1320" height="8" fill="#C9A961" opacity="0.20" rx="1"/>
+    <!-- Main deck line -->
+    <line x1="60" y1="422" x2="1380" y2="422" stroke="#C9A961" stroke-width="2.2" opacity="0.85"/>
+    <!-- Deck underside line -->
+    <line x1="60" y1="426" x2="1380" y2="426" stroke="#C9A961" stroke-width="0.8" opacity="0.30"/>
+    <!-- Deck stiffeners (vertical ribs) -->
+    <g stroke="#C9A961" stroke-width="0.6" opacity="0.18">
+      <line x1="140" y1="418" x2="140" y2="430"/>
+      <line x1="220" y1="418" x2="220" y2="430"/>
+      <line x1="300" y1="418" x2="300" y2="430"/>
+      <line x1="380" y1="418" x2="380" y2="430"/>
+      <line x1="460" y1="418" x2="460" y2="430"/>
+      <line x1="540" y1="418" x2="540" y2="430"/>
+      <line x1="620" y1="418" x2="620" y2="430"/>
+      <line x1="700" y1="418" x2="700" y2="430"/>
+      <line x1="780" y1="418" x2="780" y2="430"/>
+      <line x1="860" y1="418" x2="860" y2="430"/>
+      <line x1="940" y1="418" x2="940" y2="430"/>
+      <line x1="1020" y1="418" x2="1020" y2="430"/>
+      <line x1="1100" y1="418" x2="1100" y2="430"/>
+      <line x1="1180" y1="418" x2="1180" y2="430"/>
+      <line x1="1260" y1="418" x2="1260" y2="430"/>
+      <line x1="1340" y1="418" x2="1340" y2="430"/>
+    </g>
+
+    <!-- ── LEFT PYLON (x=420) ── -->
+    <!-- Pylon shaft (tapers slightly toward top) -->
+    <polygon points="408,422 432,422 428,118 412,118" fill="url(#pylonGrad)" opacity="0.88"/>
+    <!-- Cross beam (horizontal stiffener at mid-height) -->
+    <rect x="388" y="265" width="64" height="7" fill="#C9A961" opacity="0.55" rx="1"/>
+    <rect x="394" y="272" width="52" height="3" fill="#C9A961" opacity="0.30" rx="1"/>
+    <!-- Pylon crown cap -->
+    <rect x="406" y="110" width="28" height="10" fill="#C9A961" opacity="0.70" rx="2"/>
+    <!-- Pylon inner detail lines -->
+    <line x1="420" y1="118" x2="420" y2="422" stroke="#0B1929" stroke-width="1.5" opacity="0.4"/>
+
+    <!-- ── RIGHT PYLON (x=1020) ── -->
+    <polygon points="1008,422 1032,422 1028,118 1012,118" fill="url(#pylonGrad)" opacity="0.88"/>
+    <rect x="988" y="265" width="64" height="7" fill="#C9A961" opacity="0.55" rx="1"/>
+    <rect x="994" y="272" width="52" height="3" fill="#C9A961" opacity="0.30" rx="1"/>
+    <rect x="1006" y="110" width="28" height="10" fill="#C9A961" opacity="0.70" rx="2"/>
+    <line x1="1020" y1="118" x2="1020" y2="422" stroke="#0B1929" stroke-width="1.5" opacity="0.4"/>
+
+    <!-- ── LEFT PYLON CABLES (fan from crown at 420,118) ── -->
+    <g stroke="url(#cableGrad)" stroke-linecap="round" fill="none">
+      <!-- Back stays (toward left abutment) -->
+      <line x1="418" y1="122" x2="80"  y2="422" stroke-width="1.6" opacity="0.75"/>
+      <line x1="418" y1="124" x2="140" y2="422" stroke-width="1.5" opacity="0.68"/>
+      <line x1="418" y1="126" x2="200" y2="422" stroke-width="1.4" opacity="0.62"/>
+      <line x1="419" y1="128" x2="260" y2="422" stroke-width="1.3" opacity="0.56"/>
+      <line x1="419" y1="130" x2="320" y2="422" stroke-width="1.2" opacity="0.50"/>
+      <line x1="419" y1="132" x2="370" y2="422" stroke-width="1.1" opacity="0.44"/>
+      <!-- Forward stays (toward center span) -->
+      <line x1="422" y1="132" x2="480" y2="422" stroke-width="1.1" opacity="0.44"/>
+      <line x1="422" y1="130" x2="540" y2="422" stroke-width="1.2" opacity="0.50"/>
+      <line x1="422" y1="128" x2="600" y2="422" stroke-width="1.3" opacity="0.56"/>
+      <line x1="422" y1="126" x2="650" y2="422" stroke-width="1.4" opacity="0.62"/>
+      <line x1="422" y1="124" x2="700" y2="422" stroke-width="1.5" opacity="0.68"/>
+      <line x1="422" y1="122" x2="740" y2="422" stroke-width="1.6" opacity="0.72"/>
+    </g>
+
+    <!-- ── RIGHT PYLON CABLES (fan from crown at 1020,118) ── -->
+    <g stroke="url(#cableGrad)" stroke-linecap="round" fill="none">
+      <!-- Back stays (toward left, center span) -->
+      <line x1="1018" y1="122" x2="700"  y2="422" stroke-width="1.6" opacity="0.72"/>
+      <line x1="1018" y1="124" x2="740"  y2="422" stroke-width="1.5" opacity="0.68"/>
+      <line x1="1018" y1="126" x2="790"  y2="422" stroke-width="1.4" opacity="0.62"/>
+      <line x1="1019" y1="128" x2="840"  y2="422" stroke-width="1.3" opacity="0.56"/>
+      <line x1="1019" y1="130" x2="890"  y2="422" stroke-width="1.2" opacity="0.50"/>
+      <line x1="1019" y1="132" x2="940"  y2="422" stroke-width="1.1" opacity="0.44"/>
+      <!-- Forward stays (toward right abutment) -->
+      <line x1="1022" y1="132" x2="1100" y2="422" stroke-width="1.1" opacity="0.44"/>
+      <line x1="1022" y1="130" x2="1160" y2="422" stroke-width="1.2" opacity="0.50"/>
+      <line x1="1022" y1="128" x2="1220" y2="422" stroke-width="1.3" opacity="0.56"/>
+      <line x1="1022" y1="126" x2="1270" y2="422" stroke-width="1.4" opacity="0.62"/>
+      <line x1="1022" y1="124" x2="1320" y2="422" stroke-width="1.5" opacity="0.68"/>
+      <line x1="1022" y1="122" x2="1360" y2="422" stroke-width="1.6" opacity="0.75"/>
+    </g>
+
+    <!-- ── ABUTMENTS / APPROACH SPANS ── -->
+    <!-- Left approach piers -->
+    <line x1="80"  y1="422" x2="80"  y2="470" stroke="#C9A961" stroke-width="2.5" opacity="0.35"/>
+    <line x1="160" y1="422" x2="160" y2="465" stroke="#C9A961" stroke-width="2.0" opacity="0.28"/>
+    <line x1="240" y1="422" x2="240" y2="460" stroke="#C9A961" stroke-width="1.8" opacity="0.22"/>
+    <!-- Right approach piers -->
+    <line x1="1360" y1="422" x2="1360" y2="470" stroke="#C9A961" stroke-width="2.5" opacity="0.35"/>
+    <line x1="1280" y1="422" x2="1280" y2="465" stroke="#C9A961" stroke-width="2.0" opacity="0.28"/>
+    <line x1="1200" y1="422" x2="1200" y2="460" stroke="#C9A961" stroke-width="1.8" opacity="0.22"/>
+
+    <!-- ── CABLE REFLECTIONS IN WATER (mirrored, faded) ── -->
+    <g opacity="0.08" stroke="#C9A961" stroke-linecap="round" fill="none">
+      <line x1="418" y1="442" x2="80"  y2="520" stroke-width="1.0"/>
+      <line x1="418" y1="442" x2="200" y2="510" stroke-width="0.8"/>
+      <line x1="418" y1="442" x2="320" y2="500" stroke-width="0.7"/>
+      <line x1="422" y1="442" x2="600" y2="500" stroke-width="0.8"/>
+      <line x1="422" y1="442" x2="740" y2="510" stroke-width="1.0"/>
+      <line x1="1018" y1="442" x2="700"  y2="510" stroke-width="1.0"/>
+      <line x1="1022" y1="442" x2="1220" y2="500" stroke-width="0.8"/>
+      <line x1="1022" y1="442" x2="1360" y2="520" stroke-width="1.0"/>
+    </g>
+
+    <!-- Water overlay gradient (darkens bottom) -->
+    <rect x="0" y="420" width="1440" height="180" fill="url(#waterGrad)"/>
+  </svg>
+
+  <!-- Hero copy -->
+  <div class="hero-inner">
+    <div class="hero-chip"><span class="hero-chip-dot"></span>Commercial FX &middot; Hamburg</div>
+    <h1 class="hero-headline">Cross-border<br>payments, <em>reimagined.</em></h1>
+    <p class="hero-sub">Global payment infrastructure for modern business. Precise, regulated cross-border FX execution at mid-market rates — built on Hamburg's centuries of trade.</p>
+    <div class="hero-actions">
+      <a href="index.html#contact" class="btn btn-gold">Open an account</a>
+      <a href="index.html#contact" class="btn btn-ghost-white">Talk to our team</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">35<em>+</em></div>
+        <div class="stat-lbl">Currencies</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div>
+        <div class="stat-val">0<em>%</em></div>
+        <div class="stat-lbl">FX Markup</div>
+      </div>
+      <div class="stat-sep"></div>
+      <div>
+        <div class="stat-val">120<em>+</em></div>
+        <div class="stat-lbl">Countries</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <div><div class="trust-txt-main">BaFin Regulated</div><div class="trust-txt-sub">EU-licensed E-Money Institution</div></div>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      <div><div class="trust-txt-main">Mid-Market Rate</div><div class="trust-txt-sub">No hidden markups, ever</div></div>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <div><div class="trust-txt-main">Live Pricing</div><div class="trust-txt-sub">Real-time rates around the clock</div></div>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <div><div class="trust-txt-main">Dedicated Expert</div><div class="trust-txt-sub">Direct contact, no call centre</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section class="section" id="product">
+  <div class="container">
+    <div class="section-intro">
+      <div>
+        <div style="margin-bottom:12px"><span class="eyebrow">The Product</span></div>
+        <h2 class="section-head">Everything you need for <em>international payments.</em></h2>
+      </div>
+      <p class="lede">From one-off transfers to complex FX hedging — HansePay provides the infrastructure mid-sized businesses have been waiting for.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="feat-title">International Payments</div>
+        <div class="feat-desc">Transfers in 35+ currencies — direct and without bank detours. Transparent settlement, fully trackable.</div>
+        <a href="#" class="feat-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+        <div class="feat-title">Rate Hedging (Forward)</div>
+        <div class="feat-desc">Lock in today's rate for future payments. No FX risk, predictable costs — ideal for recurring foreign liabilities.</div>
+        <a href="#" class="feat-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+        <div class="feat-title">FX Execution</div>
+        <div class="feat-desc">Mid-market interbank rates passed directly. Zero spread, zero markup — the same rate banks trade with each other.</div>
+        <a href="#" class="feat-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="feat-title">Instant Settlement</div>
+        <div class="feat-desc">Same-day and next-day delivery on major corridors. Real-time confirmation for your treasury.</div>
+        <a href="#" class="feat-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="feat-title">Recipient Management</div>
+        <div class="feat-desc">Store and verify beneficiaries globally. IBAN, SWIFT, and local formats across 120+ countries.</div>
+        <a href="#" class="feat-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon-wrap"><svg class="feat-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+        <div class="feat-title">API &amp; Integrations</div>
+        <div class="feat-desc">Connect your ERP, TMS, or accounting system. RESTful API with webhooks, batch upload, and sandbox.</div>
+        <a href="#" class="feat-link">Learn more <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-section">
+  <div class="container">
+    <div class="how-intro">
+      <div style="margin-bottom:12px"><span class="eyebrow">How it works</span></div>
+      <h2 class="section-head" style="margin:16px 0 16px">From quote to <em>cleared funds</em> in four steps.</h2>
+      <p class="lede">No paperwork delays, no opaque pricing. Just fast, precise FX execution the way it should be.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-title">Get a quote</div>
+        <div class="how-desc">Live mid-market rate with a clear fee. What you see is what settles.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-title">Confirm the trade</div>
+        <div class="how-desc">One click locks your rate. Spot, forward, or scheduled — your choice.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-title">Fund the payment</div>
+        <div class="how-desc">Transfer from your account. Funds tracked from the moment they arrive.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <div class="how-title">Recipient receives</div>
+        <div class="how-desc">Same-day or next-day on major corridors. Instant confirmation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-inner">
+      <span class="eyebrow cta-eyebrow">Get started today</span>
+      <h2 class="cta-head">Ready to cross the<br><em>next meridian?</em></h2>
+      <p class="cta-sub">Join hundreds of European businesses moving money smarter. Open your account in under two hours — no hidden fees, dedicated support from day one.</p>
+      <div class="cta-actions">
+        <a href="index.html#contact" class="btn btn-gold">Open a business account</a>
+        <a href="index.html#contact" class="btn btn-ghost-white">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay" />
+          <span class="footer-logo-text">HansePay</span>
+        </div>
+        <p class="footer-tagline">Global payments rooted in Hamburg's trading heritage.</p>
+        <p class="footer-legal">© 2025 HansePay GmbH. Alle Rechte vorbehalten.<br>BaFin-Reg. Nr. 12345678 · USt-IdNr. DE123456789</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="index.html#product" class="footer-link">FX Execution</a></li>
+          <li><a href="index.html#transfers" class="footer-link">Global Payments</a></li>
+          <li><a href="index.html#calculator" class="footer-link">Pricing</a></li>
+          <li><a href="platform.html" class="footer-link">Platform</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="index.html#about" class="footer-link">About</a></li>
+          <li><a href="#" class="footer-link">Blog</a></li>
+          <li><a href="#" class="footer-link">Careers</a></li>
+          <li><a href="#" class="footer-link">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Impressum</a></li>
+          <li><a href="#" class="footer-link">Datenschutz</a></li>
+          <li><a href="#" class="footer-link">AGB</a></li>
+          <li><a href="#" class="footer-link">BaFin Info</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-hr"></div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Built in Hamburg. Licensed in Germany.</span>
+      <span class="bafin-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        BaFin regulated
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- VIEW TOGGLE -->
+<div class="view-toggle">
+  <a href="index.html">A</a>
+  <a href="hansepay-landing-bridge.html" class="active">B</a>
+  <a href="platform.html">C</a>
+  <a href="hansepay-sketch-bridge.html">D</a>
+  <a href="hansepay-sketch-globe.html">E</a>
+  <a href="hansepay-sketch-cog.html">F</a>
+</div>
+
+<script>
+var nav = document.getElementById('main-nav');
+window.addEventListener('scroll', function(){
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, {passive:true});
+
+var burger = document.getElementById('nav-burger');
+var menu = document.getElementById('mobile-menu');
+function closeMobileMenu(){
+  burger.classList.remove('open');
+  menu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+burger.addEventListener('click', function(){
+  var open = menu.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+</script>
+</body>
+</html>

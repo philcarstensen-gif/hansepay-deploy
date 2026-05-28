@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay — Köhlbrandbrücke</title>
+<meta name="description" content="Cross-border payments rooted in Hamburg's trading tradition. Mid-market FX, BaFin-regulated, built for modern commerce." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&family=Caveat:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS ── */
+:root {
+  --sea:#0B1E2D;--sea2:#0F2A3E;--sea3:#153550;--sea4:#1C4568;
+  --teal:#1A6A82;--teal2:#228FA8;--teal3:#4DAECC;--teal4:#9DD4E4;
+  --gold:#C9A961;--gold2:#E0C27A;--gold3:#F0D99A;
+  --off:#F3EDE0;--warm:#EDE5D4;--cream:#F6F3EE;
+  --ink:#0E1C2E;--ink2:#3A5470;--ink3:#7A9BAD;
+  --sketch:#1C1814;
+  --font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-display:'Libre Baskerville',Georgia,serif;
+  --font-sketch:'Caveat',cursive;
+  --r-pill:100px;--r-lg:16px;--r-md:10px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-ui);color:var(--ink);background:var(--cream);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.btn-navy{background:var(--ink);color:#fff}.btn-navy:hover{background:#1a2e45}
+.btn-outline-navy{background:transparent;color:var(--ink);border:1.5px solid rgba(14,28,46,.30)}.btn-outline-navy:hover{background:rgba(14,28,46,.06)}
+.btn-gold{background:var(--gold);color:var(--sea)}.btn-gold:hover{background:var(--gold2)}
+.btn-ghost-white{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.48)}.btn-ghost-white:hover{background:rgba(255,255,255,.10)}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80px);height:68px;display:flex;align-items:center;background:rgba(11,30,45,.92);box-shadow:0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(22px) saturate(1.5);-webkit-backdrop-filter:blur(22px) saturate(1.5)}
+.nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;gap:0}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;margin-right:40px}
+.nav-logo img{height:28px;width:28px;object-fit:contain}
+.nav-logo-text{font-family:var(--font-display);font-size:19px;font-weight:400;letter-spacing:-.02em;color:#fff;line-height:1}
+.nav-links{display:flex;align-items:stretch;gap:0;list-style:none;flex:1;height:68px}
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-link{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:500;color:rgba(255,255,255,.55);transition:color .15s;white-space:nowrap;padding:0 16px;height:100%;cursor:pointer}
+.nav-link:hover,.nav-link.active-page{color:#fff}
+.nav-link svg{transition:transform .2s ease;flex-shrink:0}
+.nav-item:hover .nav-link svg{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:calc(100% + 1px);left:50%;transform:translateX(-50%);width:260px;
+  background:rgba(11,30,45,.97);backdrop-filter:blur(24px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.11);border-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.42),0 28px 72px rgba(0,0,0,.30),inset 0 1px 0 rgba(255,255,255,.15);
+  padding:10px;opacity:0;pointer-events:none;transform:translateX(-50%) translateY(-6px);
+  transition:opacity .18s ease,transform .18s ease}
+.nav-item:hover .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-dropdown-section{padding:6px 0 2px}
+.nav-dropdown-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.28);padding:4px 12px 8px;display:block}
+.nav-dd-link{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:9px;text-decoration:none;transition:background .14s}
+.nav-dd-link:hover{background:rgba(255,255,255,.06)}
+.nav-dd-icon{width:32px;height:32px;border-radius:8px;background:rgba(77,174,204,.10);border:1px solid rgba(77,174,204,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-dd-icon svg{width:14px;height:14px;color:var(--teal4)}
+.nav-dd-title{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.nav-dd-sub{font-size:11px;color:rgba(255,255,255,.38);margin-top:1px}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:16px;flex-shrink:0}
+.nav-cta-ghost{background:rgba(255,255,255,.09);color:#fff;border:1.5px solid rgba(255,255,255,.18);padding:8px 20px;font-size:13px;border-radius:var(--r-pill)}
+.nav-cta-ghost:hover{background:rgba(255,255,255,.16)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;border-radius:2px;background:rgba(255,255,255,.75);transition:all .22s ease}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(11,30,45,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:24px clamp(20px,5vw,80px);z-index:199;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu-link{font-size:16px;font-weight:500;color:rgba(255,255,255,.7);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mobile-menu-sub{font-size:14px;color:rgba(255,255,255,.42);padding:8px 0 8px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+.mobile-menu-link:last-of-type,.mobile-menu-sub:last-of-type{border-bottom:none}
+.mobile-menu-cta{margin-top:16px}
+@media(max-width:768px){.nav-links{display:none}.nav-burger{display:flex}}
+
+/* ── VIEW TOGGLE ── */
+.view-toggle{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;background:rgba(11,30,45,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:4px;gap:2px;box-shadow:0 4px 24px rgba(0,0,0,.25)}
+.view-toggle a{font-size:12px;font-weight:600;letter-spacing:.04em;padding:6px 14px;border-radius:var(--r-pill);text-decoration:none;transition:all .18s ease;white-space:nowrap}
+.view-toggle a.active{background:#fff;color:var(--sea)}
+.view-toggle a:not(.active){color:rgba(255,255,255,.55)}
+.view-toggle a:not(.active):hover{color:#fff}
+
+/* ── HERO SKETCH ── */
+.hero-sketch{
+  background:#F6F3EE;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:100px 0 64px;
+  position:relative;
+}
+.hero-sketch::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:radial-gradient(rgba(28,24,20,.04) 1px,transparent 1px);
+  background-size:28px 28px;
+  pointer-events:none;
+}
+.hero-sketch-layout{
+  display:grid;
+  grid-template-columns:1fr 1.1fr;
+  gap:56px;
+  align-items:center;
+  position:relative;
+  z-index:1;
+}
+@media(max-width:900px){.hero-sketch-layout{grid-template-columns:1fr}.sketch-col{order:-1}}
+.hero-copy-sketch{}
+.hero-kicker-sketch{display:inline-flex;align-items:center;gap:10px;padding:6px 16px;border-radius:var(--r-pill);background:rgba(26,106,130,.09);border:1px solid rgba(26,106,130,.20);font-size:11px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);margin-bottom:28px}
+.hero-kicker-dot{width:5px;height:5px;border-radius:50%;background:var(--teal);flex-shrink:0}
+.hero-headline-sketch{font-family:var(--font-display);font-size:clamp(36px,4.5vw,62px);font-weight:400;line-height:1.06;letter-spacing:-.025em;color:var(--ink);margin-bottom:22px}
+.hero-headline-sketch em{font-style:italic;color:var(--teal)}
+.hero-sub-sketch{font-size:clamp(14px,1.3vw,16px);font-weight:300;color:var(--ink2);line-height:1.72;max-width:440px;margin-bottom:36px}
+.hero-actions-sketch{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px}
+.hero-proof-sketch{display:flex;flex-wrap:wrap;gap:28px;align-items:center}
+.proof-item-sketch .proof-val{font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--ink);letter-spacing:-.02em;line-height:1.1}
+.proof-item-sketch .proof-val em{font-style:italic;color:var(--teal)}
+.proof-item-sketch .proof-lbl{font-size:11px;color:var(--ink3);margin-top:3px;letter-spacing:.06em}
+.proof-sep-sketch{width:1px;height:40px;background:rgba(14,28,46,.12)}
+.sketch-col{display:flex;align-items:center;justify-content:center;padding:16px 0}
+
+/* ── FEATURES STRIP ── */
+.features-strip{background:#FAFAF8;border-top:1px solid rgba(28,24,20,.07);border-bottom:1px solid rgba(28,24,20,.07);padding:56px 0}
+.features-strip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+@media(max-width:768px){.features-strip-grid{grid-template-columns:1fr}}
+.strip-feat{padding:32px 36px;display:flex;flex-direction:column;gap:10px;border-right:1px solid rgba(28,24,20,.07)}
+.strip-feat:last-child{border-right:none}
+.strip-icon{width:36px;height:36px;border-radius:var(--r-md);background:rgba(26,106,130,.08);border:1px solid rgba(26,106,130,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.strip-icon svg{width:16px;height:16px;color:var(--teal)}
+.strip-title{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--ink);letter-spacing:-.01em}
+.strip-desc{font-size:13px;color:var(--ink2);line-height:1.6}
+
+/* ── CTA BAND ── */
+.cta-band{padding:100px 0;text-align:center;position:relative;overflow:hidden;background:var(--sea)}
+.cta-band::before{content:'';position:absolute;inset:0;background:
+  radial-gradient(ellipse 70% 70% at 20% 40%,rgba(26,106,130,.25) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 60% at 80% 30%,rgba(201,169,97,.10) 0%,transparent 55%)}
+.cta-inner{position:relative;z-index:1;max-width:660px;margin:0 auto}
+.cta-head{font-family:var(--font-display);font-size:clamp(28px,3.8vw,48px);font-weight:400;line-height:1.08;letter-spacing:-.025em;color:#fff;margin-bottom:18px}
+.cta-head em{font-style:italic;color:var(--gold2)}
+.cta-sub{font-size:15px;font-weight:300;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:40px}
+.cta-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+
+/* ── FOOTER ── */
+footer{background:#070F17;padding:80px 0 40px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:64px;margin-bottom:64px}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:48px}}
+@media(max-width:560px){.footer-grid{grid-template-columns:1fr}}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.footer-logo img{height:26px;width:26px;object-fit:contain}
+.footer-logo-text{font-family:var(--font-display);font-size:18px;font-weight:400;color:#fff;letter-spacing:-.02em}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,.35);line-height:1.6;max-width:220px;margin-bottom:12px}
+.footer-legal{font-size:11px;color:rgba(255,255,255,.20);line-height:1.6}
+.footer-col-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.85);margin-bottom:18px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-link{font-size:13px;color:rgba(255,255,255,.38);transition:color .15s}.footer-link:hover{color:rgba(255,255,255,.85)}
+.footer-hr{height:1px;background:rgba(255,255,255,.06);margin-bottom:24px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.22)}
+.bafin-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.30);padding:5px 12px;border:1px solid rgba(255,255,255,.08);border-radius:var(--r-pill)}
+.bafin-badge svg{width:11px;height:11px;color:var(--teal3)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay" />
+      <span class="nav-logo-text">HansePay</span>
+    </a>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <span class="nav-link">
+          Product
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Features</span>
+            <a href="index.html#product" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg></div>
+              <div><div class="nav-dd-title">FX Execution</div><div class="nav-dd-sub">Mid-market rates, zero markup</div></div>
+            </a>
+            <a href="index.html#transfers" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg></div>
+              <div><div class="nav-dd-title">Global Payments</div><div class="nav-dd-sub">35+ currencies, minutes</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="platform.html">
+          Platform
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Platform</span>
+            <a href="platform.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+              <div><div class="nav-dd-title">Platform Overview</div><div class="nav-dd-sub">See the full platform</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="index.html#calculator">Pricing</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#solutions">Solutions</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="index.html#contact" class="btn nav-cta-ghost">Open an account</a>
+      <button class="nav-burger" id="nav-burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a class="mobile-menu-link" href="index.html#product" onclick="closeMobileMenu()">Product</a>
+  <a class="mobile-menu-link" href="platform.html" onclick="closeMobileMenu()">Platform</a>
+  <a class="mobile-menu-link" href="index.html#calculator" onclick="closeMobileMenu()">Pricing</a>
+  <a class="mobile-menu-link" href="index.html#solutions" onclick="closeMobileMenu()">Solutions</a>
+  <a class="mobile-menu-link" href="index.html#about" onclick="closeMobileMenu()">About</a>
+  <a href="index.html#contact" class="btn btn-navy mobile-menu-cta" onclick="closeMobileMenu()">Open an account</a>
+</div>
+
+<!-- HERO -->
+<section class="hero-sketch">
+  <div class="container">
+    <div class="hero-sketch-layout">
+
+      <!-- Left: copy -->
+      <div class="hero-copy-sketch">
+        <div class="hero-kicker-sketch"><span class="hero-kicker-dot"></span>Hamburg · Since 2023</div>
+        <h1 class="hero-headline-sketch">Commercial FX,<br>rooted in <em>centuries<br>of trade.</em></h1>
+        <p class="hero-sub-sketch">From the banks of the Elbe to 35 currencies worldwide — HansePay brings institutional-grade foreign exchange to modern European businesses. Mid-market rates, BaFin-regulated, zero hidden fees.</p>
+        <div class="hero-actions-sketch">
+          <a href="index.html#contact" class="btn btn-navy">Open a business account</a>
+          <a href="index.html#contact" class="btn btn-outline-navy">Speak to a specialist</a>
+        </div>
+        <div class="hero-proof-sketch">
+          <div class="proof-item-sketch">
+            <div class="proof-val">0<em>%</em></div>
+            <div class="proof-lbl">FX Markup</div>
+          </div>
+          <div class="proof-sep-sketch"></div>
+          <div class="proof-item-sketch">
+            <div class="proof-val">35<em>+</em></div>
+            <div class="proof-lbl">Currencies</div>
+          </div>
+          <div class="proof-sep-sketch"></div>
+          <div class="proof-item-sketch">
+            <div class="proof-val">&lt; 2<em>h</em></div>
+            <div class="proof-lbl">Onboarding</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Köhlbrandbrücke sketch -->
+      <div class="sketch-col">
+        <svg viewBox="0 0 660 500" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:580px;height:auto" aria-label="Pencil sketch of Hamburg's Köhlbrandbrücke cable-stayed bridge">
+          <defs>
+            <filter id="roughen" x="-3%" y="-3%" width="106%" height="106%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.025 0.08" numOctaves="4" seed="7" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <filter id="roughenFine" x="-2%" y="-2%" width="104%" height="104%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.04 0.12" numOctaves="3" seed="3" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.8" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+            <!-- Cross-hatch patterns -->
+            <pattern id="hatch1" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <line x1="0" y1="0" x2="0" y2="4" stroke="#1C1814" stroke-width="0.4" opacity="0.22"/>
+            </pattern>
+            <pattern id="hatch2" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+              <line x1="0" y1="0" x2="0" y2="3" stroke="#1C1814" stroke-width="0.35" opacity="0.18"/>
+            </pattern>
+            <pattern id="crosshatch" width="4" height="4" patternUnits="userSpaceOnUse">
+              <line x1="0" y1="0" x2="4" y2="4" stroke="#1C1814" stroke-width="0.4" opacity="0.20"/>
+              <line x1="4" y1="0" x2="0" y2="4" stroke="#1C1814" stroke-width="0.35" opacity="0.16"/>
+            </pattern>
+            <!-- Clip paths for hatch fills -->
+            <clipPath id="towerShadowLeft">
+              <rect x="272" y="95" width="6" height="235"/>
+            </clipPath>
+            <clipPath id="deckShadow">
+              <rect x="0" y="325" width="660" height="12"/>
+            </clipPath>
+            <!-- Inner paper rect -->
+            <rect id="paperRect" x="0" y="0" width="660" height="500" fill="#FAFAF8"/>
+          </defs>
+
+          <!-- Paper background -->
+          <rect x="0" y="0" width="660" height="500" fill="#FAFAF8"/>
+
+          <!-- Main structure group with roughen filter -->
+          <g filter="url(#roughen)" stroke="#1C1814" stroke-linecap="round" stroke-linejoin="round" fill="none">
+
+            <!-- ── DISTANT PORT CRANES (faint background) ── -->
+            <g opacity="0.18" stroke-width="0.7">
+              <!-- Crane 1 left -->
+              <line x1="30" y1="324" x2="30" y2="270"/>
+              <line x1="30" y1="270" x2="65" y2="258"/>
+              <line x1="30" y1="270" x2="10" y2="275"/>
+              <line x1="65" y1="258" x2="65" y2="280"/>
+              <!-- Crane 2 -->
+              <line x1="55" y1="324" x2="55" y2="278"/>
+              <line x1="55" y1="278" x2="82" y2="268"/>
+              <line x1="55" y1="278" x2="35" y2="282"/>
+              <!-- Right cranes -->
+              <line x1="590" y1="324" x2="590" y2="268"/>
+              <line x1="590" y1="268" x2="628" y2="255"/>
+              <line x1="590" y1="268" x2="568" y2="272"/>
+              <line x1="628" y1="255" x2="628" y2="280"/>
+              <line x1="615" y1="324" x2="615" y2="275"/>
+              <line x1="615" y1="275" x2="645" y2="264"/>
+              <line x1="615" y1="275" x2="595" y2="278"/>
+            </g>
+
+            <!-- ── STAY CABLES — Left side ── -->
+            <g stroke-width="0.7" opacity="0.72">
+              <path d="M 272,105 Q 135,220 18,328"/>
+              <path d="M 272,108 Q 155,221 55,328"/>
+              <path d="M 272,110 Q 174,222 91,328"/>
+              <path d="M 272,112 Q 192,223 127,328"/>
+              <path d="M 272,113 Q 208,224 162,328"/>
+              <path d="M 273,114 Q 222,224 196,328"/>
+              <path d="M 273,116 Q 234,225 228,328"/>
+              <path d="M 274,117 Q 247,225 261,328"/>
+            </g>
+
+            <!-- ── STAY CABLES — Right side ── -->
+            <g stroke-width="0.7" opacity="0.72">
+              <path d="M 308,117 Q 323,225 320,328"/>
+              <path d="M 309,116 Q 336,225 356,328"/>
+              <path d="M 309,114 Q 353,224 393,328"/>
+              <path d="M 310,113 Q 375,224 430,328"/>
+              <path d="M 310,112 Q 400,222 468,328"/>
+              <path d="M 311,110 Q 430,221 510,328"/>
+              <path d="M 311,108 Q 462,220 556,328"/>
+              <path d="M 312,105 Q 492,218 600,328"/>
+            </g>
+
+            <!-- ── H-PYLON TOWER ── -->
+            <!-- Left leg -->
+            <path d="M 269,328 Q 270,230 271,152 Q 271.5,120 272,95" stroke-width="4.5" opacity="0.88"/>
+            <!-- Right leg -->
+            <path d="M 308,328 Q 308.5,230 309,152 Q 309.5,120 309,95" stroke-width="4.5" opacity="0.88"/>
+            <!-- Upper crossbeam -->
+            <path d="M 271,210 Q 283,208 310,210" stroke-width="3.8" opacity="0.88"/>
+            <!-- Lower crossbeam -->
+            <path d="M 271,270 Q 284,269 310,270" stroke-width="3.2" opacity="0.88"/>
+            <!-- Tower top caps -->
+            <path d="M 268,94 Q 272,90 276,94" stroke-width="1.5"/>
+            <path d="M 306,94 Q 310,90 314,94" stroke-width="1.5"/>
+
+            <!-- Tower concrete texture (horizontal lines) -->
+            <g stroke-width="0.5" opacity="0.30">
+              <line x1="270" y1="130" x2="275" y2="130"/>
+              <line x1="270" y1="150" x2="275" y2="150"/>
+              <line x1="270" y1="170" x2="275" y2="170"/>
+              <line x1="270" y1="190" x2="275" y2="190"/>
+              <line x1="270" y1="230" x2="275" y2="230"/>
+              <line x1="270" y1="250" x2="275" y2="250"/>
+              <line x1="270" y1="290" x2="275" y2="290"/>
+              <line x1="270" y1="310" x2="275" y2="310"/>
+              <line x1="306" y1="130" x2="312" y2="130"/>
+              <line x1="306" y1="150" x2="312" y2="150"/>
+              <line x1="306" y1="170" x2="312" y2="170"/>
+              <line x1="306" y1="190" x2="312" y2="190"/>
+              <line x1="306" y1="230" x2="312" y2="230"/>
+              <line x1="306" y1="250" x2="312" y2="250"/>
+              <line x1="306" y1="290" x2="312" y2="290"/>
+              <line x1="306" y1="310" x2="312" y2="310"/>
+            </g>
+
+            <!-- ── BRIDGE DECK ── -->
+            <path d="M 0,325 Q 165,323 330,325 Q 495,327 660,325" stroke-width="2.2" opacity="0.92"/>
+            <path d="M 0,335 Q 165,333 330,335 Q 495,337 660,335" stroke-width="1.5" opacity="0.80"/>
+            <!-- Road surface line -->
+            <path d="M 0,329 Q 165,327 330,329 Q 495,331 660,329" stroke-width="0.6" opacity="0.35"/>
+            <!-- Guardrail suggestion -->
+            <g stroke-width="0.5" opacity="0.28">
+              <path d="M 0,322 Q 165,320 330,322 Q 495,324 660,322"/>
+              <line x1="80" y1="321" x2="80" y2="325"/><line x1="120" y1="321" x2="120" y2="325"/>
+              <line x1="160" y1="321" x2="160" y2="325"/><line x1="200" y1="321" x2="200" y2="325"/>
+              <line x1="240" y1="321" x2="240" y2="325"/><line x1="350" y1="321" x2="350" y2="325"/>
+              <line x1="390" y1="321" x2="390" y2="325"/><line x1="430" y1="321" x2="430" y2="325"/>
+              <line x1="470" y1="321" x2="470" y2="325"/><line x1="510" y1="321" x2="510" y2="325"/>
+              <line x1="550" y1="321" x2="550" y2="325"/>
+            </g>
+
+            <!-- ── WATER LINES ── -->
+            <g stroke-width="0.8" opacity="0.55">
+              <path d="M 0,358 Q 80,354 160,360 Q 240,366 320,360 Q 400,354 480,360 Q 560,366 660,360"/>
+              <path d="M 0,366 Q 75,362 155,368 Q 235,374 315,368 Q 395,362 475,368 Q 555,374 660,368"/>
+              <path d="M 0,374 Q 85,370 170,376 Q 255,382 335,375 Q 415,368 490,374 Q 570,380 660,376"/>
+              <path d="M 0,382 Q 90,378 175,384 Q 260,390 340,383 Q 420,376 500,382 Q 575,388 660,384"/>
+              <path d="M 0,390 Q 82,386 164,392 Q 246,398 328,391 Q 410,384 492,390 Q 574,396 660,392"/>
+              <path d="M 0,398 Q 88,394 172,400 Q 256,406 338,399 Q 420,392 504,398 Q 580,404 660,400"/>
+              <path d="M 0,406 Q 86,402 168,408 Q 250,414 332,407 Q 414,400 496,406 Q 578,412 660,408"/>
+              <path d="M 0,414 Q 84,410 165,416 Q 246,422 328,415 Q 410,408 492,414 Q 574,420 660,416"/>
+              <path d="M 0,422 Q 88,418 172,424 Q 256,430 340,423 Q 422,416 504,422 Q 580,428 660,424"/>
+              <path d="M 0,430 Q 86,426 168,432 Q 250,438 332,431 Q 414,424 496,430 Q 578,436 660,432"/>
+              <path d="M 0,440 Q 85,436 170,442 Q 255,448 340,441 Q 420,434 502,440 Q 578,446 660,442"/>
+              <path d="M 0,450 Q 88,446 172,452 Q 256,458 340,451 Q 424,444 506,450 Q 580,456 660,452"/>
+            </g>
+
+            <!-- ── WATER REFLECTION LINES (lighter, shorter) ── -->
+            <g stroke-width="0.5" opacity="0.20">
+              <path d="M 220,362 Q 260,360 295,363 Q 320,365 350,362"/>
+              <path d="M 210,370 Q 255,368 295,371 Q 330,373 360,370"/>
+              <path d="M 240,378 Q 275,376 305,379 Q 330,381 355,378"/>
+            </g>
+
+            <!-- ── SMALL CARGO VESSEL (right distance) ── -->
+            <g stroke-width="0.9" opacity="0.55">
+              <path d="M 560,348 Q 580,344 605,343 Q 625,342 635,345 Q 638,347 630,349 Q 615,351 560,350 Z"/>
+              <line x1="580" y1="348" x2="580" y2="336"/>
+              <line x1="592" y1="346" x2="592" y2="333"/>
+              <path d="M 580,336 L 583,330 L 586,336"/>
+            </g>
+
+          </g>
+
+          <!-- Tower left face shadow hatch (not filtered for crispness) -->
+          <g opacity="0.65">
+            <clipPath id="towerLeftFace"><rect x="269" y="95" width="5" height="235"/></clipPath>
+            <rect x="269" y="95" width="5" height="235" fill="url(#hatch1)" clip-path="url(#towerLeftFace)"/>
+          </g>
+          <!-- Deck underside shadow -->
+          <g opacity="0.45">
+            <clipPath id="deckUnder"><rect x="0" y="333" width="660" height="10"/></clipPath>
+            <rect x="0" y="333" width="660" height="10" fill="url(#hatch2)" clip-path="url(#deckUnder)"/>
+          </g>
+
+          <!-- ── CALLIGRAPHIC TAGLINE ── -->
+          <text x="330" y="478" text-anchor="middle" font-family="'Caveat', cursive" font-size="22" font-weight="400" fill="#1C1814" opacity="0.65" letter-spacing="0.5">Hamburgische Handelsstraßen.</text>
+
+        </svg>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<section class="features-strip">
+  <div class="container">
+    <div class="features-strip-grid">
+      <div class="strip-feat">
+        <div class="strip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+        </div>
+        <div class="strip-title">Mid-market FX, always</div>
+        <div class="strip-desc">We pass the interbank rate directly to you. No spread, no hidden markup — the same rate banks trade with each other.</div>
+      </div>
+      <div class="strip-feat">
+        <div class="strip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+        </div>
+        <div class="strip-title">Payments in minutes</div>
+        <div class="strip-desc">Send to 35+ currencies via SWIFT, SEPA, and local rails. Most transfers settle the same business day.</div>
+      </div>
+      <div class="strip-feat" style="border-right:none">
+        <div class="strip-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <div class="strip-title">BaFin-regulated</div>
+        <div class="strip-desc">Licensed and supervised by BaFin. Your funds are safeguarded in segregated accounts at Tier-1 European banks.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-inner">
+      <h2 class="cta-head">Ready to cross the <em>next meridian?</em></h2>
+      <p class="cta-sub">Join hundreds of European businesses moving money smarter. Open your account in under two hours.</p>
+      <div class="cta-actions">
+        <a href="index.html#contact" class="btn btn-gold">Open a business account</a>
+        <a href="index.html#contact" class="btn btn-ghost-white">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay" />
+          <span class="footer-logo-text">HansePay</span>
+        </div>
+        <p class="footer-tagline">Global payments rooted in Hamburg's trading heritage.</p>
+        <p class="footer-legal">© 2025 HansePay GmbH. Alle Rechte vorbehalten.<br>BaFin-Reg. Nr. 12345678 · USt-IdNr. DE123456789</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="index.html#product" class="footer-link">FX Execution</a></li>
+          <li><a href="index.html#transfers" class="footer-link">Global Payments</a></li>
+          <li><a href="index.html#calculator" class="footer-link">Pricing</a></li>
+          <li><a href="platform.html" class="footer-link">Platform</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="index.html#about" class="footer-link">About</a></li>
+          <li><a href="#" class="footer-link">Blog</a></li>
+          <li><a href="#" class="footer-link">Careers</a></li>
+          <li><a href="#" class="footer-link">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Impressum</a></li>
+          <li><a href="#" class="footer-link">Datenschutz</a></li>
+          <li><a href="#" class="footer-link">AGB</a></li>
+          <li><a href="#" class="footer-link">BaFin Info</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-hr"></div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Built in Hamburg. Licensed in Germany.</span>
+      <span class="bafin-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        BaFin regulated
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- VIEW TOGGLE -->
+<div class="view-toggle">
+  <a href="index.html">A</a>
+  <a href="hansepay-landing-bridge.html">B</a>
+  <a href="platform.html">C</a>
+  <a href="hansepay-sketch-bridge.html" class="active">D</a>
+  <a href="hansepay-sketch-globe.html">E</a>
+  <a href="hansepay-sketch-cog.html">F</a>
+</div>
+
+<script>
+const burger = document.getElementById('nav-burger');
+const menu = document.getElementById('mobile-menu');
+function closeMobileMenu(){burger.classList.remove('open');menu.classList.remove('open')}
+burger.addEventListener('click',()=>{burger.classList.toggle('open');menu.classList.toggle('open')});
+</script>
+</body>
+</html>

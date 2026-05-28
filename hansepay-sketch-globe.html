@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay — Cross-border payments, reimagined.</title>
+<meta name="description" content="Global payment infrastructure for modern business. Mid-market rates, BaFin-regulated, dedicated expert service." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS — identical to Version A ── */
+:root {
+  --n900:#060D1A;--n800:#0B1929;--n700:#0F2540;--n600:#163659;
+  --n500:#1E4E80;--n400:#2E6BAD;--n300:#3B7BC4;--n200:#8DBDE6;
+  --n100:#C4DDEF;--n050:#EBF4FB;--off:#F5F1EA;--gold:#C9A961;
+  --ink:#0B1929;--ink2:#3D5A73;--ink3:#7A9AB0;
+  --font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-display:Georgia,'Times New Roman',serif;
+  --font-logo:'Libre Baskerville',Georgia,serif;
+  --r-pill:100px;--r-lg:16px;--r-md:10px;--r-sm:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-ui);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+
+.eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--n300)}
+.section-head{font-family:var(--font-display);font-size:clamp(30px,3.5vw,46px);font-weight:400;line-height:1.08;letter-spacing:-.02em;color:var(--n800)}
+.section-head em{font-style:italic;color:var(--n400)}
+.lede{font-size:16px;font-weight:300;color:var(--ink2);line-height:1.65}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--n500);color:#fff}.btn-primary:hover{background:var(--n600)}
+.btn-ghost-white{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.7)}.btn-ghost-white:hover{background:rgba(255,255,255,.1)}
+.btn-ghost-navy{background:transparent;color:var(--n600);border:1.5px solid rgba(11,25,41,.2)}.btn-ghost-navy:hover{background:var(--n050)}
+.btn-white-fill{background:#fff;color:var(--n500)}.btn-white-fill:hover{background:var(--n050)}
+.btn-outline{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid rgba(11,25,41,.2);color:var(--n600);text-decoration:none;transition:all .18s ease;white-space:nowrap}.btn-outline:hover{border-color:var(--n400);color:var(--n400);background:var(--n050)}
+
+/* ── NAV — identical to Version A ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80px);height:68px;display:flex;align-items:center;transition:background .25s,box-shadow .25s,backdrop-filter .25s}
+nav.scrolled{background:rgba(255,255,255,.97);box-shadow:0 1px 0 rgba(11,25,41,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;gap:0}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;margin-right:40px}
+.nav-logo img{height:28px;width:28px;object-fit:contain}
+.nav-logo-text{font-family:var(--font-logo);font-size:19px;font-weight:400;letter-spacing:-.02em;color:var(--n800);line-height:1}
+.nav-links{display:flex;align-items:stretch;gap:0;list-style:none;flex:1;height:68px}
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-link{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:500;color:rgba(11,25,41,.68);transition:color .15s;white-space:nowrap;padding:0 16px;height:100%;cursor:pointer}
+.nav-link:hover,.nav-link.active-page{color:var(--n700)}
+.nav-link svg{transition:transform .2s ease;flex-shrink:0}
+.nav-item:hover .nav-link svg{transform:rotate(180deg)}
+.nav-dropdown{position:absolute;top:calc(100% + 1px);left:50%;transform:translateX(-50%);width:260px;
+  background:rgba(12,22,38,.96);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.12);border-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4),0 32px 80px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.18);
+  padding:10px;opacity:0;pointer-events:none;transform:translateX(-50%) translateY(-6px);
+  transition:opacity .18s ease,transform .18s ease}
+.nav-item:hover .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-dropdown-section{padding:6px 0 2px}
+.nav-dropdown-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.30);padding:4px 12px 8px;display:block}
+.nav-dd-link{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:9px;text-decoration:none;transition:background .14s}
+.nav-dd-link:hover{background:rgba(255,255,255,.07)}
+.nav-dd-icon{width:32px;height:32px;border-radius:8px;background:rgba(141,189,230,.10);border:1px solid rgba(141,189,230,.16);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-dd-icon svg{width:14px;height:14px;color:var(--n200)}
+.nav-dd-text{flex:1;min-width:0}
+.nav-dd-title{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.nav-dd-sub{font-size:11px;color:rgba(255,255,255,.40);margin-top:1px;line-height:1.3}
+.nav-dd-active .nav-dd-icon{background:rgba(201,169,97,.14);border-color:rgba(201,169,97,.24)}
+.nav-dd-active .nav-dd-icon svg{color:var(--gold)}
+.nav-dd-active .nav-dd-title{color:var(--gold)}
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:16px;flex-shrink:0}
+.nav-cta{background:var(--n500);color:#fff;border:1.5px solid var(--n500);padding:8px 20px;font-size:13px;border-radius:var(--r-pill)}
+.nav-cta:hover{background:var(--n600)}
+nav.scrolled .nav-cta{background:var(--n500);border-color:var(--n500)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;border-radius:2px;background:var(--n700);transition:all .22s ease}
+nav.scrolled .nav-burger span{background:var(--n700)}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(12,22,38,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:24px clamp(20px,5vw,80px);z-index:199;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu-link{font-size:16px;font-weight:500;color:rgba(255,255,255,.7);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mobile-menu-sub{font-size:14px;color:rgba(255,255,255,.45);padding:8px 0 8px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+.mobile-menu-cta{margin-top:16px}
+@media(max-width:768px){.nav-links{display:none}.nav-burger{display:flex}}
+
+/* ── HERO ── */
+.hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  background:#f4f6fb;
+  overflow:hidden;
+}
+/* Same subtle dot grid as Version A */
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background-image:radial-gradient(rgba(30,78,128,.045) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+.hero-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+  align-items:center;
+  min-height:100vh;
+  padding:108px clamp(20px,5vw,80px) 80px;
+  max-width:1440px;
+  margin:0 auto;
+  width:100%;
+  gap:48px;
+  position:relative;
+  z-index:1;
+}
+@media(max-width:900px){
+  .hero-layout{grid-template-columns:1fr}
+  .hero-sketch-col{display:none}
+}
+
+/* Left: copy */
+.hero-content{position:relative;z-index:2}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:var(--r-pill);background:rgba(11,25,41,.055);border:1px solid rgba(11,25,41,.10);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--n500);margin-bottom:24px}
+.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--n400);flex-shrink:0}
+.hero-headline{font-family:var(--font-display);font-size:clamp(44px,5.4vw,80px);font-weight:400;line-height:1.04;letter-spacing:-.03em;color:var(--n800);margin-bottom:20px}
+.hero-headline em{font-style:italic;color:var(--n400)}
+.hero-sub{font-size:clamp(15px,1.4vw,17px);font-weight:300;color:var(--ink2);line-height:1.72;max-width:460px;margin-bottom:32px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px}
+.hero-route{display:flex;align-items:center;gap:8px;margin-bottom:0}
+.route-from{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase}
+.route-arrow{color:var(--n400);font-size:14px;margin:0 2px}
+.route-dest-wrap{position:relative;height:18px;overflow:hidden;min-width:90px}
+.route-dest{position:absolute;top:0;left:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--n400);opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease;white-space:nowrap}
+.route-dest.active{opacity:1;transform:none}
+
+/* Right: sketch globe — mix-blend-mode: multiply makes white paper invisible */
+.hero-sketch-col{
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:flex-end;
+  align-self:stretch;
+  overflow:visible;
+}
+.sketch-globe-wrap{
+  position:relative;
+  width:108%;         /* bleed right + top so construction lines hit the edge */
+  margin-right:-56px;
+  margin-top:-48px;
+  margin-bottom:-24px;
+}
+.sketch-globe-img{
+  width:100%;
+  max-height:92vh;
+  height:auto;
+  object-fit:contain;
+  object-position:center top;
+  mix-blend-mode:multiply;
+  animation:sketch-float 14s ease-in-out infinite;
+  display:block;
+}
+/* Left-edge gradient dissolves sketch into copy column */
+.sketch-globe-wrap::before{
+  content:'';
+  position:absolute;
+  top:0;bottom:0;left:0;
+  width:24%;
+  background:linear-gradient(to right,#f4f6fb 0%,transparent 100%);
+  z-index:2;
+  pointer-events:none;
+}
+/* Top-edge gradient dissolves construction lines that go above nav */
+.sketch-globe-wrap::after{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:14%;
+  background:linear-gradient(to bottom,#f4f6fb 0%,transparent 100%);
+  z-index:2;
+  pointer-events:none;
+}
+@keyframes sketch-float{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  40%{transform:translateY(-10px) rotate(.12deg)}
+  70%{transform:translateY(-6px) rotate(-.08deg)}
+}
+
+/* ── TRUST STRIP ── */
+.trust-strip{background:var(--n800);padding:0;border-bottom:1px solid rgba(255,255,255,.06)}
+.trust-inner{display:grid;grid-template-columns:repeat(4,1fr);align-items:center}
+.trust-item{display:flex;align-items:center;gap:14px;padding:20px 28px;border-right:1px solid rgba(255,255,255,.08);justify-content:center}
+.trust-item:last-child{border-right:none}
+.trust-item svg{width:18px;height:18px;flex-shrink:0;color:var(--n200)}
+.trust-txt-main{font-size:13px;font-weight:600;color:#fff;white-space:nowrap}
+.trust-txt-sub{font-size:11px;color:rgba(255,255,255,.4);white-space:nowrap}
+@media(max-width:900px){.trust-inner{grid-template-columns:repeat(2,1fr)}.trust-item:nth-child(2){border-right:none}.trust-item:nth-child(3){border-top:1px solid rgba(255,255,255,.08)}.trust-item:nth-child(4){border-top:1px solid rgba(255,255,255,.08);border-right:none}}
+
+.section{padding:96px 0}
+.section-intro{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:end;margin-bottom:56px}
+@media(max-width:768px){.section-intro{grid-template-columns:1fr;gap:24px}}
+.section-label{margin-bottom:12px}
+
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:rgba(11,25,41,.06);border-radius:var(--r-lg);overflow:hidden}
+@media(max-width:900px){.features-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.features-grid{grid-template-columns:1fr}}
+.feat-card{background:#fff;padding:36px 40px;display:flex;flex-direction:column;gap:14px;transition:background .2s}
+.feat-card:hover{background:var(--n050)}
+.feat-card:hover .feat-icon-wrap{background:var(--n500)}
+.feat-card:hover .feat-icon{color:#fff}
+.feat-icon-wrap{width:44px;height:44px;border-radius:var(--r-md);background:var(--n050);display:flex;align-items:center;justify-content:center;transition:background .2s;flex-shrink:0}
+.feat-icon{width:20px;height:20px;color:var(--n400);transition:color .2s}
+.feat-title{font-family:var(--font-display);font-size:18px;font-weight:400;color:var(--n800);letter-spacing:-.01em}
+.feat-desc{font-size:14px;color:var(--ink2);line-height:1.6;flex:1}
+.feat-link{font-size:13px;font-weight:600;color:var(--n400);display:inline-flex;align-items:center;gap:4px;margin-top:auto;padding-top:4px}
+.feat-link:hover{color:var(--n500)}
+.feat-link svg{width:14px;height:14px}
+
+.how-section{background:#fff}
+.how-intro{text-align:center;max-width:600px;margin:0 auto 64px}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative}
+.how-grid::before{content:'';position:absolute;top:68px;left:calc(12.5% + 28px);right:calc(12.5% + 28px);height:1px;background:linear-gradient(90deg,var(--n200),var(--n300),var(--n200));z-index:0}
+@media(max-width:900px){.how-grid{grid-template-columns:1fr 1fr}.how-grid::before{display:none}}
+@media(max-width:560px){.how-grid{grid-template-columns:1fr}}
+.how-step{position:relative;z-index:1;text-align:center;padding:40px 20px}
+.how-num{width:56px;height:56px;border-radius:50%;background:#fff;border:2px solid var(--n100);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;font-family:var(--font-display);font-style:italic;font-size:22px;font-weight:400;color:var(--n400);box-shadow:0 4px 16px rgba(11,25,41,.06)}
+.how-title{font-size:15px;font-weight:600;color:var(--n800);margin-bottom:8px}
+.how-desc{font-size:13px;color:var(--ink2);line-height:1.6}
+
+/* CALCULATOR */
+.calc-section{background:#fff;position:relative}
+.calc-layout{display:grid;grid-template-columns:1fr 1.1fr;gap:96px;align-items:start}
+@media(max-width:900px){.calc-layout{grid-template-columns:1fr;gap:48px}}
+.calc-intro{padding-top:8px}
+.calc-bullets{margin-top:48px;display:flex;flex-direction:column;gap:20px}
+.calc-bullet{display:flex;align-items:flex-start;gap:16px}
+.calc-bullet-icon{width:36px;height:36px;border-radius:50%;background:var(--n050);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.calc-bullet-icon svg{width:16px;height:16px;color:var(--n400)}
+.calc-bullet-title{font-weight:600;font-size:14px;color:var(--n800)}
+.calc-bullet-desc{font-size:13px;color:var(--ink2);margin-top:2px}
+.calc-card{background:#fff;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);padding:40px;box-shadow:0 4px 32px rgba(11,25,41,.06)}
+.calc-row{margin-bottom:24px}
+.calc-lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px;font-weight:600;color:var(--n800)}
+.calc-input-wrap{position:relative}
+.calc-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:14px;font-weight:600;color:var(--ink3);pointer-events:none}
+.calc-input{width:100%;padding:12px 14px 12px 36px;border:1.5px solid rgba(11,25,41,.1);border-radius:var(--r-sm);font-family:var(--font-ui);font-size:18px;font-weight:500;color:var(--n800);background:#fff;outline:none;transition:border-color .15s;appearance:none}
+.calc-input:focus{border-color:var(--n300)}
+.calc-select-wrap{position:relative}
+.calc-select{width:100%;padding:12px 36px 12px 14px;border:1.5px solid rgba(11,25,41,.1);border-radius:var(--r-sm);font-family:var(--font-ui);font-size:15px;font-weight:500;color:var(--n800);background:#fff;outline:none;appearance:none;cursor:pointer;transition:border-color .15s}
+.calc-select:focus{border-color:var(--n300)}
+.calc-arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink3)}
+.calc-divider{height:1px;background:rgba(11,25,41,.06);margin:24px 0}
+.calc-result{background:linear-gradient(135deg,var(--n700) 0%,var(--n500) 100%);border-radius:var(--r-md);padding:24px 28px;color:#fff}
+.calc-result-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.calc-result-row:last-of-type{margin-bottom:0}
+.calc-result-lbl{font-size:11px;font-weight:500;color:rgba(255,255,255,.6);letter-spacing:.06em;text-transform:uppercase}
+.calc-result-val{font-family:var(--font-display);font-size:20px;color:#fff}
+.calc-saving{margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;align-items:center}
+.calc-saving-lbl{font-size:12px;font-weight:700;color:var(--n100);text-transform:uppercase;letter-spacing:.08em}
+.calc-saving-val{font-family:var(--font-display);font-style:italic;font-size:30px;color:#fff}
+.calc-disclaimer{font-size:11px;color:var(--ink3);margin-top:16px;line-height:1.55}
+/* SOLUTIONS */
+.seg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.seg-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.seg-grid{grid-template-columns:1fr}}
+.seg-card{border:1px solid rgba(11,25,41,.07);border-radius:var(--r-lg);overflow:hidden;transition:box-shadow .2s,transform .2s;display:block;color:inherit;text-decoration:none}
+.seg-card:hover{box-shadow:0 8px 32px rgba(11,25,41,.1);transform:translateY(-3px)}
+.seg-img{height:140px;display:flex;align-items:flex-end;padding:16px;position:relative}
+.seg-icon{width:32px;height:32px;color:rgba(255,255,255,.45)}
+.seg-body{padding:24px}
+.seg-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--n400);background:var(--n050);padding:3px 8px;border-radius:var(--r-pill);margin-bottom:10px}
+.seg-title{font-family:var(--font-display);font-size:17px;font-weight:400;color:var(--n800);margin-bottom:6px;letter-spacing:-.01em}
+.seg-desc{font-size:13px;color:var(--ink2);line-height:1.6}
+
+.about-section{background:#f4f6fb;position:relative;overflow:hidden}
+.about-layout{display:grid;grid-template-columns:1.1fr 1fr;gap:96px;align-items:center;position:relative;z-index:1}
+@media(max-width:900px){.about-layout{grid-template-columns:1fr;gap:48px}}
+.about-eyebrow{color:var(--n300)}
+.about-head{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);font-weight:400;line-height:1.06;letter-spacing:-.025em;color:var(--n800);margin:16px 0 24px}
+.about-head em{font-style:italic;color:var(--n400)}
+.about-body{font-size:16px;font-weight:300;color:var(--ink2);line-height:1.7;margin-bottom:40px}
+.cred-card{background:#fff;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);overflow:hidden;box-shadow:0 2px 12px rgba(11,25,41,.05)}
+.cred-item{padding:24px 28px;display:flex;gap:20px;align-items:flex-start;border-bottom:1px solid rgba(11,25,41,.06)}
+.cred-item:last-child{border-bottom:none}
+.cred-icon-wrap{width:40px;height:40px;border-radius:var(--r-md);background:rgba(46,107,173,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cred-icon{width:18px;height:18px;color:var(--n400)}
+.cred-title{font-size:15px;font-weight:600;color:var(--n800);margin-bottom:4px}
+.cred-desc{font-size:13px;color:var(--ink2);line-height:1.55}
+
+.insights-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:48px;flex-wrap:wrap;gap:16px}
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.ins-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.ins-grid{grid-template-columns:1fr}}
+.ins-card{border:1px solid rgba(11,25,41,.07);border-radius:var(--r-lg);overflow:hidden;transition:box-shadow .2s,transform .2s}
+.ins-card:hover{box-shadow:0 8px 32px rgba(11,25,41,.08);transform:translateY(-2px)}
+.ins-thumb{height:140px;position:relative;overflow:hidden;display:flex;align-items:center;padding:20px}
+.ins-thumb-bar{position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--n400),var(--n200))}
+.ins-thumb-text{font-family:var(--font-display);font-style:italic;font-size:26px;color:var(--n300);line-height:1.1;max-width:200px}
+.ins-body{padding:24px}
+.ins-tag{display:inline-block;font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border-radius:var(--r-pill);background:var(--n050);color:var(--n400);margin-bottom:10px}
+.ins-title{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--n800);line-height:1.35;margin-bottom:8px;letter-spacing:-.01em}
+.ins-meta{font-size:11px;color:var(--ink3)}
+
+.cta-band{padding:128px 0;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 18% 40%,#0F2540 0%,transparent 55%),radial-gradient(ellipse at 82% 25%,#2E6BAD 0%,transparent 50%),#060D1A}
+.cta-inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
+.cta-eyebrow{color:var(--n200);margin-bottom:20px}
+.cta-head{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);font-weight:400;line-height:1.1;letter-spacing:-.025em;color:#fff;margin-bottom:20px}
+.cta-head em{font-style:italic;color:var(--n100)}
+.cta-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.65);line-height:1.65;margin-bottom:48px}
+.cta-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+
+footer{background:#0A0A0A;padding:96px 0 48px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:64px;margin-bottom:80px}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:48px}}
+@media(max-width:560px){.footer-grid{grid-template-columns:1fr}}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.footer-logo img{height:28px;width:28px;object-fit:contain}
+.footer-logo-text{font-family:var(--font-logo);font-size:18px;font-weight:400;color:#fff;letter-spacing:-.02em}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6;max-width:240px;margin-bottom:12px}
+.footer-legal{font-size:11px;color:rgba(255,255,255,.25);line-height:1.6}
+.footer-col-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:20px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-link{font-size:13px;color:rgba(255,255,255,.45);transition:color .15s}.footer-link:hover{color:rgba(255,255,255,.9)}
+.footer-hr{height:1px;background:rgba(255,255,255,.07);margin-bottom:28px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.25)}
+.bafin-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.35);padding:5px 12px;border:1px solid rgba(255,255,255,.1);border-radius:var(--r-pill)}
+.bafin-badge svg{width:12px;height:12px;color:var(--n200)}
+
+/* VALUE PROPS */
+.vp-layout{display:grid;grid-template-columns:1fr 1.05fr;gap:80px;align-items:center}
+@media(max-width:900px){.vp-layout{grid-template-columns:1fr;gap:48px}}
+.vp-metrics{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(11,25,41,.06);border-radius:var(--r-lg);overflow:hidden}
+.vp-metric{background:#fff;padding:36px 32px}
+.vp-metric-value{font-family:var(--font-display);font-size:clamp(28px,3vw,44px);font-weight:400;color:var(--n800);letter-spacing:-.03em;line-height:1.08}
+.vp-metric-label{font-size:13px;font-weight:600;color:var(--n400);margin-top:8px;margin-bottom:3px}
+.vp-metric-sub{font-size:12px;color:var(--ink3);line-height:1.4}
+/* CURRENCIES */
+.currency-grid{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.ccy-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1px solid rgba(11,25,41,.09);border-radius:var(--r-pill);background:#fff;transition:all .15s;cursor:default}
+.ccy-chip:hover{border-color:var(--n200);background:var(--n050)}
+.ccy-flag{font-size:15px;line-height:1}
+.ccy-code{font-size:12px;font-weight:700;color:var(--n600)}
+.ccy-name{font-size:12px;color:var(--ink3)}
+.corridor-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:28px}
+.corridor-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--r-pill);background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);font-size:11px;font-weight:600;color:#15803d;letter-spacing:.03em}
+.corridor-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0}
+/* PLATFORM SHOWCASE */
+.showcase-layout{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:center}
+@media(max-width:1024px){.showcase-layout{grid-template-columns:1fr;gap:56px}}
+.showcase-feats{display:flex;flex-direction:column;gap:18px;margin-top:32px}
+.showcase-feat{display:flex;align-items:flex-start;gap:14px}
+.showcase-feat-dot{width:6px;height:6px;border-radius:50%;background:var(--n200);flex-shrink:0;margin-top:7px}
+.showcase-feat-title{font-size:14px;font-weight:600;color:#fff;margin-bottom:2px}
+.showcase-feat-desc{font-size:13px;color:rgba(255,255,255,.5);line-height:1.55}
+.vis-inner{width:100%;max-width:500px}
+.screen-wrap{position:relative}
+.screen-wrap::before{content:'';position:absolute;inset:-26px -32px;border-radius:40px;background:rgba(120,170,220,.06);backdrop-filter:blur(40px) saturate(1.8) brightness(1.05);-webkit-backdrop-filter:blur(40px) saturate(1.8) brightness(1.05);border:1px solid rgba(255,255,255,.22);box-shadow:inset 0 2px 0 rgba(255,255,255,.38),inset 0 -1px 0 rgba(255,255,255,.08),inset 1px 0 0 rgba(255,255,255,.16),inset -1px 0 0 rgba(255,255,255,.08),0 4px 16px rgba(0,0,0,.12),0 24px 56px rgba(0,0,0,.32),0 72px 160px rgba(0,0,0,.30);pointer-events:none;z-index:-1}
+/* screen-wrap top-corner highlight removed */
+.screen-frame{border-radius:20px;overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.26);box-shadow:inset 0 2px 0 rgba(255,255,255,.52),inset 1.5px 0 0 rgba(255,255,255,.18),inset -1.5px 0 0 rgba(255,255,255,.08),inset 0 -1.5px 0 rgba(0,0,0,.08),0 2px 8px rgba(0,0,0,.14),0 16px 40px rgba(0,0,0,.30),0 48px 96px rgba(0,0,0,.34),0 96px 200px rgba(0,0,0,.16)}
+.screen-frame::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;z-index:11;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22) 30%,rgba(255,255,255,.28) 60%,transparent)}
+/* screen-frame diagonal sheen removed */
+.app-bg{background:linear-gradient(145deg,#D6E4F0 0%,#E8F0F8 35%,#DDE8F2 70%,#C8D8E8 100%);padding:24px;position:relative}
+/* app-bg shimmer removed */
+.app-c{background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.88);border-radius:12px;backdrop-filter:blur(12px) saturate(1.4);-webkit-backdrop-filter:blur(12px) saturate(1.4);box-shadow:0 1px 3px rgba(11,25,41,.06),0 4px 12px rgba(11,25,41,.04)}
+/* app-c card highlight removed */
+.app-ey{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.app-ey::before{content:'';display:block;width:18px;height:1.5px;background:rgba(11,25,41,.22);flex-shrink:0}
+.app-ey span{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(11,25,41,.38)}
+.app-h{font-family:var(--font-display);font-size:36px;font-weight:400;color:#0B1929;letter-spacing:-.025em;line-height:1.1}
+.app-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(11,25,41,.05)}
+.app-row:last-child{border-bottom:none}
+.app-btn-dk{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:100px;background:rgba(11,25,41,.82);backdrop-filter:blur(8px);color:#fff;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.12);cursor:default;box-shadow:0 2px 8px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.14)}
+.app-btn-lt{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:100px;background:rgba(255,255,255,.80);color:#0B1929;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.95);backdrop-filter:blur(8px);cursor:default;box-shadow:0 2px 8px rgba(11,40,80,.08),inset 0 1px 0 rgba(255,255,255,.9)}
+.app-settled{background:#0F1F33;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;white-space:nowrap}
+.app-transit{background:#1E4E80;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;white-space:nowrap}
+/* FAQ */
+.faq-list{border-top:1px solid rgba(11,25,41,.08)}
+.faq-item{border-bottom:1px solid rgba(11,25,41,.08)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:22px 0;cursor:pointer;gap:24px;user-select:none}
+.faq-q-text{font-size:16px;font-weight:500;color:var(--n800);line-height:1.4}
+.faq-icon{width:20px;height:20px;flex-shrink:0;color:var(--n400);transition:transform .22s ease}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{font-size:14px;color:var(--ink2);line-height:1.72;max-height:0;overflow:hidden;transition:max-height .3s ease,padding .2s ease;padding-bottom:0}
+.faq-item.open .faq-a{max-height:240px;padding-bottom:22px}
+
+/* ── VIEW TOGGLE ── */
+.view-toggle{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;background:rgba(11,25,41,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:4px;gap:2px;box-shadow:0 4px 24px rgba(0,0,0,.25)}
+.view-toggle a{font-size:12px;font-weight:600;letter-spacing:.04em;padding:6px 14px;border-radius:var(--r-pill);text-decoration:none;transition:all .18s ease;white-space:nowrap}
+.view-toggle a.active{background:#fff;color:var(--n800)}
+.view-toggle a:not(.active){color:rgba(255,255,255,.55)}
+.view-toggle a:not(.active):hover{color:#fff}
+
+@media(max-width:768px){
+  .section{padding:64px 0}
+  .cta-band{padding:80px 0}
+  footer{padding:64px 0 40px}
+  .footer-grid{margin-bottom:48px}
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  .hero-actions .btn{width:100%;justify-content:center}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/hansepay-mark-uploaded.png" alt="HansePay" />
+      <span class="nav-logo-text">HansePay</span>
+    </a>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <span class="nav-link">
+          Product
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Features</span>
+            <a href="index.html#product" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">FX Execution</div><div class="nav-dd-sub">Mid-market rates, zero markup</div></div>
+            </a>
+            <a href="index.html#transfers" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Global Payments</div><div class="nav-dd-sub">Send to 35+ currencies in minutes</div></div>
+            </a>
+            <a href="index.html#solutions" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Recipient Management</div><div class="nav-dd-sub">Manage payees across the world</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="platform.html">
+          Platform
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </a>
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Platform</span>
+            <a href="platform.html" class="nav-dd-link nav-dd-active">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Overview</div><div class="nav-dd-sub">See the full platform at a glance</div></div>
+            </a>
+            <a href="platform.html#transfers" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Real-time Tracking</div><div class="nav-dd-sub">Watch payments move live</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="index.html#calculator">Pricing</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#solutions">Solutions</a></li>
+      <li class="nav-item"><a class="nav-link" href="/hansepay/blog.html">Insights</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="index.html#contact" class="btn nav-cta">Open an account</a>
+      <button class="nav-burger" id="nav-burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a class="mobile-menu-link" href="index.html#product" onclick="closeMobileMenu()">Product</a>
+  <a class="mobile-menu-sub" href="index.html#transfers" onclick="closeMobileMenu()">FX Execution</a>
+  <a class="mobile-menu-sub" href="index.html#solutions" onclick="closeMobileMenu()">Payments</a>
+  <a class="mobile-menu-link" href="platform.html" onclick="closeMobileMenu()">Platform</a>
+  <a class="mobile-menu-link" href="index.html#calculator" onclick="closeMobileMenu()">Pricing</a>
+  <a class="mobile-menu-link" href="index.html#solutions" onclick="closeMobileMenu()">Solutions</a>
+  <a class="mobile-menu-link" href="/hansepay/blog.html" onclick="closeMobileMenu()">Insights</a>
+  <a class="mobile-menu-link" href="index.html#about" onclick="closeMobileMenu()">About</a>
+  <a href="index.html#contact" class="btn btn-primary mobile-menu-cta" onclick="closeMobileMenu()">Open an account</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-layout">
+
+    <!-- Left: copy — identical to Version A -->
+    <div class="hero-content">
+      <div class="hero-chip"><span class="hero-chip-dot"></span>Commercial FX &middot; Hamburg</div>
+      <h1 class="hero-headline">Cross-border<br>payments, <em>reimagined.</em></h1>
+      <p class="hero-sub">Stop overpaying on every international transfer. HansePay gives mid-sized European businesses direct access to interbank FX rates — zero markup, same-day settlement, BaFin regulated.</p>
+      <div class="hero-actions">
+        <a href="index.html#contact" class="btn btn-primary">Open an account</a>
+        <a href="index.html#contact" class="btn btn-ghost-navy">Talk to our team</a>
+      </div>
+      <div class="hero-route">
+        <span class="route-from">Hamburg</span>
+        <span class="route-arrow">&#8594;</span>
+        <div class="route-dest-wrap" id="route-dest-wrap">
+          <span class="route-dest active">London</span>
+          <span class="route-dest">New York</span>
+          <span class="route-dest">Dubai</span>
+          <span class="route-dest">Tokyo</span>
+          <span class="route-dest">Singapore</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: the actual premium sketch globe image -->
+    <!-- mix-blend-mode: multiply makes white paper transparent, pencil lines stay -->
+    <div class="hero-sketch-col">
+      <div class="sketch-globe-wrap">
+        <img
+          src="assets/sketch-globe.png"
+          alt="Premium pencil sketch of a globe on a stand with architectural construction lines"
+          class="sketch-globe-img"
+          draggable="false"
+        />
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- TRUST STRIP -->
+<div class="trust-strip">
+  <div class="container">
+    <div class="trust-inner">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <div><div class="trust-txt-main">BaFin Regulated</div><div class="trust-txt-sub">EU-licensed E-Money Institution</div></div>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <div><div class="trust-txt-main">Mid-Market Rate</div><div class="trust-txt-sub">No hidden markups</div></div>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        <div><div class="trust-txt-main">Live Pricing</div><div class="trust-txt-sub">Real-time rates around the clock</div></div>
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div><div class="trust-txt-main">Dedicated Expert</div><div class="trust-txt-sub">Direct contacts, no call centre</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CALCULATOR -->
+<section class="section calc-section" id="calculator" style="padding-top:48px">
+  <div class="container">
+    <div class="calc-layout">
+      <div class="calc-intro">
+        <span class="eyebrow">The hidden cost</span>
+        <div class="section-head" style="margin-top:12px">Your bank is quietly <em>overcharging you.</em></div>
+        <p class="lede" style="margin-top:20px">On every cross-border transfer, your bank adds a 2–4% markup on top of the exchange rate — money that disappears without a line item. Calculate exactly what you're losing.</p>
+        <div class="calc-bullets">
+          <div class="calc-bullet"><div class="calc-bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="calc-bullet-title">No hidden markups</div><div class="calc-bullet-desc">We charge only a transparent transaction fee.</div></div></div>
+          <div class="calc-bullet"><div class="calc-bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="calc-bullet-title">Mid-market rate guaranteed</div><div class="calc-bullet-desc">The real market price — no bank spread.</div></div></div>
+          <div class="calc-bullet"><div class="calc-bullet-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="calc-bullet-title">Conservative estimate</div><div class="calc-bullet-desc">Realistic benchmarks from the German business banking sector.</div></div></div>
+        </div>
+      </div>
+      <div class="calc-card">
+        <div class="calc-row"><div class="calc-lbl"><span>Annual FX volume</span></div><div class="calc-input-wrap"><span class="calc-prefix">&#8364;</span><input type="number" class="calc-input" id="vol" value="250000" min="10000" max="50000000" step="10000" /></div></div>
+        <div class="calc-row"><div class="calc-lbl"><span>Target currency</span></div><div class="calc-select-wrap"><select class="calc-select" id="cur"><option value="USD">US Dollar (USD)</option><option value="GBP">British Pound (GBP)</option><option value="CHF">Swiss Franc (CHF)</option><option value="JPY">Japanese Yen (JPY)</option><option value="CNY">Chinese Yuan (CNY)</option><option value="PLN">Polish Zloty (PLN)</option></select><svg class="calc-arrow" style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+        <div class="calc-row"><div class="calc-lbl"><span>Current banking provider</span></div><div class="calc-select-wrap"><select class="calc-select" id="bank"><option value="2.5">Typical Hausbank (approx. 2.5%)</option><option value="3.5">Large commercial bank (approx. 3.5%)</option><option value="1.5">Online bank (approx. 1.5%)</option><option value="4.0">Regional bank (approx. 4.0%)</option></select><svg class="calc-arrow" style="width:16px;height:16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div></div>
+        <div class="calc-divider"></div>
+        <div class="calc-result">
+          <div class="calc-result-row"><span class="calc-result-lbl">Bank costs per year</span><span class="calc-result-val" id="r-bank">&#8364;6,250</span></div>
+          <div class="calc-result-row"><span class="calc-result-lbl">HansePay costs per year</span><span class="calc-result-val" id="r-hp">&#8364;1,250</span></div>
+          <div class="calc-saving"><span class="calc-saving-lbl">Your savings</span><span class="calc-saving-val" id="r-save">&#8364;5,000</span></div>
+        </div>
+        <p class="calc-disclaimer">Estimate based on typical bank margins in the German business banking sector (BIS, 2024). HansePay at 0.5% transaction fee. Individual pricing on request.</p>
+        <a href="index.html#contact" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:20px">Request a precise quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE PROPS -->
+<section class="section" id="product" style="background:#f7f8fc">
+  <div class="container">
+    <div class="vp-layout">
+      <div>
+        <span class="eyebrow">The HansePay difference</span>
+        <h2 class="section-head" style="margin-top:12px">The lowest fees.<br><em>The fastest transfers.</em></h2>
+        <p class="lede" style="margin-top:20px">HansePay gives European businesses direct access to interbank FX rates with zero markup — the rate banks pay each other. Add same-day settlement on major corridors and you have the most efficient cross-border payment infrastructure available.</p>
+        <a href="index.html#calculator" class="btn btn-ghost-navy" style="margin-top:32px">See our pricing &rarr;</a>
+      </div>
+      <div class="vp-metrics">
+        <div class="vp-metric">
+          <div class="vp-metric-value">0%</div>
+          <div class="vp-metric-label">FX markup</div>
+          <div class="vp-metric-sub">Mid-market rate, always</div>
+        </div>
+        <div class="vp-metric">
+          <div class="vp-metric-value">Same<br>day</div>
+          <div class="vp-metric-label">Settlement</div>
+          <div class="vp-metric-sub">Most corridors, within hours</div>
+        </div>
+        <div class="vp-metric">
+          <div class="vp-metric-value">35+</div>
+          <div class="vp-metric-label">Currencies</div>
+          <div class="vp-metric-sub">120+ countries covered</div>
+        </div>
+        <div class="vp-metric">
+          <div class="vp-metric-value">&lt;10 min</div>
+          <div class="vp-metric-label">Onboarding</div>
+          <div class="vp-metric-sub">Fully digital, no paperwork</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="section how-section">
+  <div class="container">
+    <div class="how-intro">
+      <div class="section-label"><span class="eyebrow">How it works</span></div>
+      <h2 class="section-head" style="margin:16px 0 16px">From quote to <em>cleared funds</em> in four steps.</h2>
+      <p class="lede">No paperwork delays, no opaque pricing. Just fast, precise FX execution the way it should be.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <div class="how-title">Get a quote</div>
+        <div class="how-desc">Live mid-market rate with a clear fee. What you see is what settles.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <div class="how-title">Confirm the trade</div>
+        <div class="how-desc">One click locks your rate. Spot, forward, or scheduled — your choice.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <div class="how-title">Fund the payment</div>
+        <div class="how-desc">Transfer from your account. Funds are tracked from the moment they arrive.</div>
+      </div>
+      <div class="how-step">
+        <div class="how-num">4</div>
+        <div class="how-title">Recipient receives</div>
+        <div class="how-desc">Same-day or next-day delivery on major corridors. Confirmation sent instantly.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORM SHOWCASE -->
+<section class="section" id="platform-tour" style="background:var(--n800);overflow:hidden;position:relative">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 78% 15%,rgba(46,107,173,.32) 0%,transparent 55%),radial-gradient(ellipse at 8% 85%,rgba(30,78,128,.22) 0%,transparent 50%);pointer-events:none"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="showcase-layout">
+      <div>
+        <span class="eyebrow" style="color:var(--n200)">The Platform</span>
+        <h2 class="section-head" style="margin-top:12px;color:#fff">Everything your treasury<br><em style="color:var(--n200)">needs, nothing it doesn't.</em></h2>
+        <p class="lede" style="color:rgba(255,255,255,.58);margin-top:20px">Live FX rates, instant payments, full audit trail — your finance team gets a clean, powerful dashboard with everything in one place.</p>
+        <div class="showcase-feats">
+          <div class="showcase-feat"><div class="showcase-feat-dot"></div><div><div class="showcase-feat-title">Live mid-market rate streaming</div><div class="showcase-feat-desc">Lock in the real rate with one click. Spot, forward, or scheduled — your call.</div></div></div>
+          <div class="showcase-feat"><div class="showcase-feat-dot"></div><div><div class="showcase-feat-title">Full payment visibility</div><div class="showcase-feat-desc">Every transfer tracked in real time. Settled, in transit, or pending — always visible.</div></div></div>
+          <div class="showcase-feat"><div class="showcase-feat-dot"></div><div><div class="showcase-feat-title">Recipient management</div><div class="showcase-feat-desc">Store verified beneficiaries across 120+ countries — IBAN, SWIFT, local formats.</div></div></div>
+          <div class="showcase-feat"><div class="showcase-feat-dot"></div><div><div class="showcase-feat-title">API &amp; bulk payments</div><div class="showcase-feat-desc">Integrate with your ERP or TMS. Send hundreds of payments from one CSV upload.</div></div></div>
+        </div>
+        <a href="platform.html" class="btn btn-ghost-white" style="margin-top:36px">Explore the platform &rarr;</a>
+      </div>
+      <div>
+        <div class="screen-wrap vis-inner">
+          <div class="screen-frame">
+            <div class="app-bg">
+
+              <!-- Balance -->
+              <div class="app-ey"><span>OVERVIEW</span></div>
+              <div style="font-size:11px;color:#8DA8B8;margin-bottom:5px">Available balance</div>
+              <div class="app-h" style="margin-bottom:4px">35.000,00 €</div>
+              <div style="font-size:11px;color:#8DA8B8;margin-bottom:14px">IBAN ·· 4892</div>
+              <div style="display:flex;gap:8px;margin-bottom:20px">
+                <span class="app-btn-lt">+ Add money</span>
+                <span class="app-btn-dk">→ Send money</span>
+              </div>
+
+              <!-- FX Calculator card -->
+              <div class="app-c" style="padding:16px;margin-bottom:14px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                  <div>
+                    <div class="app-ey" style="margin-bottom:4px"><span>FX RATE</span></div>
+                    <div style="font-size:17px;font-weight:700;color:#0B1929;letter-spacing:-.01em">1 EUR = <span style="color:#1E4E80;font-style:italic">1.0842</span> USD</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:#1DA34B">
+                    <span style="width:5px;height:5px;border-radius:50%;background:#34C759;display:inline-block;box-shadow:0 0 5px rgba(52,199,89,.5)"></span>
+                    Live FX rate
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+                  <div>
+                    <div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:5px">YOU SEND</div>
+                    <div style="border:1px solid rgba(11,25,41,.10);border-radius:7px;padding:9px 11px;display:flex;justify-content:space-between;align-items:center;background:#fff">
+                      <span style="font-size:13px;font-weight:600;color:#0B1929">1.000,00</span>
+                      <span style="font-size:11px;font-weight:600;color:#0B1929">🇪🇺 EUR</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:5px">RECIPIENT GETS</div>
+                    <div style="border:1px solid rgba(11,25,41,.10);border-radius:7px;padding:9px 11px;display:flex;justify-content:space-between;align-items:center;background:#fff">
+                      <span style="font-size:13px;font-weight:600;color:#0B1929">1.073,47</span>
+                      <span style="font-size:11px;font-weight:600;color:#0B1929">🇺🇸 USD ▾</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="width:100%;padding:9px;border-radius:7px;background:#0B1929;color:#fff;font-size:12px;font-weight:600;text-align:center">Send →</div>
+              </div>
+
+              <!-- Recent Activity -->
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <div class="app-ey" style="margin-bottom:0"><span>RECENT ACTIVITY</span></div>
+                <span style="font-size:11px;font-weight:500;color:#1E4E80">View all →</span>
+              </div>
+              <div class="app-c" style="overflow:hidden">
+                <div class="app-row">
+                  <span style="font-size:16px;flex-shrink:0">🇨🇳</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Shenzhen Electronics Co.</div>
+                    <div style="font-size:10px;color:#1E4E80;margin-top:1px">Component shipment #SZ-4421</div>
+                  </div>
+                  <span class="app-settled">Settled</span>
+                  <div style="font-size:12px;font-weight:600;color:#0B1929;text-align:right;min-width:80px">−11.007,36 €</div>
+                </div>
+                <div class="app-row">
+                  <span style="font-size:16px;flex-shrink:0">🇧🇷</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">São Paulo Coffee Importers</div>
+                    <div style="font-size:10px;color:#1E4E80;margin-top:1px">Coffee invoice Q1</div>
+                  </div>
+                  <span class="app-transit">In Transit</span>
+                  <div style="font-size:12px;font-weight:600;color:#0B1929;text-align:right;min-width:80px">−6.674,25 €</div>
+                </div>
+                <div class="app-row" style="border-bottom:none">
+                  <span style="font-size:16px;flex-shrink:0">🇲🇽</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Mendoza Manufactura SA</div>
+                    <div style="font-size:10px;color:#1E4E80;margin-top:1px">Manufacturing PO #221</div>
+                  </div>
+                  <span class="app-settled">Settled</span>
+                  <div style="font-size:12px;font-weight:600;color:#0B1929;text-align:right;min-width:80px">−865,62 €</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CURRENCIES -->
+<section class="section" id="currencies" style="background:#f4f6fb">
+  <div class="container">
+    <div style="text-align:center;max-width:560px;margin:0 auto 52px">
+      <span class="eyebrow">Global reach</span>
+      <h2 class="section-head" style="margin-top:12px">Send to <em>35+ currencies.</em></h2>
+      <p class="lede" style="margin-top:16px">Seamless transfers across Europe, the Americas, Asia, and the Middle East — with same-day availability on major corridors.</p>
+    </div>
+    <div class="currency-grid">
+      <div class="ccy-chip"><span class="ccy-flag">🇺🇸</span><span class="ccy-code">USD</span><span class="ccy-name">US Dollar</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇬🇧</span><span class="ccy-code">GBP</span><span class="ccy-name">British Pound</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇨🇭</span><span class="ccy-code">CHF</span><span class="ccy-name">Swiss Franc</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇯🇵</span><span class="ccy-code">JPY</span><span class="ccy-name">Japanese Yen</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇸🇬</span><span class="ccy-code">SGD</span><span class="ccy-name">Singapore Dollar</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇦🇪</span><span class="ccy-code">AED</span><span class="ccy-name">UAE Dirham</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇨🇳</span><span class="ccy-code">CNY</span><span class="ccy-name">Chinese Yuan</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇦🇺</span><span class="ccy-code">AUD</span><span class="ccy-name">Australian Dollar</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇨🇦</span><span class="ccy-code">CAD</span><span class="ccy-name">Canadian Dollar</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇸🇪</span><span class="ccy-code">SEK</span><span class="ccy-name">Swedish Krona</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇳🇴</span><span class="ccy-code">NOK</span><span class="ccy-name">Norwegian Krone</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇩🇰</span><span class="ccy-code">DKK</span><span class="ccy-name">Danish Krone</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇵🇱</span><span class="ccy-code">PLN</span><span class="ccy-name">Polish Zloty</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇨🇿</span><span class="ccy-code">CZK</span><span class="ccy-name">Czech Koruna</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇭🇺</span><span class="ccy-code">HUF</span><span class="ccy-name">Hungarian Forint</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇭🇰</span><span class="ccy-code">HKD</span><span class="ccy-name">Hong Kong Dollar</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇳🇿</span><span class="ccy-code">NZD</span><span class="ccy-name">New Zealand Dollar</span></div>
+      <div class="ccy-chip"><span class="ccy-flag">🇮🇳</span><span class="ccy-code">INR</span><span class="ccy-name">Indian Rupee</span></div>
+    </div>
+    <div class="corridor-row">
+      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/USD &mdash; same day</span>
+      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/GBP &mdash; same day</span>
+      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/CHF &mdash; same day</span>
+      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/JPY &mdash; same day</span>
+      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/SGD &mdash; next day</span>
+      <span class="corridor-badge"><span class="corridor-dot"></span>EUR/AED &mdash; next day</span>
+    </div>
+    <p style="text-align:center;font-size:12px;color:var(--ink3);margin-top:20px">+17 more currencies available &mdash; speak with your FX expert for full corridor availability.</p>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="section" id="solutions" style="background:#fff">
+  <div class="container">
+    <div style="max-width:560px;margin-bottom:56px">
+      <span class="eyebrow">For whom</span>
+      <h2 class="section-head" style="margin-top:12px">Solutions for <em>every industry.</em></h2>
+      <p class="lede" style="margin-top:16px">Whether import, export, e-commerce or professional services — we understand the specific requirements of your sector.</p>
+    </div>
+    <div class="seg-grid">
+      <a href="#" class="seg-card"><div class="seg-img" style="background:linear-gradient(135deg,#1E4E80,#2E6BAD)"><svg class="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div><div class="seg-body"><span class="seg-tag">Import &amp; Manufacturing</span><div class="seg-title">Importers &amp; Manufacturers</div><div class="seg-desc">Raw material procurement, supplier invoices, component sourcing — plannable and cost-optimised.</div></div></a>
+      <a href="#" class="seg-card"><div class="seg-img" style="background:linear-gradient(135deg,#163659,#1E4E80)"><svg class="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div><div class="seg-body"><span class="seg-tag">E-Commerce</span><div class="seg-title">Online Retailers</div><div class="seg-desc">Payments to international marketplaces, suppliers and payment providers without exchange rate surprises.</div></div></a>
+      <a href="#" class="seg-card"><div class="seg-img" style="background:linear-gradient(135deg,#0F2540,#163659)"><svg class="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div><div class="seg-body"><span class="seg-tag">Logistics &amp; Freight</span><div class="seg-title">Logistics &amp; Freight</div><div class="seg-desc">Port fees, freight invoices, international subcontractors — all currencies, one platform.</div></div></a>
+      <a href="#" class="seg-card"><div class="seg-img" style="background:linear-gradient(135deg,#2E6BAD,#3B7BC4)"><svg class="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="seg-body"><span class="seg-tag">Professional Services</span><div class="seg-title">Service Firms &amp; Agencies</div><div class="seg-desc">International projects, foreign fees, remote teams — simple and compliant billing.</div></div></a>
+      <a href="#" class="seg-card"><div class="seg-img" style="background:linear-gradient(135deg,#1E4E80,#0F2540)"><svg class="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div class="seg-body"><span class="seg-tag">Mid &amp; Large Corporate</span><div class="seg-title">Mid-Sized Corporates</div><div class="seg-desc">Complex FX structures, treasury integration, bespoke hedging strategies for larger volumes.</div></div></a>
+      <a href="#" class="seg-card"><div class="seg-img" style="background:linear-gradient(135deg,#163659,#2E6BAD)"><svg class="seg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="seg-body"><span class="seg-tag">Small Business</span><div class="seg-title">Small Business &amp; Freelancers</div><div class="seg-desc">Easy onboarding, fair pricing — even for smaller volumes. Grow with us.</div></div></a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about-section" id="about">
+  <div class="container">
+    <div class="about-layout">
+      <div>
+        <span class="eyebrow about-eyebrow">Our story</span>
+        <h2 class="about-head">Built in Hamburg.<br><em>Trusted across Europe.</em></h2>
+        <p class="about-body">For centuries, Hamburg has been Europe's gateway to global commerce. HansePay carries that tradition forward — bringing institutional-grade FX execution to the businesses that drive the modern economy.</p>
+        <p class="about-body" style="margin-bottom:0">We are a BaFin-regulated payment institution. Our team combines decades of experience in FX, compliance, and enterprise technology.</p>
+      </div>
+      <div>
+        <div class="cred-card">
+          <div class="cred-item">
+            <div class="cred-icon-wrap"><svg class="cred-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+            <div><div class="cred-title">BaFin Regulated</div><div class="cred-desc">Authorised as an EU E-Money Institution. Client funds held in segregated accounts at Tier-1 banks.</div></div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-icon-wrap"><svg class="cred-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+            <div><div class="cred-title">120+ Countries</div><div class="cred-desc">Global reach through direct clearing relationships and established correspondent banking networks.</div></div>
+          </div>
+          <div class="cred-item">
+            <div class="cred-icon-wrap"><svg class="cred-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg></div>
+            <div><div class="cred-title">Zero Markup FX</div><div class="cred-desc">Mid-market interbank rates on every trade. Simple, transparent fee per transaction — nothing hidden.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSIGHTS / BLOG -->
+<section class="section" id="insights" style="background:#f7f8fc">
+  <div class="container">
+    <div class="insights-header">
+      <div>
+        <span class="eyebrow">HANSEPAY INSIGHTS</span>
+        <h2 class="section-title" style="margin-top:10px;margin-bottom:0">FX knowledge that moves<br><em>your business forward.</em></h2>
+      </div>
+      <a href="/hansepay/blog.html" class="btn-outline" style="flex-shrink:0">All articles →</a>
+    </div>
+    <div class="ins-grid" id="ins-grid">
+      <a class="ins-card" href="/hansepay/blog-post.html?slug=hidden-cost-of-bank-fx-fees" style="background:#fff;text-decoration:none;display:block">
+        <div class="ins-thumb" style="background:linear-gradient(135deg,#0F2540 0%,#2E6BAD 100%)">
+          <span class="ins-thumb-text">FX cost clarity.</span>
+          <div class="ins-thumb-bar"></div>
+        </div>
+        <div class="ins-body">
+          <span class="ins-tag">FX Education</span>
+          <div class="ins-title">The Hidden Cost of Bank FX Fees — What Every CFO Should Know</div>
+          <div class="ins-meta">HansePay Team · 5 min read</div>
+        </div>
+      </a>
+      <a class="ins-card" href="/hansepay/blog-post.html?slug=same-day-euro-settlement-guide" style="background:#fff;text-decoration:none;display:block">
+        <div class="ins-thumb" style="background:linear-gradient(135deg,#163659 0%,#1E4E80 100%)">
+          <span class="ins-thumb-text">Same-day settlement.</span>
+          <div class="ins-thumb-bar"></div>
+        </div>
+        <div class="ins-body">
+          <span class="ins-tag">Treasury</span>
+          <div class="ins-title">Same-Day Euro Settlement: A Practical Guide for European Businesses</div>
+          <div class="ins-meta">HansePay Team · 6 min read</div>
+        </div>
+      </a>
+      <a class="ins-card" href="/hansepay/blog-post.html?slug=bafin-regulation-what-it-means" style="background:#fff;text-decoration:none;display:block">
+        <div class="ins-thumb" style="background:linear-gradient(135deg,#0B1929 0%,#163659 100%)">
+          <span class="ins-thumb-text">Regulated &amp; secure.</span>
+          <div class="ins-thumb-bar"></div>
+        </div>
+        <div class="ins-body">
+          <span class="ins-tag">Compliance</span>
+          <div class="ins-title">BaFin Regulation: What It Means for Your Business's Money</div>
+          <div class="ins-meta">HansePay Team · 7 min read</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq" style="background:#fff">
+  <div class="container">
+    <div style="max-width:720px;margin:0 auto">
+      <div style="text-align:center;margin-bottom:56px">
+        <span class="eyebrow">FAQ</span>
+        <h2 class="section-head" style="margin-top:12px">Common <em>questions.</em></h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item"><div class="faq-q"><span class="faq-q-text">How fast are transfers?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a">Most transfers on major corridors (EUR/USD, EUR/GBP, EUR/CHF) settle same day. Transfers to Asia and the Middle East typically settle next business day. Your dedicated FX expert confirms exact timings when you book.</div></div>
+        <div class="faq-item"><div class="faq-q"><span class="faq-q-text">What fees does HansePay charge?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a">A single transparent transaction fee of 0.3–0.5%, depending on volume and currency pair. Zero markup on the exchange rate — you always receive the real mid-market rate. No monthly fees, no hidden charges, no minimum commitment.</div></div>
+        <div class="faq-item"><div class="faq-q"><span class="faq-q-text">Which currencies and countries do you support?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a">35+ currencies across 120+ countries — including USD, GBP, CHF, JPY, SGD, AED, CNY, AUD, CAD, and all major European currencies. Need a specific corridor not listed? Get in touch — we can often arrange it on request.</div></div>
+        <div class="faq-item"><div class="faq-q"><span class="faq-q-text">Is HansePay regulated and safe?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a">Yes. HansePay is a BaFin-regulated EU E-Money Institution. Client funds are held in fully segregated accounts. We comply with all applicable AML, KYC, and MiCAR regulations and are subject to regular audits under German and EU financial law.</div></div>
+        <div class="faq-item"><div class="faq-q"><span class="faq-q-text">How do I get started?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a">Open an account online in under 10 minutes — fully digital, no paperwork, no bank appointments. Digital ID verification is included. Once approved, your dedicated FX expert contacts you to walk through the platform and discuss your requirements.</div></div>
+        <div class="faq-item"><div class="faq-q"><span class="faq-q-text">Is there a minimum transfer amount?</span><svg class="faq-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div><div class="faq-a">The minimum transfer is EUR 1,000 (or equivalent). There is no maximum. For large or complex transfers, your FX expert can arrange tailored rates and bespoke settlement options — just get in touch.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="eyebrow cta-eyebrow">Get started today</div>
+      <h2 class="cta-head">Ready to move money<br><em>across every meridian?</em></h2>
+      <p class="cta-sub">Join hundreds of European businesses moving money smarter. Open your account in under two hours — no hidden fees, dedicated support from day one.</p>
+      <div class="cta-actions">
+        <a href="index.html#contact" class="btn btn-white-fill">Open a business account</a>
+        <a href="index.html#contact" class="btn btn-ghost-white">Talk to sales</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay" />
+          <span class="footer-logo-text">HansePay</span>
+        </div>
+        <p class="footer-tagline">Global payments rooted in Hamburg's trading heritage.</p>
+        <p class="footer-legal">© 2025 HansePay GmbH. Alle Rechte vorbehalten.<br>BaFin-Reg. Nr. 12345678 · USt-IdNr. DE123456789</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <ul class="footer-links">
+          <li><a href="index.html#product" class="footer-link">FX Execution</a></li>
+          <li><a href="index.html#transfers" class="footer-link">Global Payments</a></li>
+          <li><a href="index.html#calculator" class="footer-link">Pricing</a></li>
+          <li><a href="platform.html" class="footer-link">Platform</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="index.html#about" class="footer-link">About</a></li>
+          <li><a href="#" class="footer-link">Blog</a></li>
+          <li><a href="#" class="footer-link">Careers</a></li>
+          <li><a href="#" class="footer-link">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a href="#" class="footer-link">Impressum</a></li>
+          <li><a href="#" class="footer-link">Datenschutz</a></li>
+          <li><a href="#" class="footer-link">AGB</a></li>
+          <li><a href="#" class="footer-link">BaFin Info</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-hr"></div>
+    <div class="footer-bottom">
+      <span class="footer-copy">Built in Hamburg. Licensed in Germany.</span>
+      <span class="bafin-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        BaFin regulated
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- VIEW TOGGLE -->
+<div class="view-toggle">
+  <a href="index.html">A</a>
+  <a href="platform.html">C</a>
+  <a href="hansepay-sketch-globe.html" class="active">E</a>
+</div>
+
+<script>
+/* Nav scroll */
+var nav = document.getElementById('main-nav');
+window.addEventListener('scroll', function(){
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, {passive:true});
+
+/* Mobile menu */
+var burger = document.getElementById('nav-burger');
+var menu = document.getElementById('mobile-menu');
+function closeMobileMenu(){
+  burger.classList.remove('open');
+  menu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+burger.addEventListener('click', function(){
+  var open = menu.classList.toggle('open');
+  burger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+
+/* Rotating destination ticker */
+var dests = document.querySelectorAll('.route-dest');
+var idx = 0;
+setInterval(function(){
+  dests[idx].classList.remove('active');
+  idx = (idx + 1) % dests.length;
+  dests[idx].classList.add('active');
+}, 2200);
+
+/* CALCULATOR */
+var fmt=function(n){return new Intl.NumberFormat('en-GB',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n);};
+function calcUpdate(){var vol=parseFloat(document.getElementById('vol').value)||0,br=parseFloat(document.getElementById('bank').value)/100,bc=vol*br,hc=vol*0.005;document.getElementById('r-bank').textContent=fmt(bc);document.getElementById('r-hp').textContent=fmt(hc);document.getElementById('r-save').textContent=fmt(bc-hc);}
+['vol','cur','bank'].forEach(function(id){var el=document.getElementById(id);if(el)el.addEventListener('input',calcUpdate);});
+calcUpdate();
+
+/* FAQ accordion */
+document.querySelectorAll('.faq-q').forEach(function(q){
+  q.addEventListener('click', function(){
+    var item = q.closest('.faq-item');
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+    if(!wasOpen) item.classList.add('open');
+  });
+});
+
+/* Smooth scroll */
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click', function(e){
+    var t = document.querySelector(a.getAttribute('href'));
+    if(t){ e.preventDefault(); t.scrollIntoView({behavior:'smooth', block:'start'}); }
+  });
+});
+
+// ── Insights: load from API if available ─────────────────────────────────────
+(function(){
+  var grid = document.getElementById('ins-grid');
+  if(!grid) return;
+  var gradients = [
+    'linear-gradient(135deg,#0F2540 0%,#2E6BAD 100%)',
+    'linear-gradient(135deg,#163659 0%,#1E4E80 100%)',
+    'linear-gradient(135deg,#0B1929 0%,#163659 100%)',
+    'linear-gradient(135deg,#1E4E80 0%,#3B7BC4 100%)'
+  ];
+  function fmtDate(d){var dt=new Date(d);return dt.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
+  function renderCards(posts){
+    grid.innerHTML = posts.slice(0,3).map(function(p,i){
+      return '<a class="ins-card" href="/hansepay/blog-post.html?slug='+p.slug+'" style="background:#fff;text-decoration:none;display:block">'+
+        '<div class="ins-thumb" style="background:'+gradients[i%gradients.length]+'">'+
+        '<span class="ins-thumb-text">'+(p.excerpt?p.excerpt.split('.')[0]+'.':'FX insight.')+'</span>'+
+        '<div class="ins-thumb-bar"></div></div>'+
+        '<div class="ins-body">'+
+        '<span class="ins-tag">'+(p.category||'Insights')+'</span>'+
+        '<div class="ins-title">'+p.title+'</div>'+
+        '<div class="ins-meta">'+(p.authorName||'HansePay Team')+' · '+(p.readTime||5)+' min read · '+fmtDate(p.publishedAt||p.createdAt)+'</div>'+
+        '</div></a>';
+    }).join('');
+  }
+  fetch('/api/posts').then(function(r){return r.json();}).then(function(data){
+    var posts = Array.isArray(data) ? data : (data.posts||[]);
+    if(posts.length) renderCards(posts);
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>

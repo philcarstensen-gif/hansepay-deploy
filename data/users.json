@@ -1,0 +1,12 @@
+[
+  {
+    "id": "usr_001",
+    "name": "Admin User",
+    "email": "admin@hansepay.com",
+    "passwordHash": "$2a$10$Lpoc/raRUrFN0dd2gzesfufvHoyRKENWbaELvtUKrdE5tbEgMvad6",
+    "role": "admin",
+    "avatar": "",
+    "createdAt": "2024-01-15T10:00:00.000Z",
+    "lastLogin": null
+  }
+]

@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay Platform — Overview</title>
+<meta name="description" content="The HansePay platform. Mid-market FX, global payments, recipient management, and smart rate alerts — built for modern corporate treasury." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+/* ── TOKENS ── */
+:root {
+  --n900:#0E1C2E;--n800:#142438;--n700:#1A3350;--n600:#1E4068;
+  --n500:#2458A0;--n400:#3570BF;--n300:#4B84D4;--n200:#8DBDE6;
+  --n100:#C4DDEF;--n050:#EBF4FB;--off:#F5F1EA;--gold:#C9A961;
+  --ink:#0B1929;--ink2:#3D5A73;--ink3:#7A9AB0;
+  --font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+  --font-display:Georgia,'Times New Roman',serif;
+  --font-logo:'Libre Baskerville',Georgia,serif;
+  --r-pill:100px;--r-lg:16px;--r-md:10px;--r-sm:6px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-ui);color:#fff;background:var(--n900);-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--n500);color:#fff}.btn-primary:hover{background:var(--n600)}
+.btn-ghost-white{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.32)}.btn-ghost-white:hover{background:rgba(255,255,255,.08)}
+.btn-ghost-navy{background:transparent;color:var(--n600);border:1.5px solid rgba(11,25,41,.2)}.btn-ghost-navy:hover{background:var(--n050)}
+.btn-white-fill{background:#fff;color:var(--n500)}.btn-white-fill:hover{background:var(--n050)}
+
+/* ── NAV (dark) ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80px);height:68px;display:flex;align-items:center;transition:background .3s,box-shadow .3s,backdrop-filter .3s}
+nav.scrolled{background:rgba(255,255,255,.97);box-shadow:0 1px 0 rgba(11,25,41,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;gap:0}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;margin-right:40px}
+.nav-logo img{height:28px;width:28px;object-fit:contain}
+.nav-logo-text{font-family:var(--font-logo);font-size:19px;font-weight:400;letter-spacing:-.02em;color:#fff;line-height:1}
+/* nav items */
+.nav-links{display:flex;align-items:stretch;gap:0;list-style:none;flex:1;height:68px}
+.nav-item{position:relative;display:flex;align-items:center}
+.nav-link{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:500;color:rgba(255,255,255,.56);transition:color .15s;white-space:nowrap;padding:0 16px;height:100%;cursor:pointer}
+.nav-link:hover,.nav-link.active-page{color:#fff}
+.nav-link svg{transition:transform .2s ease;flex-shrink:0}
+.nav-item:hover .nav-link svg{transform:rotate(180deg)}
+/* dropdown */
+.nav-dropdown{position:absolute;top:calc(100% + 1px);left:50%;transform:translateX(-50%);width:260px;
+  background:rgba(13,24,41,.96);backdrop-filter:blur(24px) saturate(1.5);-webkit-backdrop-filter:blur(24px) saturate(1.5);
+  border:1px solid rgba(255,255,255,.12);border-radius:16px;
+  box-shadow:0 8px 32px rgba(0,0,0,.4),0 32px 80px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.18);
+  padding:10px;opacity:0;pointer-events:none;transform:translateX(-50%) translateY(-6px);
+  transition:opacity .18s ease,transform .18s ease}
+.nav-item:hover .nav-dropdown{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.nav-dropdown-section{padding:6px 0 2px}
+.nav-dropdown-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.30);padding:4px 12px 8px;display:block}
+.nav-dd-link{display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:9px;text-decoration:none;transition:background .14s}
+.nav-dd-link:hover{background:rgba(255,255,255,.07)}
+.nav-dd-icon{width:32px;height:32px;border-radius:8px;background:rgba(141,189,230,.10);border:1px solid rgba(141,189,230,.16);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nav-dd-icon svg{width:14px;height:14px;color:var(--n200)}
+.nav-dd-text{flex:1;min-width:0}
+.nav-dd-title{font-size:13px;font-weight:600;color:#fff;line-height:1.2}
+.nav-dd-sub{font-size:11px;color:rgba(255,255,255,.40);margin-top:1px;line-height:1.3}
+.nav-dd-active .nav-dd-icon{background:rgba(201,169,97,.14);border-color:rgba(201,169,97,.24)}
+.nav-dd-active .nav-dd-icon svg{color:var(--gold)}
+.nav-dd-active .nav-dd-title{color:var(--gold)}
+.nav-dropdown-sep{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+/* nav right */
+.nav-right{display:flex;align-items:center;gap:8px;margin-left:16px;flex-shrink:0}
+.nav-cta{background:rgba(255,255,255,.10);color:#fff;border:1.5px solid rgba(255,255,255,.18);padding:8px 20px;font-size:13px;border-radius:var(--r-pill)}
+.nav-cta:hover{background:rgba(255,255,255,.16)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;border-radius:2px;background:rgba(255,255,255,.75);transition:all .22s ease}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(13,24,41,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:24px clamp(20px,5vw,80px);z-index:199;flex-direction:column;gap:4px}
+.mobile-menu.open{display:flex}
+.mobile-menu-link{font-size:16px;font-weight:500;color:rgba(255,255,255,.7);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
+.mobile-menu-sub{font-size:14px;font-weight:400;color:rgba(255,255,255,.45);padding:8px 0 8px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
+.mobile-menu-link:last-of-type,.mobile-menu-sub:last-of-type{border-bottom:none}
+.mobile-menu-cta{margin-top:16px}
+@media(max-width:768px){.nav-links{display:none}.nav-burger{display:flex}}
+
+/* ── VIEW TOGGLE ── */
+.view-toggle{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;background:rgba(11,25,41,.82);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-pill);padding:4px;gap:2px;box-shadow:0 4px 24px rgba(0,0,0,.25)}
+.view-toggle a{font-size:12px;font-weight:600;letter-spacing:.04em;padding:6px 14px;border-radius:var(--r-pill);text-decoration:none;transition:all .18s ease;white-space:nowrap}
+.view-toggle a.active{background:#fff;color:var(--n800)}
+.view-toggle a:not(.active){color:rgba(255,255,255,.55)}
+.view-toggle a:not(.active):hover{color:#fff}
+
+/* ── GLASS FRAME (wraps app mockups) ── */
+
+/* The outer glass surround — sits behind the app card, gives frosted-panel feel */
+.screen-wrap{position:relative}
+.screen-wrap::before{
+  content:'';position:absolute;inset:-26px -32px;border-radius:40px;
+  background:rgba(120,170,220,.06);
+  backdrop-filter:blur(40px) saturate(1.8) brightness(1.05);
+  -webkit-backdrop-filter:blur(40px) saturate(1.8) brightness(1.05);
+  border:1px solid rgba(255,255,255,.22);
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.38),
+    inset 0 -1px 0 rgba(255,255,255,.08),
+    inset 1px 0 0 rgba(255,255,255,.16),
+    inset -1px 0 0 rgba(255,255,255,.08),
+    0 4px 16px rgba(0,0,0,.12),
+    0 24px 56px rgba(0,0,0,.32),
+    0 72px 160px rgba(0,0,0,.30);
+  pointer-events:none;z-index:-1
+}
+/* top-left corner highlight removed */
+
+/* The app card itself — tight border + layered shadows for 3D depth */
+.screen-frame{
+  border-radius:20px;overflow:hidden;position:relative;
+  border:1px solid rgba(255,255,255,.26);
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.52),
+    inset 1.5px 0 0 rgba(255,255,255,.18),
+    inset -1.5px 0 0 rgba(255,255,255,.08),
+    inset 0 -1.5px 0 rgba(0,0,0,.08),
+    0 2px 8px rgba(0,0,0,.14),
+    0 16px 40px rgba(0,0,0,.30),
+    0 48px 96px rgba(0,0,0,.34),
+    0 96px 200px rgba(0,0,0,.16);
+}
+/* diagonal sheen removed */
+/* Subtle bottom-edge reflection */
+.screen-frame::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;z-index:11;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.22) 30%,rgba(255,255,255,.28) 60%,transparent)
+}
+
+/* ── APP UI INTERNALS — liquid glass treatment ── */
+/* Recreates the HansePay app with a glassy, premium feel */
+.app-bg{
+  background:linear-gradient(145deg,#D6E4F0 0%,#E8F0F8 35%,#DDE8F2 70%,#C8D8E8 100%);
+  padding:24px;position:relative
+}
+/* app-bg shimmer removed */
+.app-c{
+  background:rgba(255,255,255,.72);
+  border:1px solid rgba(255,255,255,.88);
+  border-radius:12px;
+  backdrop-filter:blur(12px) saturate(1.4);
+  -webkit-backdrop-filter:blur(12px) saturate(1.4);
+  box-shadow:0 2px 12px rgba(11,40,80,.06),0 1px 0 rgba(255,255,255,.9) inset;
+  position:relative
+}
+/* app-c card highlight removed */
+.app-ey{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.app-ey::before{content:'';display:block;width:18px;height:1.5px;background:rgba(11,25,41,.22);flex-shrink:0}
+.app-ey span{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(11,25,41,.38)}
+.app-h{font-family:var(--font-display);font-size:36px;font-weight:400;color:#0B1929;letter-spacing:-.025em;line-height:1.1}
+.app-h-md{font-family:var(--font-display);font-size:26px;font-weight:400;color:#0B1929;letter-spacing:-.02em;line-height:1.1}
+.app-h-page{font-size:22px;font-weight:700;color:#0B1929;letter-spacing:-.02em;line-height:1.2}
+.app-muted{font-size:11px;color:#7A9AB0}
+.app-blue{color:#1A4A78}
+.app-green{color:#1DA34B;font-weight:600}
+.app-row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-bottom:1px solid rgba(11,25,41,.05)}
+.app-row:last-child{border-bottom:none}
+.app-avatar{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.app-settled{background:#0F1F33;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;white-space:nowrap}
+.app-transit{background:#1E4E80;color:#fff;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;white-space:nowrap}
+.app-active-badge{background:rgba(26,74,120,.10);color:#1A4A78;font-size:9px;font-weight:700;padding:2px 7px;border-radius:100px;border:1px solid rgba(26,74,120,.18);white-space:nowrap}
+.app-alert-away{font-size:10px;font-weight:600;padding:2px 7px;border-radius:100px;white-space:nowrap}
+.app-btn-dk{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:100px;background:rgba(11,25,41,.82);backdrop-filter:blur(8px);color:#fff;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.12);cursor:default;box-shadow:0 2px 8px rgba(0,0,0,.18),inset 0 1px 0 rgba(255,255,255,.14)}
+.app-btn-lt{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:100px;background:rgba(255,255,255,.80);color:#0B1929;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,.95);backdrop-filter:blur(8px);cursor:default;box-shadow:0 2px 8px rgba(11,40,80,.08),inset 0 1px 0 rgba(255,255,255,.9)}
+.app-input{width:100%;border:1px solid rgba(255,255,255,.80);border-radius:8px;padding:10px 12px;background:rgba(255,255,255,.65);backdrop-filter:blur(8px);font-size:13px;color:#0B1929;font-family:var(--font-ui);outline:none;box-shadow:inset 0 1px 3px rgba(11,40,80,.06),0 1px 0 rgba(255,255,255,.9)}
+.app-step-bar{height:2px;border-radius:1px}
+.app-sep{height:1px;background:rgba(11,25,41,.05)}
+
+/* ── LANDING PAGE SECTIONS ── */
+.section{padding:104px 0;position:relative;overflow:hidden}
+.section-alt{background:var(--n800)}
+.section-light{background:#fff}
+.section-off{background:var(--off)}
+
+.split{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1}
+@media(max-width:960px){.split{grid-template-columns:1fr;gap:48px}.split .vis-order-first{order:-1}.section{padding:72px 0}}
+
+.copy-head{font-family:var(--font-display);font-size:clamp(28px,3vw,42px);font-weight:400;line-height:1.08;letter-spacing:-.025em;color:#fff;margin:14px 0 20px}
+.copy-head em{font-style:italic;color:var(--n200)}
+.copy-head-ink{color:var(--n800)}
+.copy-head-ink em{color:var(--n400)}
+.copy-lede{font-size:16px;font-weight:300;color:rgba(255,255,255,.56);line-height:1.68;margin-bottom:32px}
+.copy-lede-ink{color:var(--ink2)}
+.eyebrow{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--n200)}
+.eyebrow-ink{color:var(--n300)}
+
+.cbullet{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+.cbullet-dot{width:20px;height:20px;border-radius:50%;background:rgba(141,189,230,.12);border:1px solid rgba(141,189,230,.22);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.cbullet-dot-ink{background:var(--n050);border-color:var(--n100)}
+.cbullet-dot svg{width:10px;height:10px;color:var(--n200)}
+.cbullet-dot-ink svg{color:var(--n400)}
+.cbullet-t{font-size:14px;font-weight:600;color:#fff}
+.cbullet-t-ink{color:var(--n800)}
+.cbullet-d{font-size:13px;color:rgba(255,255,255,.42);margin-top:1px}
+.cbullet-d-ink{color:var(--ink2)}
+
+.vis-col{display:flex;justify-content:center;align-items:center}
+.vis-inner{width:100%;max-width:500px}
+
+/* blob */
+.blob{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;background:var(--n900);position:relative;overflow:hidden;padding:88px 0 72px}
+.hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(ellipse 80% 70% at 78% 45%,rgba(46,107,173,.32) 0%,transparent 62%),
+  radial-gradient(ellipse 50% 50% at 10% 70%,rgba(22,54,120,.28) 0%,transparent 55%),
+  radial-gradient(ellipse 40% 50% at 55% 5%,rgba(80,55,150,.14) 0%,transparent 50%)}
+.hero-layout{display:grid;grid-template-columns:1fr 1.08fr;align-items:center;min-height:calc(100vh - 160px);gap:56px;position:relative;z-index:1}
+@media(max-width:960px){.hero-layout{grid-template-columns:1fr}.hero-vis{display:none}}
+.hero-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:var(--r-pill);background:rgba(141,189,230,.10);border:1px solid rgba(141,189,230,.18);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--n200);margin-bottom:28px}
+.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--n300)}
+.hero-h1{font-family:var(--font-display);font-size:clamp(44px,5.2vw,72px);font-weight:400;line-height:1.04;letter-spacing:-.03em;color:#fff;margin-bottom:24px}
+.hero-h1 em{font-style:italic;color:var(--n200)}
+.hero-sub{font-size:clamp(15px,1.4vw,17px);font-weight:300;color:rgba(255,255,255,.56);line-height:1.72;max-width:440px;margin-bottom:36px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:48px}
+.hero-stats{display:flex;gap:40px;flex-wrap:wrap}
+.stat-val{font-family:var(--font-display);font-size:22px;color:#fff;letter-spacing:-.01em;line-height:1.1}
+.stat-lbl{font-size:11px;color:rgba(255,255,255,.34);margin-top:3px;letter-spacing:.04em}
+
+/* ── CURRENCY GRID ── */
+.currency-section{padding:96px 0;text-align:center;position:relative;overflow:hidden}
+.cpill-grid{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:44px;max-width:860px;margin-left:auto;margin-right:auto}
+.cpill{display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:var(--r-pill);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);transition:all .18s}
+.cpill:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.15);transform:translateY(-1px)}
+.cpill-flag{font-size:14px;line-height:1}
+.cpill-code{font-size:12px;font-weight:600;color:rgba(255,255,255,.70);letter-spacing:.05em}
+
+/* ── ONBOARDING ── */
+.onboard-section{padding:96px 0;background:#fff}
+.onboard-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;position:relative;margin-top:52px}
+.onboard-grid::before{content:'';position:absolute;top:25px;left:calc(10% + 10px);right:calc(10% + 10px);height:2px;background:var(--n050);z-index:0}
+@media(max-width:900px){.onboard-grid{grid-template-columns:1fr 1fr}.onboard-grid::before{display:none}}
+@media(max-width:560px){.onboard-grid{grid-template-columns:1fr}}
+.onboard-step{position:relative;z-index:1;text-align:center;padding:0 12px}
+.onboard-num{width:50px;height:50px;border-radius:50%;background:#fff;border:2px solid var(--n500);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-family:var(--font-display);font-style:italic;font-size:18px;color:var(--n500);box-shadow:0 4px 16px rgba(11,25,41,.06)}
+.onboard-title{font-size:14px;font-weight:600;color:var(--n800);margin-bottom:6px}
+.onboard-desc{font-size:12px;color:var(--ink2);line-height:1.55}
+
+/* ── CTA + FOOTER ── */
+.cta-band{padding:128px 0;text-align:center;position:relative;overflow:hidden;background:radial-gradient(ellipse at 18% 40%,#163348 0%,transparent 55%),radial-gradient(ellipse at 82% 25%,#2E6BAD 0%,transparent 50%),#0D1829}
+.cta-inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
+.cta-head{font-family:var(--font-display);font-size:clamp(32px,4vw,52px);font-weight:400;line-height:1.1;letter-spacing:-.025em;color:#fff;margin-bottom:20px}
+.cta-head em{font-style:italic;color:var(--n100)}
+.cta-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.65);line-height:1.65;margin-bottom:48px}
+.cta-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+footer{background:#0A0A0A;padding:96px 0 48px}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:64px;margin-bottom:80px}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:48px}}
+@media(max-width:560px){.footer-grid{grid-template-columns:1fr}}
+.footer-logo{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.footer-logo img{height:28px;width:28px;object-fit:contain}
+.footer-logo-text{font-family:var(--font-logo);font-size:18px;font-weight:400;color:#fff;letter-spacing:-.02em}
+.footer-tagline{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6;max-width:240px;margin-bottom:12px}
+.footer-legal{font-size:11px;color:rgba(255,255,255,.25);line-height:1.6}
+.footer-col-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;margin-bottom:20px}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-link{font-size:13px;color:rgba(255,255,255,.45);transition:color .15s}.footer-link:hover{color:rgba(255,255,255,.9)}
+.footer-hr{height:1px;background:rgba(255,255,255,.07);margin-bottom:28px}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+.footer-copy{font-size:12px;color:rgba(255,255,255,.25)}
+.bafin-badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:rgba(255,255,255,.35);padding:5px 12px;border:1px solid rgba(255,255,255,.1);border-radius:var(--r-pill)}
+.bafin-badge svg{width:12px;height:12px;color:var(--n200)}
+@media(max-width:768px){
+  .hero-actions{flex-direction:column;align-items:flex-start}
+  .hero-actions .btn{width:100%;justify-content:center}
+  .cta-band{padding:80px 0}
+  footer{padding:64px 0 40px}
+  .footer-grid{margin-bottom:48px}
+  .cta-actions{flex-direction:column;align-items:center}
+  .currency-section,.onboard-section{padding:64px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay" />
+      <span class="nav-logo-text">HansePay</span>
+    </a>
+    <ul class="nav-links">
+      <li class="nav-item">
+        <a class="nav-link" href="index.html#product">Product</a>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link active-page">
+          Platform
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <!-- Platform mega-dropdown -->
+        <div class="nav-dropdown">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Platform</span>
+            <a href="platform.html" class="nav-dd-link nav-dd-active">
+              <div class="nav-dd-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+              </div>
+              <div class="nav-dd-text">
+                <div class="nav-dd-title">Overview</div>
+                <div class="nav-dd-sub">See the full platform at a glance</div>
+              </div>
+            </a>
+            <a href="#transfers" class="nav-dd-link">
+              <div class="nav-dd-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg>
+              </div>
+              <div class="nav-dd-text">
+                <div class="nav-dd-title">Payments</div>
+                <div class="nav-dd-sub">Send to 35+ currencies in minutes</div>
+              </div>
+            </a>
+            <a href="#rate-alerts" class="nav-dd-link">
+              <div class="nav-dd-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+              </div>
+              <div class="nav-dd-text">
+                <div class="nav-dd-title">Rate Alerts</div>
+                <div class="nav-dd-sub">Get notified when rates hit your target</div>
+              </div>
+            </a>
+          </div>
+          <div class="nav-dropdown-sep"></div>
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">More</span>
+            <a href="#in-transit" class="nav-dd-link">
+              <div class="nav-dd-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
+              <div class="nav-dd-text">
+                <div class="nav-dd-title">Real-time Tracking</div>
+                <div class="nav-dd-sub">Watch payments move across the world</div>
+              </div>
+            </a>
+            <a href="#currencies" class="nav-dd-link">
+              <div class="nav-dd-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div class="nav-dd-text">
+                <div class="nav-dd-title">Currency Coverage</div>
+                <div class="nav-dd-sub">35+ pairs, mid-market rates</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item"><a class="nav-link" href="index.html#calculator">Pricing</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#solutions">Solutions</a></li>
+      <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="index.html#contact" class="btn nav-cta">Open an account</a>
+      <button class="nav-burger" id="nav-burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a class="mobile-menu-link" href="index.html#product" onclick="closeMobileMenu()">Product</a>
+  <a class="mobile-menu-link" href="platform.html" onclick="closeMobileMenu()">Platform — Overview</a>
+  <a class="mobile-menu-sub" href="#transfers" onclick="closeMobileMenu()">Payments</a>
+  <a class="mobile-menu-sub" href="#rate-alerts" onclick="closeMobileMenu()">Rate Alerts</a>
+  <a class="mobile-menu-sub" href="#in-transit" onclick="closeMobileMenu()">Real-time Tracking</a>
+  <a class="mobile-menu-link" href="index.html#calculator" onclick="closeMobileMenu()">Pricing</a>
+  <a class="mobile-menu-link" href="index.html#solutions" onclick="closeMobileMenu()">Solutions</a>
+  <a class="mobile-menu-link" href="index.html#about" onclick="closeMobileMenu()">About</a>
+  <a href="index.html#contact" class="btn btn-primary mobile-menu-cta" onclick="closeMobileMenu()">Open an account</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HERO — Dashboard overview                             -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="blob" style="width:600px;height:600px;top:-120px;right:-80px;background:rgba(46,107,173,.22);z-index:0"></div>
+  <div class="blob" style="width:380px;height:380px;bottom:-80px;left:-60px;background:rgba(70,50,160,.14);z-index:0"></div>
+  <div class="container" style="width:100%">
+    <div class="hero-layout">
+
+      <!-- Copy -->
+      <div>
+        <div class="hero-chip"><span class="hero-chip-dot"></span>Platform Overview</div>
+        <h1 class="hero-h1">One platform for<br><em>global payments.</em></h1>
+        <p class="hero-sub">Cross-border payments, wholesale FX, and full treasury visibility — built for businesses moving money across borders. BaFin-licensed, mid-market rates, zero hidden fees.</p>
+        <div class="hero-actions">
+          <a href="index.html#contact" class="btn btn-white-fill">Open an account</a>
+          <a href="index.html#contact" class="btn btn-ghost-white">Talk to a dealer</a>
+        </div>
+        <div class="hero-stats">
+          <div><div class="stat-val">35+</div><div class="stat-lbl">Currencies</div></div>
+          <div><div class="stat-val">0 %</div><div class="stat-lbl">FX markup</div></div>
+          <div><div class="stat-val">&lt; 2 hrs</div><div class="stat-lbl">Onboarding</div></div>
+        </div>
+      </div>
+
+      <!-- App mockup: Dashboard home -->
+      <div class="hero-vis vis-col">
+        <div class="screen-wrap vis-inner">
+          <div class="screen-frame">
+            <div class="app-bg">
+
+              <!-- Balance -->
+              <div class="app-ey"><span>OVERVIEW</span></div>
+              <div style="font-size:11px;color:#8DA8B8;margin-bottom:5px">Available balance</div>
+              <div class="app-h" style="margin-bottom:4px">35.000,00 €</div>
+              <div style="font-size:11px;color:#8DA8B8;margin-bottom:14px">IBAN ·· 4892</div>
+              <div style="display:flex;gap:8px;margin-bottom:20px">
+                <span class="app-btn-lt">+ Add money</span>
+                <span class="app-btn-dk">→ Send money</span>
+              </div>
+
+              <!-- FX Calculator card -->
+              <div class="app-c" style="padding:16px;margin-bottom:14px">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+                  <div>
+                    <div class="app-ey" style="margin-bottom:4px"><span>FX RATE</span></div>
+                    <div style="font-size:17px;font-weight:700;color:#0B1929;letter-spacing:-.01em">1 EUR = <span style="color:#1E4E80;font-style:italic">1.0842</span> USD</div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:5px;font-size:10px;font-weight:600;color:#1DA34B">
+                    <span style="width:5px;height:5px;border-radius:50%;background:#34C759;display:inline-block;box-shadow:0 0 5px rgba(52,199,89,.5)"></span>
+                    Live FX rate
+                  </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+                  <div>
+                    <div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:5px">YOU SEND</div>
+                    <div style="border:1px solid rgba(11,25,41,.10);border-radius:7px;padding:9px 11px;display:flex;justify-content:space-between;align-items:center;background:#fff">
+                      <span style="font-size:13px;font-weight:600;color:#0B1929">1.000,00</span>
+                      <span style="font-size:11px;font-weight:600;color:#0B1929">🇪🇺 EUR</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div style="font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:5px">RECIPIENT GETS</div>
+                    <div style="border:1px solid rgba(11,25,41,.10);border-radius:7px;padding:9px 11px;display:flex;justify-content:space-between;align-items:center;background:#fff">
+                      <span style="font-size:13px;font-weight:600;color:#0B1929">1.073,47</span>
+                      <span style="font-size:11px;font-weight:600;color:#0B1929">🇺🇸 USD ▾</span>
+                    </div>
+                  </div>
+                </div>
+                <div style="width:100%;padding:9px;border-radius:7px;background:#0B1929;color:#fff;font-size:12px;font-weight:600;text-align:center">Send →</div>
+              </div>
+
+              <!-- Recent Activity -->
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+                <div class="app-ey" style="margin-bottom:0"><span>RECENT ACTIVITY</span></div>
+                <span style="font-size:11px;font-weight:500;color:#1E4E80">View all →</span>
+              </div>
+              <div class="app-c" style="overflow:hidden">
+                <div class="app-row">
+                  <span style="font-size:16px;flex-shrink:0">🇨🇳</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Shenzhen Electronics Co.</div>
+                    <div style="font-size:10px;color:#1E4E80;margin-top:1px">Component shipment #SZ-4421</div>
+                  </div>
+                  <span class="app-settled">Settled</span>
+                  <div style="font-size:12px;font-weight:600;color:#0B1929;text-align:right;min-width:80px">−11.007,36 €</div>
+                </div>
+                <div class="app-row">
+                  <span style="font-size:16px;flex-shrink:0">🇧🇷</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">São Paulo Coffee Importers</div>
+                    <div style="font-size:10px;color:#1E4E80;margin-top:1px">Coffee invoice Q1</div>
+                  </div>
+                  <span class="app-transit">In Transit</span>
+                  <div style="font-size:12px;font-weight:600;color:#0B1929;text-align:right;min-width:80px">−6.674,25 €</div>
+                </div>
+                <div class="app-row" style="border-bottom:none">
+                  <span style="font-size:16px;flex-shrink:0">🇲🇽</span>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Mendoza Manufactura SA</div>
+                    <div style="font-size:10px;color:#1E4E80;margin-top:1px">Manufacturing PO #221</div>
+                  </div>
+                  <span class="app-settled">Settled</span>
+                  <div style="font-size:12px;font-weight:600;color:#0B1929;text-align:right;min-width:80px">−865,62 €</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SEND MONEY — Recipient selection                       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="transfers" style="overflow:hidden">
+  <div class="blob" style="width:520px;height:520px;top:-80px;left:-160px;background:rgba(46,107,173,.24);z-index:0"></div>
+  <div class="blob" style="width:320px;height:320px;bottom:-60px;right:-60px;background:rgba(60,45,140,.16);z-index:0"></div>
+  <div class="container">
+    <div class="split">
+
+      <!-- App mockup: Send Money -->
+      <div class="vis-col vis-order-first">
+        <div class="screen-wrap vis-inner">
+          <div class="screen-frame">
+            <div class="app-bg" style="padding:20px">
+
+              <!-- Back + progress -->
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:12px;color:#1E4E80;font-weight:500">
+                ← Back
+              </div>
+              <div class="app-h-page" style="margin-bottom:4px">Who are you sending to?</div>
+              <div style="font-size:12px;color:#8DA8B8;margin-bottom:16px">Pick a recipient, search by country, or add someone new.</div>
+
+              <!-- Step bar -->
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:18px">
+                <div>
+                  <div style="height:2px;border-radius:1px;background:#0B1929;margin-bottom:5px"></div>
+                  <div style="font-size:9px;font-weight:700;color:#0B1929;letter-spacing:.06em">01 · RECIPIENT</div>
+                </div>
+                <div>
+                  <div style="height:2px;border-radius:1px;background:rgba(11,25,41,.15);margin-bottom:5px"></div>
+                  <div style="font-size:9px;font-weight:600;color:rgba(11,25,41,.35);letter-spacing:.06em">02 · AMOUNT</div>
+                </div>
+                <div>
+                  <div style="height:2px;border-radius:1px;background:rgba(11,25,41,.15);margin-bottom:5px"></div>
+                  <div style="font-size:9px;font-weight:600;color:rgba(11,25,41,.35);letter-spacing:.06em">03 · REVIEW</div>
+                </div>
+              </div>
+
+              <!-- Recent recipients -->
+              <div class="app-c" style="padding:14px;margin-bottom:10px">
+                <div style="display:flex;align-items:center;gap:5px;margin-bottom:10px">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#1E4E80" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  <span style="font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1E4E80">RECENT RECIPIENTS</span>
+                </div>
+                <div class="app-row" style="padding:9px 0 9px 0;border-bottom:1px solid rgba(11,25,41,.05)">
+                  <span style="font-size:14px;flex-shrink:0">🇬🇧</span>
+                  <div style="flex:1">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929">ABC Corp Ltd</div>
+                    <div style="font-size:10px;color:#8DA8B8">United Kingdom</div>
+                  </div>
+                  <span style="font-size:11px;font-weight:700;color:#1E4E80">GBP</span>
+                </div>
+                <div class="app-row" style="padding:9px 0 0 0;border-bottom:none">
+                  <span style="font-size:14px;flex-shrink:0">🇸🇪</span>
+                  <div style="flex:1">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929">Stockholm Studio</div>
+                    <div style="font-size:10px;color:#8DA8B8">Sweden</div>
+                  </div>
+                  <span style="font-size:11px;font-weight:700;color:#1E4E80">SEK</span>
+                </div>
+              </div>
+
+              <!-- Search -->
+              <div style="position:relative;margin-bottom:10px">
+                <svg style="position:absolute;left:11px;top:50%;transform:translateY(-50%);color:#8DA8B8" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <div style="border:1px solid rgba(11,25,41,.10);border-radius:8px;padding:9px 12px 9px 32px;background:#fff;font-size:12px;color:#8DA8B8">Search by name, country or currency</div>
+              </div>
+
+              <!-- All recipients -->
+              <div class="app-c" style="overflow:hidden">
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;border-bottom:1px solid rgba(11,25,41,.05)">
+                  <span style="font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(11,25,41,.40)">ALL RECIPIENTS · 12</span>
+                  <span style="font-size:11px;font-weight:600;color:#1E4E80">+ Add new</span>
+                </div>
+                <div class="app-row">
+                  <div class="app-avatar" style="background:#EEF4FB;color:#1E4E80;font-size:9px">AC</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929">ABC Corp Ltd</div>
+                    <div style="font-size:10px;color:#8DA8B8">🇬🇧 United Kingdom · NatWest Bank</div>
+                  </div>
+                  <span style="font-size:11px;font-weight:700;color:#1E4E80">GBP</span>
+                </div>
+                <div class="app-row">
+                  <div class="app-avatar" style="background:#EEF4FB;color:#1E4E80;font-size:9px">HL</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929">Hamburg Logistics</div>
+                    <div style="font-size:10px;color:#8DA8B8">🇩🇪 Germany · Deutsche Bank</div>
+                  </div>
+                  <span style="font-size:11px;font-weight:700;color:#1E4E80">EUR</span>
+                </div>
+                <div class="app-row" style="border-bottom:none">
+                  <div class="app-avatar" style="background:#EEF4FB;color:#1E4E80;font-size:9px">SS</div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:12px;font-weight:600;color:#0B1929">Stockholm Studio AB</div>
+                    <div style="font-size:10px;color:#8DA8B8">🇸🇪 Sweden · SEB</div>
+                  </div>
+                  <span style="font-size:11px;font-weight:700;color:#1E4E80">SEK</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Copy -->
+      <div class="copy-col" style="position:relative;z-index:1">
+        <span class="eyebrow">Payments</span>
+        <h2 class="copy-head" style="margin-top:14px">Send anywhere,<br><em>in minutes.</em></h2>
+        <p class="copy-lede">Save recipients once and pay them in any currency with a few clicks. Drop in an invoice and our AI extracts the amount, recipient, and reference — or fill it in manually if you prefer the control.</p>
+        <div style="margin-bottom:36px">
+          <div class="cbullet"><div class="cbullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="cbullet-t">AI invoice extraction</div><div class="cbullet-d">Drop a PDF. Amount, recipient, and reference auto-filled.</div></div></div>
+          <div class="cbullet"><div class="cbullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="cbullet-t">Recipient book with IBAN/SWIFT validation</div><div class="cbullet-d">Bank details verified before the first payment clears.</div></div></div>
+          <div class="cbullet"><div class="cbullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="cbullet-t">Maker/checker approval flows</div><div class="cbullet-d">Role-based permissions so the right people sign off.</div></div></div>
+        </div>
+        <a href="index.html#contact" class="btn btn-ghost-white" style="width:fit-content">See a demo</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- IN TRANSIT — confirmation screen                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section" style="background:var(--n900);overflow:hidden" id="in-transit">
+  <div class="blob" style="width:560px;height:560px;top:30%;left:40%;transform:translate(-50%,-50%);background:rgba(46,107,173,.22);z-index:0"></div>
+  <div class="blob" style="width:340px;height:340px;top:60%;left:70%;transform:translate(-50%,-50%);background:rgba(65,45,155,.18);z-index:0"></div>
+  <div class="container" style="position:relative;z-index:1">
+
+    <!-- Section header -->
+    <div style="text-align:center;margin-bottom:56px">
+      <span class="eyebrow">Real-time tracking</span>
+      <h2 style="font-family:var(--font-display);font-size:clamp(28px,3.2vw,42px);font-weight:400;letter-spacing:-.025em;color:#fff;margin:14px 0 12px;line-height:1.08">
+        Watch your payment<br><em style="font-style:italic;color:var(--n200)">move across the world.</em>
+      </h2>
+      <p style="font-size:16px;font-weight:300;color:rgba(255,255,255,.50);max-width:480px;margin:0 auto">Every transfer is fully traceable from the moment you confirm — right through to settlement at the recipient's bank.</p>
+    </div>
+
+    <!-- In-transit card, centered -->
+    <div style="display:flex;justify-content:center">
+      <div class="screen-wrap" style="max-width:500px;width:100%">
+        <div class="screen-frame">
+          <!-- Dark card (matches the actual in-transit screen) -->
+          <div style="background:#0F1D2E;padding:28px 28px 24px">
+
+            <!-- Header -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px">
+              <div style="width:26px;height:26px;border-radius:50%;border:2px solid rgba(141,189,230,.45);display:flex;align-items:center;justify-content:center">
+                <div style="width:8px;height:8px;border-radius:50%;border:1.5px solid var(--n200);position:relative">
+                  <div style="width:2px;height:2px;border-radius:50%;background:var(--n200);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></div>
+                </div>
+              </div>
+              <h3 style="font-family:var(--font-display);font-size:22px;font-weight:400;color:#fff;letter-spacing:-.015em">In transit</h3>
+            </div>
+            <p style="text-align:center;font-size:13px;color:rgba(255,255,255,.55);line-height:1.5;margin-bottom:20px">
+              <strong style="color:#fff;font-weight:600">9.900,99 €</strong> is on its way to <strong style="color:#fff;font-weight:600">Stockholm Studio.</strong><br>
+              We'll notify you once it settles — usually within 2 hours.
+            </p>
+
+            <!-- Globe — orthographic projection centered at 54°N 10°E (Hamburg)
+                 All coordinates computed from: x=95+88·cos(φ)·sin(λ−10°), y=95−88·(cos(54°)·sin(φ)−sin(54°)·cos(φ)·cos(λ−10°))
+                 Key computed positions: Hamburg(95,96) Berlin(98,97) Amsterdam(90,97)
+                 London(85,98) Oslo(96,86) Stockholm(101,86) Helsinki(106,84) Warsaw(105,97) -->
+            <div style="display:flex;justify-content:center;margin-bottom:22px">
+              <svg width="190" height="190" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <radialGradient id="gBg" cx="34%" cy="28%" r="68%">
+                    <stop offset="0%" stop-color="#1C4570"/>
+                    <stop offset="48%" stop-color="#0E2644"/>
+                    <stop offset="100%" stop-color="#060D1C"/>
+                  </radialGradient>
+                  <radialGradient id="gLimb" cx="50%" cy="50%" r="50%">
+                    <stop offset="70%" stop-color="transparent"/>
+                    <stop offset="97%" stop-color="rgba(2,6,16,0.78)"/>
+                    <stop offset="100%" stop-color="rgba(2,6,16,0.30)"/>
+                  </radialGradient>
+                  <radialGradient id="gAtmo" cx="50%" cy="50%" r="50%">
+                    <stop offset="86%" stop-color="transparent"/>
+                    <stop offset="97%" stop-color="rgba(90,150,220,0.26)"/>
+                    <stop offset="100%" stop-color="transparent"/>
+                  </radialGradient>
+                  <filter id="gGlow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="3.5"/>
+                  </filter>
+                  <filter id="dotGlow" x="-60%" y="-60%" width="220%" height="220%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2"/>
+                  </filter>
+                  <clipPath id="gClip"><circle cx="95" cy="95" r="88"/></clipPath>
+                </defs>
+
+                <!-- Sphere -->
+                <circle cx="95" cy="95" r="91" fill="url(#gBg)"/>
+
+                <!-- Latitude grid lines — ellipses computed from oblique orthographic formulae
+                     φ=60°N: cy=95−88·cos54°·sin60°=50, rx=44, ry=36
+                     φ=50°N: cy=55, rx=57, ry=46
+                     φ=40°N: cy=62, rx=67, ry=55
+                     φ=30°N: cy=69, rx=76, ry=62 -->
+                <g clip-path="url(#gClip)" fill="none">
+                  <ellipse cx="95" cy="50" rx="44" ry="36" stroke="rgba(141,189,230,0.09)" stroke-width="0.6"/>
+                  <ellipse cx="95" cy="55" rx="57" ry="46" stroke="rgba(141,189,230,0.09)" stroke-width="0.6"/>
+                  <ellipse cx="95" cy="62" rx="67" ry="55" stroke="rgba(141,189,230,0.07)" stroke-width="0.55"/>
+                  <ellipse cx="95" cy="69" rx="76" ry="62" stroke="rgba(141,189,230,0.05)" stroke-width="0.5"/>
+                  <!-- Meridians (approximate vertical ellipses) -->
+                  <ellipse cx="95" cy="95" rx="28" ry="88" stroke="rgba(141,189,230,0.07)" stroke-width="0.5"/>
+                  <ellipse cx="95" cy="95" rx="62" ry="88" stroke="rgba(141,189,230,0.06)" stroke-width="0.45"/>
+                </g>
+
+                <!-- Land masses — all coordinates computed from orthographic projection -->
+                <g clip-path="url(#gClip)">
+
+                  <!-- SCANDINAVIA + FINLAND
+                       SW Norway(91,88) → Bergen(92,85) → Trondheim(95,81) → Tromsø(100,71) →
+                       North Cape(103,68) → Murmansk area(107,70) → NE Finland(104,70) →
+                       Oulu/Bothnia(105,77) → Helsinki(106,84) → SE Sweden(100,91) →
+                       Gothenburg/SW Sweden(97,90) → back via Kattegat sea gap -->
+                  <path d="M 91,88
+                    C 91,86 92,85 92,85
+                    C 93,82 94,81 95,81
+                    C 97,76 99,73 100,71
+                    C 102,68 102,67 103,68
+                    C 105,68 106,69 107,70
+                    C 106,70 105,70 104,70
+                    C 104,73 105,76 105,77
+                    C 106,81 106,83 106,84
+                    C 104,88 102,90 100,91
+                    C 98,91 96,91 93,92
+                    C 91,91 90,90 91,88 Z"
+                    fill="rgba(130,182,224,0.20)" stroke="rgba(141,189,230,0.45)" stroke-width="0.75" stroke-linejoin="round"/>
+
+                  <!-- MAINLAND EUROPE (clockwise from NW Germany)
+                       NW Germany(94,95) → Baltic coast E(103,94) → Baltic states(106,86) →
+                       Ukraine(115,98) → Romania(116,108) → S Italy/Med(100,115) →
+                       SE France(90,111) → NW Spain(80,108) → Brittany(80,102) →
+                       N France/Calais(87,99) → Netherlands(90,96) back -->
+                  <path d="M 94,95
+                    C 97,95 100,94 103,94
+                    C 106,93 107,90 106,86
+                    C 108,88 110,92 109,95
+                    C 112,96 114,97 115,98
+                    C 116,101 116,105 116,108
+                    C 114,112 112,115 110,116
+                    C 107,116 103,116 100,115
+                    C 97,114 95,112 94,110
+                    C 91,110 89,111 90,111
+                    C 88,112 86,114 86,114
+                    C 83,113 81,111 80,108
+                    C 79,105 79,103 80,102
+                    C 82,101 84,100 87,99
+                    C 89,98 90,97 90,96
+                    C 91,96 93,95 94,95 Z"
+                    fill="rgba(130,182,224,0.20)" stroke="rgba(141,189,230,0.45)" stroke-width="0.75" stroke-linejoin="round"/>
+
+                  <!-- GREAT BRITAIN
+                       SE(87,99) → SW/Land's End(80,99) → Liverpool(83,95) →
+                       Scotland NW(83,87) → Scotland NE(85,88) → E coast back -->
+                  <path d="M 87,99
+                    C 84,99 81,99 80,99
+                    C 81,97 82,95 83,95
+                    C 83,91 83,88 83,87
+                    C 84,88 85,88 85,88
+                    C 86,91 86,95 87,99 Z"
+                    fill="rgba(130,182,224,0.17)" stroke="rgba(141,189,230,0.40)" stroke-width="0.7" stroke-linejoin="round"/>
+
+                  <!-- IRELAND -->
+                  <ellipse cx="78" cy="95" rx="3.5" ry="4.5"
+                    fill="rgba(130,182,224,0.14)" stroke="rgba(141,189,230,0.34)" stroke-width="0.6"/>
+
+                  <!-- ICELAND -->
+                  <ellipse cx="70" cy="77" rx="5.5" ry="2.8"
+                    fill="rgba(130,182,224,0.12)" stroke="rgba(141,189,230,0.28)" stroke-width="0.6"/>
+                </g>
+
+                <!-- City dot halos (soft glow behind dots) -->
+                <g clip-path="url(#gClip)" filter="url(#dotGlow)">
+                  <circle cx="101" cy="86" r="4" fill="rgba(201,169,97,0.35)"/><!-- Stockholm glow -->
+                  <circle cx="95" cy="96" r="4" fill="rgba(141,189,230,0.45)"/><!-- Hamburg glow -->
+                </g>
+
+                <!-- Secondary city dots -->
+                <g clip-path="url(#gClip)" fill="rgba(141,189,230,0.38)">
+                  <circle cx="90" cy="97" r="1.5"/><!-- Amsterdam -->
+                  <circle cx="85" cy="98" r="1.5"/><!-- London -->
+                  <circle cx="87" cy="103" r="1.3"/><!-- Paris -->
+                  <circle cx="97" cy="92" r="1.5"/><!-- Copenhagen -->
+                  <circle cx="98" cy="97" r="1.3"/><!-- Berlin -->
+                  <circle cx="105" cy="97" r="1.3"/><!-- Warsaw -->
+                  <circle cx="96" cy="86" r="1.3"/><!-- Oslo -->
+                </g>
+
+                <!-- Payment arc: Hamburg(95,96) → Stockholm(101,86) — curves gently NE via Denmark strait -->
+                <path d="M 95,96 Q 92,82 101,86" stroke="rgba(201,169,97,0.25)" stroke-width="6" fill="none" stroke-linecap="round" clip-path="url(#gClip)" filter="url(#gGlow)"/>
+                <path d="M 95,96 Q 92,82 101,86" stroke="#C9A961" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-dasharray="3 3.5" clip-path="url(#gClip)" opacity="0.92"/>
+                <!-- Faint arc: Hamburg → London -->
+                <path d="M 95,96 Q 87,91 85,98" stroke="#C9A961" stroke-width="1.0" fill="none" stroke-linecap="round" stroke-dasharray="2 3.5" clip-path="url(#gClip)" opacity="0.38"/>
+
+                <!-- Hamburg origin marker -->
+                <circle cx="95" cy="96" r="5.5" fill="rgba(141,189,230,0.16)" clip-path="url(#gClip)"/>
+                <circle cx="95" cy="96" r="3.5" fill="#8DBDE6" clip-path="url(#gClip)"/>
+                <circle cx="95" cy="96" r="1.6" fill="#fff"/>
+                <text x="95" y="106.5" font-family="Inter,sans-serif" font-size="6.5" font-weight="600" fill="rgba(141,189,230,0.72)" text-anchor="middle" clip-path="url(#gClip)">Hamburg</text>
+
+                <!-- Stockholm destination marker (pulsing rings) -->
+                <circle cx="101" cy="86" r="10" fill="rgba(201,169,97,0.08)" clip-path="url(#gClip)"/>
+                <circle cx="101" cy="86" r="6" fill="rgba(201,169,97,0.18)" clip-path="url(#gClip)"/>
+                <circle cx="101" cy="86" r="3.5" fill="#C9A961" clip-path="url(#gClip)"/>
+                <circle cx="101" cy="86" r="1.6" fill="#fff"/>
+                <text x="101" y="76.5" font-family="Inter,sans-serif" font-size="6.5" font-weight="600" fill="rgba(201,169,97,0.84)" text-anchor="middle" clip-path="url(#gClip)">Stockholm</text>
+
+                <!-- Atmosphere halo -->
+                <circle cx="95" cy="95" r="91" fill="url(#gAtmo)"/>
+                <!-- Limb darkening -->
+                <circle cx="95" cy="95" r="91" fill="url(#gLimb)"/>
+                <!-- Rim highlight -->
+                <circle cx="95" cy="95" r="91" fill="none" stroke="rgba(141,189,230,0.22)" stroke-width="1"/>
+              </svg>
+            </div>
+
+            <!-- Details table -->
+            <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;overflow:hidden;margin-bottom:20px">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06)">
+                <span style="font-size:12px;color:rgba(255,255,255,.42)">Recipient gets</span>
+                <span style="font-size:12px;font-weight:700;color:#fff">112.079,21 SEK</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06)">
+                <span style="font-size:12px;color:rgba(255,255,255,.42)">You sent</span>
+                <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.80)">9.900,99 €</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06)">
+                <span style="font-size:12px;color:rgba(255,255,255,.42)">Recipient</span>
+                <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.80)">Stockholm Studio</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06)">
+                <span style="font-size:12px;color:rgba(255,255,255,.42)">Destination</span>
+                <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.80)">🇸🇪 Sweden</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06)">
+                <span style="font-size:12px;color:rgba(255,255,255,.42)">Reference</span>
+                <span style="font-size:12px;font-weight:600;color:rgba(255,255,255,.80)">HP-7317-3200</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px">
+                <span style="font-size:12px;color:rgba(255,255,255,.42)">Estimated arrival</span>
+                <span style="font-size:12px;font-weight:700;color:#34C759">Within 2 hours</span>
+              </div>
+            </div>
+
+            <!-- Buttons -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div style="padding:10px;border-radius:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);font-size:12px;font-weight:600;color:rgba(255,255,255,.80);text-align:center;display:flex;align-items:center;justify-content:center;gap:6px">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download receipt
+              </div>
+              <div style="padding:10px;border-radius:8px;background:#fff;font-size:12px;font-weight:600;color:#0B1929;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px">
+                Back to home →
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- RATE ALERTS — active alerts screen                    -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="rate-alerts" style="overflow:hidden">
+  <div class="blob" style="width:480px;height:480px;bottom:-80px;right:-100px;background:rgba(46,107,173,.24);z-index:0"></div>
+  <div class="blob" style="width:300px;height:300px;top:-40px;left:-80px;background:rgba(55,40,150,.16);z-index:0"></div>
+  <div class="container">
+    <div class="split">
+
+      <!-- Copy -->
+      <div class="copy-col" style="position:relative;z-index:1">
+        <span class="eyebrow">Rate Alerts</span>
+        <h2 class="copy-head" style="margin-top:14px">Never miss a<br><em>rate opportunity.</em></h2>
+        <p class="copy-lede">Set a target on any currency pair. The moment it hits, we ping you by SMS and email. Prefer a steady rhythm? Daily summaries land each morning with the numbers that matter.</p>
+        <div style="margin-bottom:36px">
+          <div class="cbullet"><div class="cbullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="cbullet-t">Mid-market monitored around the clock</div><div class="cbullet-d">We check the live interbank rate, not a lagging bank feed.</div></div></div>
+          <div class="cbullet"><div class="cbullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="cbullet-t">SMS and email notifications</div><div class="cbullet-d">Choose both or just one per alert.</div></div></div>
+          <div class="cbullet"><div class="cbullet-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div><div><div class="cbullet-t">One-click to execute from the alert</div><div class="cbullet-d">Alert fires, you click, payment initiates. No extra steps.</div></div></div>
+        </div>
+        <a href="index.html#contact" class="btn btn-ghost-white" style="width:fit-content">Set up your first alert</a>
+      </div>
+
+      <!-- App mockup: Rate Alerts -->
+      <div class="vis-col" style="position:relative;z-index:1">
+        <div class="screen-wrap vis-inner">
+          <div class="screen-frame">
+            <div class="app-bg" style="padding:20px">
+
+              <!-- Banner -->
+              <div style="background:#fff;border:1px solid rgba(11,25,41,.07);border-radius:10px;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px;min-width:0">
+                  <div style="width:32px;height:32px;border-radius:50%;background:#EEF4FB;border:1px solid rgba(30,78,128,.15);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1E4E80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                  </div>
+                  <div>
+                    <div style="font-size:10px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:#1E4E80;margin-bottom:2px">3 ACTIVE ALERTS</div>
+                    <div style="font-size:11px;color:#8DA8B8;line-height:1.3">We watch the mid-market rate around the clock. We'll ping you via <strong style="color:#0B1929">SMS and email.</strong></div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:100px;background:#0B1929;color:#fff;font-size:11px;font-weight:600;flex-shrink:0">+ New alert</div>
+              </div>
+
+              <div style="font-size:14px;font-weight:700;color:#0B1929;margin-bottom:12px">Active alerts <span style="font-size:13px;font-weight:400;color:#8DA8B8">3</span></div>
+
+              <!-- Alert 1 — EUR/USD -->
+              <div style="background:#fff;border:1px solid rgba(11,25,41,.07);border-radius:10px;padding:14px 16px;margin-bottom:8px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="display:flex;gap:-4px;flex-shrink:0">
+                    <span style="font-size:18px">🇪🇺</span><span style="font-size:18px;margin-left:-2px">🇺🇸</span>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;font-weight:700;color:#0B1929">EUR → USD</div>
+                    <div style="font-size:10px;color:#8DA8B8">US Dollar · Wholesale order USD payout</div>
+                  </div>
+                  <span style="font-size:10px;font-weight:700;background:rgba(201,169,97,.12);color:#AA8A35;border:1px solid rgba(201,169,97,.25);padding:2px 8px;border-radius:100px;white-space:nowrap">1.46% away</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(11,25,41,.05)">
+                  <div>
+                    <div style="font-size:9px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:4px">TARGET</div>
+                    <div style="font-size:16px;font-weight:700;color:#0B1929;letter-spacing:-.01em">≥ 1.1</div>
+                  </div>
+                  <div>
+                    <div style="font-size:9px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:4px">CURRENT</div>
+                    <div style="font-size:16px;font-weight:700;color:#1E4E80;letter-spacing:-.01em">1.0842</div>
+                  </div>
+                </div>
+                <div style="font-size:10px;color:#8DA8B8;margin-top:8px">Last checked 2 min ago · Notify once, then deactivate</div>
+              </div>
+
+              <!-- Alert 2 — EUR/GBP -->
+              <div style="background:#fff;border:1px solid rgba(11,25,41,.07);border-radius:10px;padding:14px 16px;margin-bottom:8px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="display:flex;gap:-4px;flex-shrink:0">
+                    <span style="font-size:18px">🇪🇺</span><span style="font-size:18px;margin-left:-2px">🇬🇧</span>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;font-weight:700;color:#0B1929">EUR → GBP</div>
+                    <div style="font-size:10px;color:#8DA8B8">British Pound</div>
+                  </div>
+                  <span style="font-size:10px;font-weight:700;background:rgba(52,199,89,.10);color:#1DA34B;border:1px solid rgba(52,199,89,.20);padding:2px 8px;border-radius:100px;white-space:nowrap">0.93% away</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(11,25,41,.05)">
+                  <div>
+                    <div style="font-size:9px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:4px">TARGET</div>
+                    <div style="font-size:16px;font-weight:700;color:#0B1929;letter-spacing:-.01em">≥ 0.86</div>
+                  </div>
+                  <div>
+                    <div style="font-size:9px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:4px">CURRENT</div>
+                    <div style="font-size:16px;font-weight:700;color:#1E4E80;letter-spacing:-.01em">0.8521</div>
+                  </div>
+                </div>
+                <div style="font-size:10px;color:#8DA8B8;margin-top:8px">Last checked 12 min ago · Notify daily while target is met</div>
+              </div>
+
+              <!-- Alert 3 — EUR/INR -->
+              <div style="background:#fff;border:1px solid rgba(11,25,41,.07);border-radius:10px;padding:14px 16px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="display:flex;gap:-4px;flex-shrink:0">
+                    <span style="font-size:18px">🇪🇺</span><span style="font-size:18px;margin-left:-2px">🇮🇳</span>
+                  </div>
+                  <div style="flex:1;min-width:0">
+                    <div style="font-size:13px;font-weight:700;color:#0B1929">EUR → INR</div>
+                    <div style="font-size:10px;color:#8DA8B8">Indian Rupee · Mumbai contractor invoice</div>
+                  </div>
+                  <span style="font-size:10px;font-weight:700;background:rgba(201,169,97,.12);color:#AA8A35;border:1px solid rgba(201,169,97,.25);padding:2px 8px;border-radius:100px;white-space:nowrap">1.20% away</span>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(11,25,41,.05)">
+                  <div>
+                    <div style="font-size:9px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:4px">TARGET</div>
+                    <div style="font-size:16px;font-weight:700;color:#0B1929;letter-spacing:-.01em">≥ 92.5</div>
+                  </div>
+                  <div>
+                    <div style="font-size:9px;font-weight:700;letter-spacing:.10em;text-transform:uppercase;color:rgba(11,25,41,.35);margin-bottom:4px">CURRENT</div>
+                    <div style="font-size:16px;font-weight:700;color:#1E4E80;letter-spacing:-.01em">91.4</div>
+                  </div>
+                </div>
+                <div style="font-size:10px;color:#8DA8B8;margin-top:8px">Last checked 5 min ago · Notify once, then deactivate</div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CURRENCY COVERAGE                                      -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="currency-section" id="currencies" style="background:var(--n900);overflow:hidden">
+  <div class="blob" style="width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(46,107,173,.20);z-index:0"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <span class="eyebrow">Coverage</span>
+    <h2 style="font-family:var(--font-display);font-size:clamp(28px,3.2vw,42px);font-weight:400;letter-spacing:-.025em;color:#fff;margin:14px 0 12px;line-height:1.08">
+      35+ currencies,<br><em style="font-style:italic;color:var(--n200)">one platform.</em>
+    </h2>
+    <p style="font-size:16px;font-weight:300;color:rgba(255,255,255,.48);max-width:520px;margin:0 auto">From EUR to BRL, GBP to CNY — wherever your business moves money, we're already there.</p>
+    <div class="cpill-grid">
+      <div class="cpill"><span class="cpill-flag">🇺🇸</span><span class="cpill-code">USD</span></div>
+      <div class="cpill"><span class="cpill-flag">🇬🇧</span><span class="cpill-code">GBP</span></div>
+      <div class="cpill"><span class="cpill-flag">🇨🇭</span><span class="cpill-code">CHF</span></div>
+      <div class="cpill"><span class="cpill-flag">🇯🇵</span><span class="cpill-code">JPY</span></div>
+      <div class="cpill"><span class="cpill-flag">🇸🇬</span><span class="cpill-code">SGD</span></div>
+      <div class="cpill"><span class="cpill-flag">🇦🇪</span><span class="cpill-code">AED</span></div>
+      <div class="cpill"><span class="cpill-flag">🇦🇺</span><span class="cpill-code">AUD</span></div>
+      <div class="cpill"><span class="cpill-flag">🇨🇦</span><span class="cpill-code">CAD</span></div>
+      <div class="cpill"><span class="cpill-flag">🇧🇷</span><span class="cpill-code">BRL</span></div>
+      <div class="cpill"><span class="cpill-flag">🇨🇳</span><span class="cpill-code">CNY</span></div>
+      <div class="cpill"><span class="cpill-flag">🇮🇳</span><span class="cpill-code">INR</span></div>
+      <div class="cpill"><span class="cpill-flag">🇲🇽</span><span class="cpill-code">MXN</span></div>
+      <div class="cpill"><span class="cpill-flag">🇰🇷</span><span class="cpill-code">KRW</span></div>
+      <div class="cpill"><span class="cpill-flag">🇳🇴</span><span class="cpill-code">NOK</span></div>
+      <div class="cpill"><span class="cpill-flag">🇸🇪</span><span class="cpill-code">SEK</span></div>
+      <div class="cpill"><span class="cpill-flag">🇩🇰</span><span class="cpill-code">DKK</span></div>
+      <div class="cpill"><span class="cpill-flag">🇵🇱</span><span class="cpill-code">PLN</span></div>
+      <div class="cpill"><span class="cpill-flag">🇨🇿</span><span class="cpill-code">CZK</span></div>
+      <div class="cpill"><span class="cpill-flag">🇭🇺</span><span class="cpill-code">HUF</span></div>
+      <div class="cpill"><span class="cpill-flag">🇷🇴</span><span class="cpill-code">RON</span></div>
+      <div class="cpill"><span class="cpill-flag">🇹🇷</span><span class="cpill-code">TRY</span></div>
+      <div class="cpill"><span class="cpill-flag">🇿🇦</span><span class="cpill-code">ZAR</span></div>
+      <div class="cpill"><span class="cpill-flag">🇹🇭</span><span class="cpill-code">THB</span></div>
+      <div class="cpill"><span class="cpill-flag">🇲🇾</span><span class="cpill-code">MYR</span></div>
+      <div class="cpill"><span class="cpill-flag">🇮🇩</span><span class="cpill-code">IDR</span></div>
+      <div class="cpill"><span class="cpill-flag">🇵🇭</span><span class="cpill-code">PHP</span></div>
+      <div class="cpill"><span class="cpill-flag">🇳🇿</span><span class="cpill-code">NZD</span></div>
+      <div class="cpill"><span class="cpill-flag">🇭🇰</span><span class="cpill-code">HKD</span></div>
+      <div class="cpill"><span class="cpill-flag">🇶🇦</span><span class="cpill-code">QAR</span></div>
+      <div class="cpill"><span class="cpill-flag">🇸🇦</span><span class="cpill-code">SAR</span></div>
+      <div class="cpill"><span class="cpill-flag">🇧🇩</span><span class="cpill-code">BDT</span></div>
+      <div class="cpill"><span class="cpill-flag">🇦🇷</span><span class="cpill-code">ARS</span></div>
+      <div class="cpill"><span class="cpill-flag">🇨🇱</span><span class="cpill-code">CLP</span></div>
+      <div class="cpill"><span class="cpill-flag">🇪🇬</span><span class="cpill-code">EGP</span></div>
+      <div class="cpill"><span class="cpill-flag">🇳🇬</span><span class="cpill-code">NGN</span></div>
+    </div>
+    <p style="font-size:13px;color:rgba(255,255,255,.30);margin-top:24px">+ custom corridors available on request for institutional volumes</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- ONBOARDING — 5 steps                                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="onboard-section" id="onboarding">
+  <div class="container">
+    <div style="text-align:center;max-width:560px;margin:0 auto">
+      <span class="eyebrow eyebrow-ink">Onboarding</span>
+      <h2 style="font-family:var(--font-display);font-size:clamp(28px,3.2vw,42px);font-weight:400;letter-spacing:-.025em;color:var(--n800);margin:14px 0 12px;line-height:1.08">
+        Open an account<br><em style="font-style:italic;color:var(--n400)">in minutes.</em>
+      </h2>
+      <p style="font-size:15px;font-weight:300;color:var(--ink2);line-height:1.65">KYC is straightforward and built for businesses. Once verified, your account is live and ready to fund. The regulated rails are already in place before you send your first euro.</p>
+    </div>
+    <div class="onboard-grid">
+      <div class="onboard-step">
+        <div class="onboard-num">1</div>
+        <div class="onboard-title">Apply</div>
+        <p class="onboard-desc">Start your application online. No paperwork at this stage — just basic company information.</p>
+      </div>
+      <div class="onboard-step">
+        <div class="onboard-num">2</div>
+        <div class="onboard-title">Verify your identity</div>
+        <p class="onboard-desc">KYC and KYB for the business. Submit company documents and director identification.</p>
+      </div>
+      <div class="onboard-step">
+        <div class="onboard-num">3</div>
+        <div class="onboard-title">Compliance review</div>
+        <p class="onboard-desc">Internal compliance check. Most reviews complete within one business day.</p>
+      </div>
+      <div class="onboard-step">
+        <div class="onboard-num">4</div>
+        <div class="onboard-title">Activate your account</div>
+        <p class="onboard-desc">Account goes live. Fund it by SEPA transfer from your existing bank — same day for most German banks.</p>
+      </div>
+      <div class="onboard-step">
+        <div class="onboard-num">5</div>
+        <div class="onboard-title">Start sending</div>
+        <p class="onboard-desc">Add recipients, lock your first FX quote, settle your first cross-border payment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- CTA -->
+<section class="cta-band">
+  <div class="container">
+    <div class="cta-inner">
+      <div><span class="eyebrow" style="margin-bottom:20px">Ready to start</span></div>
+      <h2 class="cta-head" style="margin-top:16px">Move money like a<br><em>global treasury.</em></h2>
+      <p class="cta-sub">Open an account in minutes or speak with one of our FX specialists. No minimum volumes, no lock-in contracts.</p>
+      <div class="cta-actions">
+        <a href="index.html#contact" class="btn btn-white-fill">Open a business account</a>
+        <a href="index.html#contact" class="btn btn-ghost-white">Talk to a specialist</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay" /><span class="footer-logo-text">HansePay</span></div>
+        <p class="footer-tagline">Commercial FX, made in Hamburg.</p>
+        <p class="footer-legal">&#169; 2026 Caplend Technologies GmbH<br>HansePay is a brand of Caplend Technologies GmbH</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Platform</div>
+        <ul class="footer-links">
+          <li><a class="footer-link" href="#">FX Execution</a></li>
+          <li><a class="footer-link" href="#">Payments</a></li>
+          <li><a class="footer-link" href="#">Recipients</a></li>
+          <li><a class="footer-link" href="#">Rate Alerts</a></li>
+          <li><a class="footer-link" href="#">Reporting</a></li>
+          <li><a class="footer-link" href="#">API</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a class="footer-link" href="index.html#about">About</a></li>
+          <li><a class="footer-link" href="#">Team</a></li>
+          <li><a class="footer-link" href="#">Insights</a></li>
+          <li><a class="footer-link" href="#">Careers</a></li>
+          <li><a class="footer-link" href="#">Contact</a></li>
+          <li><a class="footer-link" href="#">Press</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Legal</div>
+        <ul class="footer-links">
+          <li><a class="footer-link" href="#">Imprint</a></li>
+          <li><a class="footer-link" href="#">Privacy</a></li>
+          <li><a class="footer-link" href="#">Terms</a></li>
+          <li><a class="footer-link" href="#">Complaints</a></li>
+          <li><a class="footer-link" href="#">Regulatory</a></li>
+          <li><a class="footer-link" href="#">Licences</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-hr"></div>
+    <div class="footer-bottom">
+      <span class="footer-copy">HansePay &middot; Hamburg, Germany &middot; Regulated by BaFin</span>
+      <span class="bafin-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>BaFin-regulated &middot; EU E-Money Institution</span>
+    </div>
+  </div>
+</footer>
+
+<!-- VIEW TOGGLE -->
+<div class="view-toggle">
+  <a href="index.html">A</a>
+  <a href="platform.html" class="active">C</a>
+  <a href="hansepay-sketch-globe.html">E</a>
+</div>
+
+<script>
+var nav=document.getElementById('main-nav');
+window.addEventListener('scroll',function(){nav.classList.toggle('scrolled',window.scrollY>20);},{passive:true});
+var burger=document.getElementById('nav-burger');
+var mobileMenu=document.getElementById('mobile-menu');
+burger.addEventListener('click',function(){var o=mobileMenu.classList.toggle('open');burger.classList.toggle('open',o);document.body.style.overflow=o?'hidden':'';});
+function closeMobileMenu(){mobileMenu.classList.remove('open');burger.classList.remove('open');document.body.style.overflow='';}
+</script>
+</body>
+</html>

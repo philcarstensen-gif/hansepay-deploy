@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Posts — HansePay Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --n900:#060D1A; --n800:#0B1929; --n700:#0F2540; --n600:#163659;
+  --n500:#1E4E80; --n400:#2E6BAD; --n300:#3B7BC4; --n200:#8DBDE6;
+  --n100:#C4DDEF; --n050:#EBF4FB; --off:#F5F1EA; --gold:#C9A961;
+  --ink:#0B1929; --ink2:#3D5A73; --ink3:#7A9AB0;
+  --r-sm:6px; --r-md:10px; --r-lg:16px; --r-pill:100px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: var(--off); color: var(--ink); display: flex; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+
+/* SIDEBAR */
+.sidebar { width:240px; min-height:100vh; background:var(--n800); display:flex; flex-direction:column; flex-shrink:0; position:fixed; top:0; left:0; bottom:0; z-index:100; }
+.sidebar-logo { display:flex; align-items:center; gap:10px; padding:28px 20px 22px; border-bottom:1px solid rgba(255,255,255,0.07); }
+.sidebar-brand { font-family:'Playfair Display',serif; font-size:1.25rem; font-weight:700; color:#fff; letter-spacing:-0.01em; line-height:1; }
+.sidebar-admin-badge { font-family:'Inter',sans-serif; font-size:0.625rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.35); display:block; margin-top:4px; }
+.sidebar-nav { flex:1; padding:18px 12px; }
+.nav-section { font-size:0.6875rem; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.22); padding:12px 12px 6px; margin-top:4px; display:block; }
+.nav-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; color:rgba(255,255,255,0.55); transition:all 0.15s; margin-bottom:2px; border-left:3px solid transparent; }
+.nav-item:hover { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.85); }
+.nav-item.active { background:var(--n600); color:#fff; font-weight:600; border-left-color:var(--gold); }
+.nav-item svg { width:16px; height:16px; flex-shrink:0; }
+.sidebar-footer { padding:16px 12px; border-top:1px solid rgba(255,255,255,0.07); }
+.sidebar-user { display:flex; align-items:center; gap:10px; padding:8px 10px; margin-bottom:8px; }
+.sidebar-avatar { width:30px; height:30px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.6875rem; font-weight:700; color:#fff; flex-shrink:0; }
+.sidebar-user-info { overflow:hidden; }
+.sidebar-user-name { font-size:0.75rem; font-weight:500; color:rgba(255,255,255,0.75); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.sidebar-user-email { font-size:0.6875rem; color:rgba(255,255,255,0.35); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.signout-link { display:flex; align-items:center; gap:8px; padding:8px 12px; border-radius:var(--r-md); font-size:0.75rem; font-weight:500; color:rgba(255,255,255,0.45); cursor:pointer; transition:all 0.15s; background:none; border:none; font-family:'Inter',sans-serif; width:100%; text-align:left; }
+.signout-link:hover { background:rgba(255,255,255,0.07); color:rgba(255,255,255,0.75); }
+.signout-link svg { width:14px; height:14px; }
+
+/* MAIN */
+.main { flex:1; margin-left:240px; min-height:100vh; display:flex; flex-direction:column; }
+.topbar { background:#fff; border-bottom:1px solid rgba(11,25,41,0.08); padding:0 32px; height:64px; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+.page-title { font-family:'Playfair Display',serif; font-size:1.375rem; font-weight:600; color:var(--n800); }
+.topbar-avatar { display:flex; align-items:center; gap:9px; padding:5px 14px 5px 5px; border-radius:var(--r-pill); border:1px solid rgba(11,25,41,0.09); background:var(--off); }
+.topbar-avatar-circle { width:28px; height:28px; border-radius:50%; background:var(--n500); display:flex; align-items:center; justify-content:center; font-size:0.6875rem; font-weight:700; color:#fff; }
+.topbar-avatar-name { font-size:0.8125rem; font-weight:500; color:var(--ink2); }
+.content { padding:32px; flex:1; }
+
+/* PAGE HEADER */
+.page-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; }
+.page-heading { font-family:'Playfair Display',serif; font-size:1.625rem; font-weight:600; color:var(--n800); }
+.btn-primary { display:inline-flex; align-items:center; gap:7px; padding:10px 20px; border-radius:var(--r-pill); background:var(--n500); color:#fff; font-family:'Inter',sans-serif; font-size:0.875rem; font-weight:600; border:none; cursor:pointer; transition:background 0.15s; text-decoration:none; }
+.btn-primary:hover { background:var(--n600); }
+
+/* TABLE CARD */
+.table-card { background:#fff; border-radius:var(--r-lg); border:1px solid rgba(11,25,41,0.08); box-shadow:0 1px 4px rgba(11,25,41,0.04); overflow:hidden; }
+.table-toolbar { padding:16px 20px; border-bottom:1px solid rgba(11,25,41,0.06); display:flex; align-items:center; gap:12px; }
+.search-input { flex:1; max-width:320px; height:40px; padding:0 14px; border:1.5px solid rgba(11,25,41,0.1); border-radius:var(--r-md); font-family:'Inter',sans-serif; font-size:0.875rem; color:var(--ink); outline:none; transition:border-color 0.15s; }
+.search-input:focus { border-color:var(--n300); }
+.search-input::placeholder { color:var(--ink3); }
+.data-table { width:100%; border-collapse:collapse; }
+.data-table th { font-size:0.6875rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--ink3); padding:11px 16px; text-align:left; border-bottom:1px solid rgba(11,25,41,0.06); background:#fafbfc; white-space:nowrap; }
+.data-table td { padding:13px 16px; font-size:0.8125rem; color:var(--ink2); border-bottom:1px solid rgba(11,25,41,0.04); }
+.data-table tr:last-child td { border-bottom:none; }
+.data-table tr:hover td { background:var(--n050); }
+.badge { display:inline-flex; align-items:center; padding:3px 9px; border-radius:var(--r-pill); font-size:0.6875rem; font-weight:600; }
+.badge-published { background:#dcfce7; color:#166534; }
+.badge-draft { background:#f3f4f6; color:#6b7280; }
+.actions { display:flex; align-items:center; gap:4px; }
+.btn-edit { display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border-radius:var(--r-sm); font-size:0.75rem; font-weight:600; color:var(--n400); background:transparent; transition:all 0.15s; text-decoration:none; }
+.btn-edit:hover { background:var(--n050); color:var(--n600); }
+.btn-delete { display:inline-flex; align-items:center; gap:5px; padding:5px 10px; border-radius:var(--r-sm); font-size:0.75rem; font-weight:600; color:#dc2626; background:transparent; border:none; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.15s; }
+.btn-delete:hover { background:#fef2f2; }
+.empty-state { text-align:center; padding:56px 24px; color:var(--ink3); }
+.empty-state p { margin-top:8px; font-size:0.875rem; }
+
+/* TOAST */
+.toast { position:fixed; bottom:24px; right:24px; background:var(--n800); color:#fff; padding:12px 20px; border-radius:var(--r-md); font-size:0.8125rem; font-weight:500; z-index:1000; opacity:0; transform:translateY(8px); transition:all 0.25s; pointer-events:none; }
+.toast.show { opacity:1; transform:none; }
+.toast.success { background:#166534; }
+.toast.error { background:#dc2626; }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div>
+      <div class="sidebar-brand">HansePay</div>
+      <span class="sidebar-admin-badge">Admin</span>
+    </div>
+  </div>
+  <nav class="sidebar-nav">
+    <span class="nav-section">Main</span>
+    <a href="/hansepay/admin/" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      Dashboard
+    </a>
+    <span class="nav-section">Content</span>
+    <a href="/hansepay/admin/posts.html" class="nav-item active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      Posts
+    </a>
+    <a href="/hansepay/admin/new-post.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      New Post
+    </a>
+    <span class="nav-section">Admin</span>
+    <a href="/hansepay/admin/users.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Users
+    </a>
+    <a href="/hansepay/admin/settings.html" class="nav-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M19.07 19.07l-1.41-1.41M5.34 5.34L3.93 3.93M21 12h-2M5 12H3M12 21v-2M12 5V3"/></svg>
+      Settings
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="sidebar-user">
+      <div class="sidebar-avatar" id="sidebar-avatar">A</div>
+      <div class="sidebar-user-info">
+        <div class="sidebar-user-name" id="sidebar-name">Admin</div>
+        <div class="sidebar-user-email" id="sidebar-email">admin@hansepay.com</div>
+      </div>
+    </div>
+    <button class="signout-link" onclick="signOut()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      Sign out
+    </button>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <div class="page-title">Posts</div>
+    <div class="topbar-avatar">
+      <div class="topbar-avatar-circle" id="topbar-avatar">A</div>
+      <span class="topbar-avatar-name" id="topbar-name">Admin</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-header">
+      <h1 class="page-heading">Posts</h1>
+      <a href="/hansepay/admin/new-post.html" class="btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        New Post
+      </a>
+    </div>
+
+    <div class="table-card">
+      <div class="table-toolbar">
+        <input type="text" class="search-input" id="search" placeholder="Search posts…" oninput="filterPosts()" />
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Views</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="posts-tbody">
+          <tr><td colspan="6" style="text-align:center;color:var(--ink3);padding:36px">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// Auth guard
+var token = localStorage.getItem('hp_token');
+if (!token) { window.location.href = '/hansepay/admin/login.html'; }
+
+// Validate token
+fetch('http://localhost:4200/api/auth/me', { headers: { 'Authorization': 'Bearer ' + token } })
+  .then(function(r) { if (!r.ok) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; } });
+
+var user = JSON.parse(localStorage.getItem('hp_user') || 'null');
+if (user && user.name) {
+  var initials = user.name.split(' ').map(function(w){ return w[0]; }).join('').substring(0, 2).toUpperCase();
+  document.getElementById('sidebar-avatar').textContent = initials;
+  document.getElementById('topbar-avatar').textContent = initials;
+  document.getElementById('sidebar-name').textContent = user.name;
+  document.getElementById('topbar-name').textContent = user.name;
+  if (user.email) document.getElementById('sidebar-email').textContent = user.email;
+}
+
+function signOut() {
+  localStorage.removeItem('hp_token');
+  localStorage.removeItem('hp_user');
+  window.location.href = '/hansepay/admin/login.html';
+}
+
+function authFetch(url, opts) {
+  opts = opts || {};
+  opts.headers = Object.assign({ 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, opts.headers || {});
+  return fetch('http://localhost:4200' + url, opts);
+}
+
+function showToast(msg, type) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (type ? ' ' + type : '');
+  setTimeout(function() { t.className = 'toast'; }, 3000);
+}
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+var allPosts = [];
+
+function renderRows(posts) {
+  var tbody = document.getElementById('posts-tbody');
+  if (!posts.length) {
+    tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--ink3)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p>No posts yet. <a href="/hansepay/admin/new-post.html" style="color:var(--n400);font-weight:600">Create your first post.</a></p></div></td></tr>';
+    return;
+  }
+  tbody.innerHTML = posts.map(function(p) {
+    var id = p.id || p._id || '';
+    var title = (p.title || '').replace(/</g, '&lt;');
+    var safeTitle = (p.title || '').replace(/'/g, "\\'");
+    return '<tr>' +
+      '<td><span style="font-weight:500;color:var(--ink);max-width:260px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + title + '</span></td>' +
+      '<td style="white-space:nowrap">' + (p.category || '—') + '</td>' +
+      '<td><span class="badge ' + (p.status === 'published' ? 'badge-published' : 'badge-draft') + '">' + (p.status || 'draft') + '</span></td>' +
+      '<td>' + (p.viewCount || 0).toLocaleString() + '</td>' +
+      '<td style="white-space:nowrap">' + formatDate(p.createdAt) + '</td>' +
+      '<td><div class="actions">' +
+        '<a href="/hansepay/admin/new-post.html?id=' + id + '" class="btn-edit">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+          'Edit' +
+        '</a>' +
+        '<button class="btn-delete" onclick="deletePost(\'' + id + '\', \'' + safeTitle + '\')">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>' +
+          'Delete' +
+        '</button>' +
+      '</div></td>' +
+    '</tr>';
+  }).join('');
+}
+
+function filterPosts() {
+  var q = document.getElementById('search').value.toLowerCase();
+  var filtered = allPosts.filter(function(p) { return (p.title || '').toLowerCase().includes(q); });
+  renderRows(filtered);
+}
+
+function deletePost(id, title) {
+  if (!confirm('Delete "' + title + '"? This cannot be undone.')) return;
+  authFetch('/api/posts/' + id, { method: 'DELETE' })
+    .then(function(r) {
+      if (!r.ok) throw new Error('Delete failed');
+      allPosts = allPosts.filter(function(p) { return (p.id || p._id) !== id; });
+      renderRows(allPosts);
+      showToast('Post deleted.', 'success');
+    })
+    .catch(function() { showToast('Error deleting post.', 'error'); });
+}
+
+authFetch('/api/posts?status=all')
+  .then(function(r) {
+    if (r.status === 401) { localStorage.removeItem('hp_token'); window.location.href = '/hansepay/admin/login.html'; }
+    return r.json();
+  })
+  .then(function(posts) {
+    allPosts = Array.isArray(posts) ? posts : (posts.posts || posts.data || []);
+    renderRows(allPosts);
+  })
+  .catch(function() { renderRows([]); });
+</script>
+</body>
+</html>

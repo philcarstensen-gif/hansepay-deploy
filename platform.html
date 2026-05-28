@@ -182,7 +182,7 @@ a{color:inherit;text-decoration:none}
 .onboard-desc{font-size:12px;color:var(--ink2);line-height:1.55}
 
 /* ── FAQ ── */
-.faq-section{padding:96px 0;background:var(--off)}
+.faq-section{padding:96px 0;background:var(--n050)}
 .faq-list{max-width:720px;margin:0 auto}
 .faq-item{border-bottom:1px solid rgba(11,25,41,.10)}
 .faq-item:first-child{border-top:1px solid rgba(11,25,41,.10)}
@@ -236,7 +236,7 @@ a{color:inherit;text-decoration:none}
       <!-- Copy -->
       <div>
         <div class="hero-chip"><span class="hero-chip-dot"></span>Platform Overview</div>
-        <h1 class="hero-h1">One platform for<br><em>global payments.</em></h1>
+        <h1 class="hero-h1">One platform<br><em>for global payments.</em></h1>
         <p class="hero-sub">Cross-border payments, wholesale FX, and full treasury visibility — built for businesses moving money across borders. BaFin-licensed, mid-market rates, zero hidden fees.</p>
         <div class="hero-actions">
           <a href="index.html#contact" class="btn btn-white-fill">Open an account</a>
@@ -339,7 +339,7 @@ a{color:inherit;text-decoration:none}
 <!-- ═══════════════════════════════════════════════════════ -->
 <!-- FEATURE OVERVIEW — three pillars + key numbers        -->
 <!-- ═══════════════════════════════════════════════════════ -->
-<section style="padding:88px 0;background:var(--off)">
+<section style="padding:88px 0;background:var(--n050)">
   <div class="container">
 
     <div style="text-align:center;margin-bottom:52px">
@@ -539,56 +539,166 @@ a{color:inherit;text-decoration:none}
               We'll notify you once it settles — usually within 2 hours.
             </p>
 
-            <!-- Globe SVG -->
+            <!-- Globe SVG — orthographic, centred ~54°N 12°E (Northern Europe) -->
             <div style="display:flex;justify-content:center;margin-bottom:22px">
-              <svg width="190" height="190" viewBox="0 0 190 190" xmlns="http://www.w3.org/2000/svg">
+              <svg width="210" height="210" viewBox="0 0 210 210" xmlns="http://www.w3.org/2000/svg">
                 <defs>
-                  <radialGradient id="gBg" cx="34%" cy="28%" r="68%"><stop offset="0%" stop-color="#1C4570"/><stop offset="48%" stop-color="#0E2644"/><stop offset="100%" stop-color="#060D1C"/></radialGradient>
-                  <radialGradient id="gLimb" cx="50%" cy="50%" r="50%"><stop offset="70%" stop-color="transparent"/><stop offset="97%" stop-color="rgba(2,6,16,0.78)"/><stop offset="100%" stop-color="rgba(2,6,16,0.30)"/></radialGradient>
-                  <radialGradient id="gAtmo" cx="50%" cy="50%" r="50%"><stop offset="86%" stop-color="transparent"/><stop offset="97%" stop-color="rgba(90,150,220,0.26)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
-                  <filter id="gGlow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur in="SourceGraphic" stdDeviation="3.5"/></filter>
-                  <filter id="dotGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur in="SourceGraphic" stdDeviation="2"/></filter>
-                  <clipPath id="gClip"><circle cx="95" cy="95" r="88"/></clipPath>
+                  <!-- Deep blue sphere gradient, highlight top-left -->
+                  <radialGradient id="gBg" cx="32%" cy="26%" r="72%">
+                    <stop offset="0%"   stop-color="#1E4E80"/>
+                    <stop offset="40%"  stop-color="#0D2B4E"/>
+                    <stop offset="100%" stop-color="#050C1A"/>
+                  </radialGradient>
+                  <!-- Limb darkening -->
+                  <radialGradient id="gLimb" cx="50%" cy="50%" r="50%">
+                    <stop offset="68%" stop-color="transparent"/>
+                    <stop offset="94%" stop-color="rgba(2,6,18,0.72)"/>
+                    <stop offset="100%" stop-color="rgba(2,6,18,0.25)"/>
+                  </radialGradient>
+                  <!-- Atmosphere rim -->
+                  <radialGradient id="gAtmo" cx="50%" cy="50%" r="50%">
+                    <stop offset="84%" stop-color="transparent"/>
+                    <stop offset="96%" stop-color="rgba(80,140,220,0.28)"/>
+                    <stop offset="100%" stop-color="transparent"/>
+                  </radialGradient>
+                  <!-- Arc glow -->
+                  <filter id="arcGlow" x="-60%" y="-60%" width="220%" height="220%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="4"/>
+                  </filter>
+                  <!-- City dot glow -->
+                  <filter id="cityGlow" x="-80%" y="-80%" width="260%" height="260%">
+                    <feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/>
+                  </filter>
+                  <clipPath id="gc"><circle cx="105" cy="105" r="98"/></clipPath>
                 </defs>
-                <circle cx="95" cy="95" r="91" fill="url(#gBg)"/>
-                <g clip-path="url(#gClip)" fill="none">
-                  <ellipse cx="95" cy="50" rx="44" ry="36" stroke="rgba(141,189,230,0.09)" stroke-width="0.6"/>
-                  <ellipse cx="95" cy="55" rx="57" ry="46" stroke="rgba(141,189,230,0.09)" stroke-width="0.6"/>
-                  <ellipse cx="95" cy="62" rx="67" ry="55" stroke="rgba(141,189,230,0.07)" stroke-width="0.55"/>
-                  <ellipse cx="95" cy="69" rx="76" ry="62" stroke="rgba(141,189,230,0.05)" stroke-width="0.5"/>
-                  <ellipse cx="95" cy="95" rx="28" ry="88" stroke="rgba(141,189,230,0.07)" stroke-width="0.5"/>
-                  <ellipse cx="95" cy="95" rx="62" ry="88" stroke="rgba(141,189,230,0.06)" stroke-width="0.45"/>
+
+                <!-- Sphere base -->
+                <circle cx="105" cy="105" r="100" fill="url(#gBg)"/>
+
+                <!-- Grid lines (latitude parallels + meridians) -->
+                <g clip-path="url(#gc)" fill="none" stroke="rgba(141,189,230,0.13)" stroke-width="0.7">
+                  <!-- Parallels (approximate ellipses for oblique projection at 54°N centre) -->
+                  <ellipse cx="105" cy="53"  rx="49"  ry="40"/>
+                  <ellipse cx="105" cy="62"  rx="63"  ry="52"/>
+                  <ellipse cx="105" cy="74"  rx="76"  ry="62"/>
+                  <ellipse cx="105" cy="88"  rx="88"  ry="72"/>
+                  <ellipse cx="105" cy="120" rx="88"  ry="56"/>
+                  <!-- Meridians -->
+                  <ellipse cx="105" cy="105" rx="30"  ry="98"/>
+                  <ellipse cx="105" cy="105" rx="65"  ry="98"/>
+                  <ellipse cx="105" cy="105" rx="92"  ry="98"/>
                 </g>
-                <g clip-path="url(#gClip)">
-                  <path d="M 91,88 C 91,86 92,85 92,85 C 93,82 94,81 95,81 C 97,76 99,73 100,71 C 102,68 102,67 103,68 C 105,68 106,69 107,70 C 106,70 105,70 104,70 C 104,73 105,76 105,77 C 106,81 106,83 106,84 C 104,88 102,90 100,91 C 98,91 96,91 93,92 C 91,91 90,90 91,88 Z" fill="rgba(130,182,224,0.20)" stroke="rgba(141,189,230,0.45)" stroke-width="0.75" stroke-linejoin="round"/>
-                  <path d="M 94,95 C 97,95 100,94 103,94 C 106,93 107,90 106,86 C 108,88 110,92 109,95 C 112,96 114,97 115,98 C 116,101 116,105 116,108 C 114,112 112,115 110,116 C 107,116 103,116 100,115 C 97,114 95,112 94,110 C 91,110 89,111 90,111 C 88,112 86,114 86,114 C 83,113 81,111 80,108 C 79,105 79,103 80,102 C 82,101 84,100 87,99 C 89,98 90,97 90,96 C 91,96 93,95 94,95 Z" fill="rgba(130,182,224,0.20)" stroke="rgba(141,189,230,0.45)" stroke-width="0.75" stroke-linejoin="round"/>
-                  <path d="M 87,99 C 84,99 81,99 80,99 C 81,97 82,95 83,95 C 83,91 83,88 83,87 C 84,88 85,88 85,88 C 86,91 86,95 87,99 Z" fill="rgba(130,182,224,0.17)" stroke="rgba(141,189,230,0.40)" stroke-width="0.7" stroke-linejoin="round"/>
-                  <ellipse cx="78" cy="95" rx="3.5" ry="4.5" fill="rgba(130,182,224,0.14)" stroke="rgba(141,189,230,0.34)" stroke-width="0.6"/>
-                  <ellipse cx="70" cy="77" rx="5.5" ry="2.8" fill="rgba(130,182,224,0.12)" stroke="rgba(141,189,230,0.28)" stroke-width="0.6"/>
+
+                <!-- Land masses — Northern Europe -->
+                <g clip-path="url(#gc)">
+
+                  <!-- Scandinavia + Finland -->
+                  <path d="M 101,94
+                    C 100,91 101,89 101,88
+                    C 102,85 103,83 104,81
+                    C 106,76 108,73 109,71
+                    C 111,68 112,67 113,68
+                    C 115,68 117,70 117,71
+                    C 116,71 114,71 113,71
+                    C 113,74 114,77 115,79
+                    C 116,83 117,85 116,87
+                    C 115,90 113,92 111,93
+                    C 109,94 107,95 104,95
+                    C 102,95 101,95 101,94 Z"
+                    fill="rgba(100,160,220,0.22)" stroke="rgba(141,189,230,0.55)" stroke-width="0.9"/>
+
+                  <!-- Continental Europe (incl. Iberia, France, Germany, Balkans) -->
+                  <path d="M 103,99
+                    C 107,99 111,98 114,98
+                    C 118,97 119,94 118,90
+                    C 120,92 122,95 121,99
+                    C 124,100 127,101 128,103
+                    C 129,106 129,110 128,113
+                    C 126,117 124,120 121,121
+                    C 118,122 113,121 110,120
+                    C 107,119 104,117 103,115
+                    C 100,115 98,115 98,116
+                    C 96,117 94,118 93,118
+                    C 90,117 88,115 87,112
+                    C 86,109 86,107 87,105
+                    C 89,104 91,103 94,102
+                    C 97,101 100,100 100,99
+                    C 101,99 102,99 103,99 Z"
+                    fill="rgba(100,160,220,0.22)" stroke="rgba(141,189,230,0.55)" stroke-width="0.9"/>
+
+                  <!-- Great Britain -->
+                  <path d="M 95,103
+                    C 92,103 89,103 88,103
+                    C 89,101 90,99 91,99
+                    C 91,95 91,92 91,91
+                    C 92,92 93,92 93,92
+                    C 94,95 94,99 95,103 Z"
+                    fill="rgba(100,160,220,0.18)" stroke="rgba(141,189,230,0.45)" stroke-width="0.8"/>
+
+                  <!-- Ireland -->
+                  <ellipse cx="85" cy="99" rx="3.8" ry="4.8" fill="rgba(100,160,220,0.15)" stroke="rgba(141,189,230,0.38)" stroke-width="0.7"/>
+
+                  <!-- Iceland -->
+                  <ellipse cx="77" cy="82" rx="6"   ry="3"   fill="rgba(100,160,220,0.13)" stroke="rgba(141,189,230,0.30)" stroke-width="0.7"/>
                 </g>
-                <g clip-path="url(#gClip)" filter="url(#dotGlow)">
-                  <circle cx="101" cy="86" r="4" fill="rgba(201,169,97,0.35)"/>
-                  <circle cx="95" cy="96" r="4" fill="rgba(141,189,230,0.45)"/>
+
+                <!-- Secondary city dots (Amsterdam, London, Paris, Berlin, Copenhagen, Oslo, Warsaw) -->
+                <g clip-path="url(#gc)" fill="rgba(141,189,230,0.45)">
+                  <circle cx="98"  cy="100" r="1.6"/><!-- Amsterdam -->
+                  <circle cx="93"  cy="102" r="1.6"/><!-- London -->
+                  <circle cx="95"  cy="107" r="1.4"/><!-- Paris -->
+                  <circle cx="107" cy="100" r="1.4"/><!-- Berlin -->
+                  <circle cx="106" cy="95"  r="1.6"/><!-- Copenhagen -->
+                  <circle cx="103" cy="91"  r="1.4"/><!-- Oslo -->
+                  <circle cx="116" cy="101" r="1.4"/><!-- Warsaw -->
                 </g>
-                <g clip-path="url(#gClip)" fill="rgba(141,189,230,0.38)">
-                  <circle cx="90" cy="97" r="1.5"/><circle cx="85" cy="98" r="1.5"/><circle cx="87" cy="103" r="1.3"/>
-                  <circle cx="97" cy="92" r="1.5"/><circle cx="98" cy="97" r="1.3"/><circle cx="105" cy="97" r="1.3"/><circle cx="96" cy="86" r="1.3"/>
+
+                <!-- Arc glow layer (Hamburg → Stockholm) -->
+                <path d="M 105,100 Q 101,86 110,90"
+                  stroke="rgba(201,169,97,0.30)" stroke-width="7"
+                  fill="none" stroke-linecap="round"
+                  clip-path="url(#gc)" filter="url(#arcGlow)"/>
+
+                <!-- Arc solid dashed line -->
+                <path d="M 105,100 Q 101,86 110,90"
+                  stroke="#C9A961" stroke-width="2"
+                  fill="none" stroke-linecap="round"
+                  stroke-dasharray="4 4"
+                  clip-path="url(#gc)" opacity="0.95"/>
+
+                <!-- Faint secondary arc (Hamburg → London) -->
+                <path d="M 105,100 Q 96,95 93,102"
+                  stroke="#C9A961" stroke-width="1.1"
+                  fill="none" stroke-linecap="round"
+                  stroke-dasharray="2.5 4"
+                  clip-path="url(#gc)" opacity="0.35"/>
+
+                <!-- Hamburg origin — glow + dot -->
+                <g clip-path="url(#gc)" filter="url(#cityGlow)">
+                  <circle cx="105" cy="100" r="5" fill="rgba(141,189,230,0.50)"/>
                 </g>
-                <path d="M 95,96 Q 92,82 101,86" stroke="rgba(201,169,97,0.25)" stroke-width="6" fill="none" stroke-linecap="round" clip-path="url(#gClip)" filter="url(#gGlow)"/>
-                <path d="M 95,96 Q 92,82 101,86" stroke="#C9A961" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-dasharray="3 3.5" clip-path="url(#gClip)" opacity="0.92"/>
-                <path d="M 95,96 Q 87,91 85,98" stroke="#C9A961" stroke-width="1.0" fill="none" stroke-linecap="round" stroke-dasharray="2 3.5" clip-path="url(#gClip)" opacity="0.38"/>
-                <circle cx="95" cy="96" r="5.5" fill="rgba(141,189,230,0.16)" clip-path="url(#gClip)"/>
-                <circle cx="95" cy="96" r="3.5" fill="#8DBDE6" clip-path="url(#gClip)"/>
-                <circle cx="95" cy="96" r="1.6" fill="#fff"/>
-                <text x="95" y="106.5" font-family="Inter,sans-serif" font-size="6.5" font-weight="600" fill="rgba(141,189,230,0.72)" text-anchor="middle" clip-path="url(#gClip)">Hamburg</text>
-                <circle cx="101" cy="86" r="10" fill="rgba(201,169,97,0.08)" clip-path="url(#gClip)"/>
-                <circle cx="101" cy="86" r="6" fill="rgba(201,169,97,0.18)" clip-path="url(#gClip)"/>
-                <circle cx="101" cy="86" r="3.5" fill="#C9A961" clip-path="url(#gClip)"/>
-                <circle cx="101" cy="86" r="1.6" fill="#fff"/>
-                <text x="101" y="76.5" font-family="Inter,sans-serif" font-size="6.5" font-weight="600" fill="rgba(201,169,97,0.84)" text-anchor="middle" clip-path="url(#gClip)">Stockholm</text>
-                <circle cx="95" cy="95" r="91" fill="url(#gAtmo)"/>
-                <circle cx="95" cy="95" r="91" fill="url(#gLimb)"/>
-                <circle cx="95" cy="95" r="91" fill="none" stroke="rgba(141,189,230,0.22)" stroke-width="1"/>
+                <circle cx="105" cy="100" r="4.5" fill="rgba(141,189,230,0.18)" clip-path="url(#gc)"/>
+                <circle cx="105" cy="100" r="3"   fill="#8DBDE6"                clip-path="url(#gc)"/>
+                <circle cx="105" cy="100" r="1.4" fill="#fff"/>
+                <text x="105" y="111" font-family="Inter,sans-serif" font-size="7" font-weight="600"
+                  fill="rgba(141,189,230,0.80)" text-anchor="middle" clip-path="url(#gc)">Hamburg</text>
+
+                <!-- Stockholm destination — pulsing rings + gold dot -->
+                <g clip-path="url(#gc)" filter="url(#cityGlow)">
+                  <circle cx="110" cy="90" r="6" fill="rgba(201,169,97,0.40)"/>
+                </g>
+                <circle cx="110" cy="90" r="11"  fill="rgba(201,169,97,0.08)"  clip-path="url(#gc)"/>
+                <circle cx="110" cy="90" r="6.5" fill="rgba(201,169,97,0.18)"  clip-path="url(#gc)"/>
+                <circle cx="110" cy="90" r="3.8" fill="#C9A961"                clip-path="url(#gc)"/>
+                <circle cx="110" cy="90" r="1.6" fill="#fff"/>
+                <text x="110" y="80" font-family="Inter,sans-serif" font-size="7" font-weight="600"
+                  fill="rgba(201,169,97,0.90)" text-anchor="middle" clip-path="url(#gc)">Stockholm</text>
+
+                <!-- Atmosphere + limb darkening overlays -->
+                <circle cx="105" cy="105" r="100" fill="url(#gAtmo)"/>
+                <circle cx="105" cy="105" r="100" fill="url(#gLimb)"/>
+                <!-- Rim highlight -->
+                <circle cx="105" cy="105" r="100" fill="none" stroke="rgba(141,189,230,0.25)" stroke-width="1.2"/>
               </svg>
             </div>
 

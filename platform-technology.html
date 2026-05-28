@@ -241,35 +241,30 @@ nav.scrolled .nav-burger span{background:var(--n700)}
   content:'';position:absolute;left:40px;bottom:-4px;
   width:1px;height:8px;background:rgba(11,25,41,.1);z-index:1
 }
-.flow-card-hp .flow-step:not(:last-child)::after{background:rgba(141,189,230,.18)}
 .flow-step-num{
   width:24px;height:24px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
   font-size:11px;font-weight:700;flex-shrink:0
 }
 .flow-step-num.muted{background:rgba(11,25,41,.07);color:var(--ink3)}
-.flow-step-num.navy{background:rgba(141,189,230,.15);color:var(--n200)}
-.flow-step-name{font-size:14px;font-weight:500;flex:1}
-.flow-card-bank .flow-step-name{color:var(--n800)}
-.flow-card-hp .flow-step-name{color:#fff}
+.flow-step-num.navy{background:var(--n050);color:var(--n500)}
+.flow-step-name{font-size:14px;font-weight:500;color:var(--n800);flex:1}
 .flow-step-fee{font-size:12px;font-weight:600;padding:2px 8px;border-radius:var(--r-pill);white-space:nowrap;flex-shrink:0}
 .flow-step-fee.cost{background:rgba(180,50,50,.07);color:#9b2c2c;border:1px solid rgba(180,50,50,.12)}
 .flow-step-fee.delay{background:rgba(11,25,41,.07);color:var(--ink3);border:1px solid rgba(11,25,41,.1)}
-.flow-step-fee.fast{background:rgba(30,78,128,.1);color:var(--n400);border:1px solid rgba(30,78,128,.14)}
+.flow-step-fee.fast{background:rgba(30,78,128,.07);color:var(--n500);border:1px solid rgba(30,78,128,.14)}
 .flow-step-icon{width:32px;height:32px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .flow-step-icon.muted{background:rgba(11,25,41,.06)}
-.flow-step-icon.hp{background:rgba(141,189,230,.14)}
+.flow-step-icon.hp{background:var(--n050)}
 .flow-step-icon svg{width:14px;height:14px}
 .flow-step-icon.muted svg{color:var(--ink3)}
-.flow-step-icon.hp svg{color:var(--n200)}
+.flow-step-icon.hp svg{color:var(--n400)}
 
-.flow-card-footer{padding:20px 28px;border-top:1px solid rgba(11,25,41,.07);display:flex;flex-direction:column;gap:2px}
-.flow-card-hp .flow-card-footer{border-top:1px solid rgba(255,255,255,.08)}
+.flow-card-footer{padding:20px 28px;border-top:1px solid rgba(11,25,41,.07);background:#f7f8fc;display:flex;flex-direction:column;gap:2px}
 .flow-footer-total{font-family:var(--font-display);font-size:22px;font-weight:400;letter-spacing:-.02em}
 .flow-footer-total.muted{color:var(--ink3)}
-.flow-footer-total.good{color:var(--n500)}
+.flow-footer-total.good{color:var(--n600)}
 .flow-footer-sub{font-size:12px;color:var(--ink3)}
-.flow-card-hp .flow-footer-sub{color:rgba(255,255,255,.38)}
 
 /* ══════════════════════════════════════════
    3 — FAMILIAR TERRITORY
@@ -300,33 +295,30 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 @media(max-width:680px){.cost-layout{grid-template-columns:1fr}}
 
 .cost-card{border-radius:var(--r-lg);overflow:hidden;border:1px solid rgba(11,25,41,.08)}
-.cost-card-hp{border:1.5px solid var(--n400);box-shadow:0 4px 32px rgba(30,78,128,.1)}
-.cost-card-header{padding:24px 32px 20px;border-bottom:1px solid rgba(11,25,41,.06)}
-.cost-card-hp .cost-card-header{background:var(--n800);border-bottom:1px solid rgba(255,255,255,.07)}
+.cost-card-hp{border:1.5px solid var(--n300)}
+.cost-card-header{padding:24px 32px 20px;border-bottom:1px solid rgba(11,25,41,.06);background:#fff}
 .cost-card-title{font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px}
 .cost-card-title.muted{color:var(--ink3)}
-.cost-card-title.navy{color:var(--n200)}
+.cost-card-title.navy{color:var(--n400)}
 .cost-total{font-family:var(--font-display);font-size:clamp(40px,4.5vw,56px);font-weight:400;letter-spacing:-.03em;line-height:1}
 .cost-total.muted{color:var(--ink3)}
-.cost-total.good{color:#fff}
+.cost-total.good{color:var(--n700)}
 .cost-items{padding:8px 0}
 .cost-item{display:flex;align-items:center;gap:12px;padding:13px 32px}
 .cost-item:not(:last-child){border-bottom:1px solid rgba(11,25,41,.05)}
-.cost-card-hp .cost-item:not(:last-child){border-bottom:1px solid rgba(255,255,255,.05)}
 /* Visual bar track */
 .cost-bar-track{flex:1;height:4px;border-radius:2px;background:rgba(11,25,41,.06);overflow:hidden;min-width:40px}
-.cost-card-hp .cost-bar-track{background:rgba(255,255,255,.08)}
-.cost-bar-fill{height:100%;border-radius:2px;background:var(--ink3);transition:width .4s ease}
-.cost-card-hp .cost-bar-fill{background:var(--n300)}
+.cost-bar-fill{height:100%;border-radius:2px;background:var(--ink3)}
+.cost-card-hp .cost-bar-fill{background:var(--n400)}
 .cost-item-label{font-size:13px;color:var(--ink2);flex:1;min-width:0}
-.cost-card-hp .cost-item-label{color:rgba(255,255,255,.55)}
 .cost-item-pct{font-size:13px;font-weight:700;white-space:nowrap;flex-shrink:0}
 .cost-item-pct.muted{color:var(--n800)}
-.cost-item-pct.navy{color:var(--n200)}
+.cost-item-pct.navy{color:var(--n500)}
 .cost-card-footer{padding:18px 32px;background:#f7f8fc;border-top:1px solid rgba(11,25,41,.06);font-size:12px;color:var(--ink3)}
-.cost-card-hp .cost-card-footer{background:rgba(255,255,255,.04);border-top:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.3)}
+.cost-delta-note{margin:0 32px 20px;padding:12px 16px;background:rgba(30,78,128,.05);border:1px solid rgba(30,78,128,.1);border-radius:var(--r-md);font-size:12px;font-weight:600;color:var(--n500)}
 @media(max-width:768px){
   .cost-card-header,.cost-item,.cost-card-footer{padding-left:24px;padding-right:24px}
+  .cost-delta-note{margin:0 24px 16px}
 }
 
 /* ══════════════════════════════════════════
@@ -335,15 +327,15 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 .rates-layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px}
 @media(max-width:620px){.rates-layout{grid-template-columns:1fr}}
 
-.rate-card{border-radius:var(--r-lg);overflow:hidden}
-.rate-card-bank{border:1px solid rgba(11,25,41,.1);background:#fff}
-.rate-card-hp{border:1.5px solid var(--n400);box-shadow:0 4px 32px rgba(30,78,128,.1)}
+.rate-card{border-radius:var(--r-lg);overflow:hidden;background:#fff}
+.rate-card-bank{border:1px solid rgba(11,25,41,.1)}
+.rate-card-hp{border:1.5px solid var(--n300)}
 
-.rate-card-head{padding:20px 28px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(11,25,41,.06)}
-.rate-card-head.muted{color:var(--ink3);background:#f7f8fc}
-.rate-card-head.navy{color:var(--n200);background:var(--n800);border-bottom-color:rgba(255,255,255,.07)}
+.rate-card-head{padding:20px 28px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid rgba(11,25,41,.06);background:#f7f8fc}
+.rate-card-head.muted{color:var(--ink3)}
+.rate-card-head.navy{color:var(--n400);background:var(--n050)}
 
-.rate-body{padding:36px 28px;display:flex;flex-direction:column;gap:0}
+.rate-body{padding:36px 28px;display:flex;flex-direction:column;gap:0;background:#fff}
 .rate-row{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px}
 .rate-row-lbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
 .rate-num{font-family:'Courier New',Courier,monospace;font-size:clamp(32px,4vw,44px);font-weight:700;letter-spacing:-.01em;line-height:1}
@@ -351,20 +343,15 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 .rate-num.bad{color:#c53030}
 .rate-num.good{color:var(--n500)}
 .rate-connector{display:flex;flex-direction:column;align-items:center;gap:4px;padding:16px 0}
-.rate-connector-line{width:1px;height:24px}
-.rate-connector-line.muted{background:rgba(11,25,41,.1)}
-.rate-connector-line.navy{background:rgba(30,78,128,.2)}
-.rate-connector-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.rate-connector-icon.muted{background:rgba(11,25,41,.06)}
-.rate-connector-icon.navy{background:rgba(30,78,128,.1)}
-.rate-connector-icon svg{width:12px;height:12px}
-.rate-connector-icon.muted svg{color:var(--ink3)}
+.rate-connector-line{width:1px;height:24px;background:rgba(11,25,41,.1)}
+.rate-connector-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(11,25,41,.05)}
+.rate-connector-icon.navy{background:rgba(30,78,128,.08)}
+.rate-connector-icon svg{width:12px;height:12px;color:var(--ink3)}
 .rate-connector-icon.navy svg{color:var(--n400)}
 .rate-badge{display:inline-flex;align-items:center;gap:5px;margin-top:16px;padding:5px 12px;border-radius:var(--r-pill);font-size:11px;font-weight:700;letter-spacing:.04em}
 .rate-badge.bad{background:rgba(197,48,48,.07);color:#c53030;border:1px solid rgba(197,48,48,.15)}
 .rate-badge.good{background:rgba(30,78,128,.07);color:var(--n500);border:1px solid rgba(30,78,128,.14)}
-.rate-caption{padding:18px 28px;font-size:13px;color:var(--ink3);text-align:center;border-top:1px solid rgba(11,25,41,.06);line-height:1.55;font-style:italic}
-.rate-card-hp .rate-caption{border-top-color:rgba(255,255,255,.07);color:rgba(255,255,255,.35);background:var(--n800)}
+.rate-caption{padding:18px 28px;font-size:13px;color:var(--ink3);text-align:center;border-top:1px solid rgba(11,25,41,.06);line-height:1.55;font-style:italic;background:#f7f8fc}
 
 /* ══════════════════════════════════════════
    6 — WHY IT MATTERS
@@ -815,7 +802,7 @@ footer{background:#060D1A;padding:80px 0 44px;border-top:1px solid rgba(255,255,
   <div class="container">
     <div style="max-width:600px;margin-bottom:0">
       <span class="sec-label">The cost stack</span>
-      <h2 class="sec-h">The bank charges 1.2%. We charge 0.1%.<br><em>Here is where the difference goes.</em></h2>
+      <h2 class="sec-h">1.2% vs 0.1%. <em>Here is where the difference goes.</em></h2>
       <p class="sec-body">Every fee in cross-border banking maps to a layer of infrastructure the system was forced to build around its own latency. Remove the latency, and most of those layers disappear.</p>
     </div>
 
@@ -877,9 +864,8 @@ footer{background:#060D1A;padding:80px 0 44px;border-top:1px solid rgba(255,255,
             <span class="cost-item-pct navy">0.02%</span>
           </div>
         </div>
-        <div class="cost-card-footer">
-          Delta ~1.1% — structural, not promotional. The savings are in the architecture.
-        </div>
+        <div class="cost-delta-note">Delta ~1.1% — structural, not promotional. Savings are in the architecture.</div>
+        <div class="cost-card-footer">Indicative. Actual bank costs vary by corridor and provider.</div>
       </div>
 
     </div>
@@ -930,24 +916,24 @@ footer{background:#060D1A;padding:80px 0 44px;border-top:1px solid rgba(255,255,
 
       <div class="rate-card rate-card-hp">
         <div class="rate-card-head navy">HansePay execution</div>
-        <div class="rate-body" style="background:var(--n800)">
+        <div class="rate-body">
           <div class="rate-row">
-            <div class="rate-row-lbl" style="color:rgba(255,255,255,.38)">Rate quoted</div>
-            <div class="rate-num good" style="color:#fff">1.0850</div>
+            <div class="rate-row-lbl">Rate quoted</div>
+            <div class="rate-num neutral">1.0850</div>
           </div>
           <div class="rate-connector">
-            <div class="rate-connector-line navy"></div>
+            <div class="rate-connector-line"></div>
             <div class="rate-connector-icon navy">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
             </div>
-            <div class="rate-connector-line navy"></div>
+            <div class="rate-connector-line"></div>
           </div>
           <div class="rate-row">
-            <div class="rate-row-lbl" style="color:rgba(255,255,255,.38)">Rate executed</div>
-            <div class="rate-num good" style="color:var(--n200)">1.0850</div>
+            <div class="rate-row-lbl">Rate executed</div>
+            <div class="rate-num good">1.0850</div>
           </div>
           <div style="display:flex;justify-content:center">
-            <span class="rate-badge good" style="background:rgba(141,189,230,.1);color:var(--n200);border-color:rgba(141,189,230,.2)">
+            <span class="rate-badge good">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
               Locked atomically
             </span>

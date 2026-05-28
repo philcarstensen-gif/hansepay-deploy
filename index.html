@@ -337,15 +337,15 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
   box-shadow:0 32px 80px rgba(11,25,41,.13),0 8px 24px rgba(11,25,41,.08)}
 @media(max-width:960px){.currencies-globe-wrap{display:none}}
 .currencies-content-col{}
-.currency-grid{display:flex;flex-wrap:wrap;gap:8px}
-.ccy-chip{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1px solid rgba(11,25,41,.09);border-radius:var(--r-pill);background:#fff;transition:all .15s;cursor:default}
+.currency-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.ccy-chip{display:flex;align-items:center;gap:8px;padding:9px 14px;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-md);background:#fff;transition:all .15s;cursor:default}
 .ccy-chip:hover{border-color:var(--n200);background:var(--n050)}
-.ccy-flag{font-size:15px;line-height:1}
-.ccy-code{font-size:12px;font-weight:700;color:var(--n600)}
-.ccy-name{font-size:12px;color:var(--ink3)}
-.corridor-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-start;margin-top:28px}
-.corridor-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--r-pill);background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.2);font-size:11px;font-weight:600;color:#15803d;letter-spacing:.03em}
-.corridor-dot{width:6px;height:6px;border-radius:50%;background:#22c55e;flex-shrink:0}
+.ccy-flag{font-size:15px;line-height:1;flex-shrink:0}
+.ccy-code{font-size:12px;font-weight:700;color:var(--n700);letter-spacing:.01em}
+.ccy-name{font-size:11px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.corridor-row{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-top:16px}
+.corridor-badge{display:flex;align-items:center;justify-content:center;gap:6px;padding:7px 10px;border-radius:var(--r-md);background:rgba(34,197,94,.07);border:1px solid rgba(34,197,94,.18);font-size:11px;font-weight:600;color:#15803d;letter-spacing:.02em}
+.corridor-dot{width:5px;height:5px;border-radius:50%;background:#22c55e;flex-shrink:0}
 
 /* PLATFORM SHOWCASE */
 .showcase-layout{display:grid;grid-template-columns:1fr 1.15fr;gap:72px;align-items:center}
@@ -737,10 +737,10 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
       </div>
       <!-- Right: header + chips -->
       <div class="currencies-content-col">
-        <div style="margin-bottom:36px">
+        <div style="margin-bottom:24px">
           <span class="eyebrow reveal">Global reach</span>
-          <h2 class="section-head reveal d1" style="margin-top:12px">Send to <em>35+ currencies.</em></h2>
-          <p class="lede reveal d2" style="margin-top:16px">Seamless transfers across Europe, the Americas, Asia, and the Middle East — with same-day availability on major corridors.</p>
+          <h2 class="section-head reveal d1" style="margin-top:10px">Send to <em>35+ currencies.</em></h2>
+          <p class="lede reveal d2" style="margin-top:14px;font-size:15px">Seamless transfers across Europe, the Americas, Asia, and the Middle East — with same-day availability on major corridors.</p>
         </div>
         <div class="currency-grid reveal">
           <div class="ccy-chip"><span class="ccy-flag">🇺🇸</span><span class="ccy-code">USD</span><span class="ccy-name">US Dollar</span></div>
@@ -762,15 +762,15 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
           <div class="ccy-chip"><span class="ccy-flag">🇳🇿</span><span class="ccy-code">NZD</span><span class="ccy-name">New Zealand Dollar</span></div>
           <div class="ccy-chip"><span class="ccy-flag">🇮🇳</span><span class="ccy-code">INR</span><span class="ccy-name">Indian Rupee</span></div>
         </div>
-        <div class="corridor-row reveal" style="margin-top:20px">
-          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/USD &mdash; same day</span>
-          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/GBP &mdash; same day</span>
-          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/CHF &mdash; same day</span>
-          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/JPY &mdash; same day</span>
-          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/SGD &mdash; next day</span>
-          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/AED &mdash; next day</span>
+        <div class="corridor-row reveal">
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/USD · same day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/GBP · same day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/CHF · same day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/JPY · same day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/SGD · next day</span>
+          <span class="corridor-badge"><span class="corridor-dot"></span>EUR/AED · next day</span>
         </div>
-        <p style="font-size:12px;color:var(--ink3);margin-top:16px">+17 more currencies available &mdash; speak with your FX expert for full corridor availability.</p>
+        <p style="font-size:11.5px;color:var(--ink3);margin-top:14px;line-height:1.5">+17 more currencies available &mdash; speak with your FX expert for full corridor availability.</p>
       </div>
     </div>
   </div>

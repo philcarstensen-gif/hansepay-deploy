@@ -168,26 +168,36 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 
 /* STACKED BAR CHART */
 .chart-wrap{max-width:840px}
-.chart-bars{display:flex;align-items:flex-end;gap:clamp(32px,5vw,80px);padding-bottom:0}
-.chart-col{display:flex;flex-direction:column;align-items:center}
+/* chart-visual: only bars + baselines — both columns share the same height so align-items:flex-end works correctly */
+.chart-visual{display:flex;align-items:flex-end;gap:clamp(32px,5vw,80px)}
+.chart-bar-col{display:flex;flex-direction:column;align-items:center;width:72px}
 .chart-bar-track{height:260px;display:flex;flex-direction:column;justify-content:flex-end;width:72px}
 .chart-bar{width:72px;display:flex;flex-direction:column;overflow:hidden;border-radius:4px 4px 0 0}
 .chart-bar-bank{height:240px}  /* 1.20 / 1.20 * 240 */
 .chart-bar-hp{height:20px}     /* 0.10 / 1.20 * 240 = 20px */
 .chart-seg{width:100%;flex-shrink:0}
-.chart-baseline{width:72px;height:1px;background:rgba(11,25,41,.15);margin-bottom:12px}
-.chart-total{font-family:var(--font-display);font-size:clamp(36px,4vw,52px);font-weight:400;letter-spacing:-.04em;line-height:1}
+.chart-baseline{width:72px;height:2px;background:rgba(11,25,41,.15);margin-top:0}
+/* chart-info: labels + legends sit below the bar area, separate from the visual alignment */
+.chart-info{display:flex;gap:clamp(32px,5vw,80px);margin-top:16px}
+.chart-info-col{width:72px;display:flex;flex-direction:column;align-items:center}
+.chart-total{font-family:var(--font-display);font-size:clamp(36px,4vw,52px);font-weight:400;letter-spacing:-.04em;line-height:1;margin-top:8px}
 .chart-total.bank{color:var(--ink3)}
 .chart-total.hp{color:var(--n500)}
-.chart-col-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-top:6px}
+.chart-col-label{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-top:6px;white-space:nowrap}
 .chart-col-label.hp{color:var(--n400)}
-.chart-legend-list{display:flex;flex-direction:column;gap:6px;margin-top:20px;width:100%}
+.chart-legend-list{display:flex;flex-direction:column;gap:6px;margin-top:16px;width:180px}
 .chart-legend-item{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2)}
 .chart-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 .chart-legend-pct{font-weight:600;color:var(--n800);margin-left:auto;font-variant-numeric:tabular-nums}
 .chart-note{font-size:11px;color:var(--ink3);margin-top:20px;line-height:1.6}
 .chart-savings-callout{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;background:rgba(30,78,128,.06);border:1px solid rgba(30,78,128,.12);border-radius:var(--r-md);font-size:13px;font-weight:600;color:var(--n500);margin-top:20px}
-@media(max-width:640px){.chart-bars{flex-direction:column;align-items:flex-start;gap:32px}.chart-bar-track{height:auto;justify-content:flex-start}.chart-bar-bank{height:160px}.chart-bar-hp{height:14px}}
+@media(max-width:640px){
+  .chart-visual{flex-direction:column;align-items:flex-start;gap:32px}
+  .chart-info{flex-direction:column;gap:24px}
+  .chart-bar-track{height:auto;justify-content:flex-start}
+  .chart-bar-bank{height:160px}
+  .chart-bar-hp{height:14px}
+}
 
 /* LOCKED RATES */
 .rate-cards{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:860px}
@@ -534,7 +544,7 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
             <div class="spectrum-examples" style="margin-top:4px">Bank account</div>
           </div>
           <div class="spectrum-tile active" style="border-left:3px solid var(--n300)">
-            <div class="spectrum-label active">E-money ← here</div>
+            <div class="spectrum-label active">E-money</div>
             <div class="spectrum-name">E-Geld</div>
             <div class="spectrum-en">Electronic money</div>
             <div class="spectrum-examples active" style="margin-top:4px">PayPal · HansePay</div>
@@ -570,12 +580,12 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
 
       <!-- Stacked bar chart -->
       <div class="chart-wrap">
-        <div class="chart-bars">
-          <!-- Bank -->
-          <div class="chart-col">
+        <!-- Bars only — shared align-items:flex-end ensures a common baseline -->
+        <div class="chart-visual">
+          <!-- Bank bar -->
+          <div class="chart-bar-col">
             <div class="chart-bar-track">
               <div class="chart-bar chart-bar-bank">
-                <!-- segments from top (smallest) to bottom (largest) — flex-col, so first item is at top -->
                 <div class="chart-seg" style="height:10px;background:#b0bec5"></div><!-- Lift fee 0.05% -->
                 <div class="chart-seg" style="height:20px;background:#90a4ae"></div><!-- SWIFT 0.10% -->
                 <div class="chart-seg" style="height:40px;background:#607d8b"></div><!-- Settlement risk 0.20% -->
@@ -584,19 +594,9 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
               </div>
             </div>
             <div class="chart-baseline"></div>
-            <div class="chart-total bank">1.20%</div>
-            <div class="chart-col-label">Bank wire</div>
-            <div class="chart-legend-list" style="max-width:180px">
-              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#263238"></span>FX spread<span class="chart-legend-pct">0.55%</span></div>
-              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#455a64"></span>Correspondent fees<span class="chart-legend-pct">0.30%</span></div>
-              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#607d8b"></span>Settlement risk<span class="chart-legend-pct">0.20%</span></div>
-              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#90a4ae"></span>SWIFT fees<span class="chart-legend-pct">0.10%</span></div>
-              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#b0bec5"></span>Lift fee<span class="chart-legend-pct">0.05%</span></div>
-            </div>
           </div>
-
-          <!-- HansePay -->
-          <div class="chart-col">
+          <!-- HansePay bar -->
+          <div class="chart-bar-col">
             <div class="chart-bar-track">
               <div class="chart-bar chart-bar-hp">
                 <div class="chart-seg" style="height:4px;background:var(--n200)"></div><!-- Network 0.02% -->
@@ -604,9 +604,25 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
               </div>
             </div>
             <div class="chart-baseline"></div>
+          </div>
+        </div>
+        <!-- Labels and legends — below the visual, in matching column order -->
+        <div class="chart-info">
+          <div class="chart-info-col">
+            <div class="chart-total bank">1.20%</div>
+            <div class="chart-col-label">Bank wire</div>
+            <div class="chart-legend-list">
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#263238"></span>FX spread<span class="chart-legend-pct">0.55%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#455a64"></span>Correspondent fees<span class="chart-legend-pct">0.30%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#607d8b"></span>Settlement risk<span class="chart-legend-pct">0.20%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#90a4ae"></span>SWIFT fees<span class="chart-legend-pct">0.10%</span></div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#b0bec5"></span>Lift fee<span class="chart-legend-pct">0.05%</span></div>
+            </div>
+          </div>
+          <div class="chart-info-col">
             <div class="chart-total hp">0.10%</div>
             <div class="chart-col-label hp">HansePay</div>
-            <div class="chart-legend-list" style="max-width:180px">
+            <div class="chart-legend-list">
               <div class="chart-legend-item"><span class="chart-legend-dot" style="background:var(--n500)"></span>FX spread<span class="chart-legend-pct">0.08%</span></div>
               <div class="chart-legend-item"><span class="chart-legend-dot" style="background:var(--n200)"></span>Network fee<span class="chart-legend-pct">0.02%</span></div>
             </div>

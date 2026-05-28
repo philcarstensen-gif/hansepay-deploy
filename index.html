@@ -100,20 +100,33 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:var(--n900)}
 
 /* Background image layer */
-@keyframes heroZoom{from{transform:scale(1.06)}to{transform:scale(1)}}
+@keyframes heroZoom{from{transform:scale(1.05)}to{transform:scale(1)}}
 .hero-bg{
   position:absolute;inset:0;z-index:0;
-  background:url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80') center 55% / cover no-repeat;
-  animation:heroZoom 2.4s cubic-bezier(.25,.46,.45,.94) forwards
+  background:url('https://images.pexels.com/photos/17458967/pexels-photo-17458967.jpeg?auto=compress&cs=tinysrgb&w=1920&q=85') center 38% / cover no-repeat;
+  animation:heroZoom 2.8s cubic-bezier(.22,.44,.45,.94) forwards;
+  filter:saturate(0.88) brightness(0.96)
 }
 
-/* Layered gradient overlay — dark left where text lives, opens right to show image */
+/* Layered gradient overlay — crafted for this image:
+   heavy left-to-right fade keeps text crisp, bottom scrim grounds the composition,
+   subtle top fade anchors the nav */
 .hero::before{
   content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
   background:
-    linear-gradient(100deg, rgba(6,13,26,.92) 0%, rgba(6,13,26,.78) 32%, rgba(6,13,26,.42) 58%, rgba(6,13,26,.18) 100%),
-    linear-gradient(to top, rgba(6,13,26,.55) 0%, rgba(6,13,26,.1) 30%, transparent 55%),
-    linear-gradient(to bottom, rgba(6,13,26,.32) 0%, transparent 18%)
+    linear-gradient(108deg,
+      rgba(6,13,26,.94) 0%,
+      rgba(6,13,26,.80) 28%,
+      rgba(6,13,26,.48) 52%,
+      rgba(6,13,26,.22) 72%,
+      rgba(6,13,26,.08) 100%),
+    linear-gradient(to top,
+      rgba(6,13,26,.65) 0%,
+      rgba(6,13,26,.18) 22%,
+      transparent 48%),
+    linear-gradient(to bottom,
+      rgba(6,13,26,.38) 0%,
+      transparent 16%)
 }
 
 /* Content sits above overlay */

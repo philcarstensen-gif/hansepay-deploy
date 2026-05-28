@@ -38,20 +38,20 @@ a{color:inherit;text-decoration:none}
 .btn-white-fill{background:#fff;color:var(--n500)}.btn-white-fill:hover{background:var(--n050)}
 .btn-outline{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:13px;font-weight:600;cursor:pointer;border:1.5px solid rgba(11,25,41,.2);color:var(--n600);text-decoration:none;transition:all .18s ease;white-space:nowrap}.btn-outline:hover{border-color:var(--n400);color:var(--n400);background:var(--n050)}
 
-/* ── NAV — unified rich nav (dark glass, adapts for light hero) ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80px);height:68px;display:flex;align-items:center;transition:background .3s,box-shadow .3s,backdrop-filter .3s}
+/* ── NAV — transparent over dark hero, solid white on scroll ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:0 clamp(20px,5vw,80px);height:68px;display:flex;align-items:center;transition:background .35s,box-shadow .35s,backdrop-filter .35s}
 nav.scrolled{background:rgba(255,255,255,.97);box-shadow:0 1px 0 rgba(11,25,41,.08);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .nav-inner{max-width:1240px;margin:0 auto;width:100%;display:flex;align-items:center;gap:0}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;margin-right:40px}
 .nav-logo img{height:28px;width:28px;object-fit:contain}
-.nav-logo-text{font-family:var(--font-logo);font-size:19px;font-weight:400;letter-spacing:-.02em;color:var(--n800);line-height:1;transition:color .25s}
+.nav-logo-text{font-family:var(--font-logo);font-size:19px;font-weight:400;letter-spacing:-.02em;color:#fff;line-height:1;transition:color .25s}
 nav.scrolled .nav-logo-text{color:var(--n800)}
 /* nav links */
 .nav-links{display:flex;align-items:stretch;gap:0;list-style:none;flex:1;height:68px}
 .nav-item{position:relative;display:flex;align-items:center}
-.nav-link{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:500;color:rgba(11,25,41,.68);transition:color .15s;white-space:nowrap;padding:0 16px;height:100%;cursor:pointer}
+.nav-link{display:flex;align-items:center;gap:5px;font-size:14px;font-weight:500;color:rgba(255,255,255,.78);transition:color .15s;white-space:nowrap;padding:0 16px;height:100%;cursor:pointer}
 nav.scrolled .nav-link{color:rgba(11,25,41,.68)}
-.nav-link:hover,.nav-link.active-page{color:var(--n700)}
+.nav-link:hover,.nav-link.active-page{color:#fff}
 nav.scrolled .nav-link:hover,nav.scrolled .nav-link.active-page{color:var(--n700)}
 .nav-link svg{transition:transform .2s ease;flex-shrink:0}
 .nav-item:hover .nav-link svg{transform:rotate(180deg)}
@@ -78,10 +78,12 @@ nav.scrolled .nav-link:hover,nav.scrolled .nav-link.active-page{color:var(--n700
 .nav-dropdown-sep{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
 /* nav right */
 .nav-right{display:flex;align-items:center;gap:8px;margin-left:16px;flex-shrink:0}
-.nav-cta{background:var(--n500);color:#fff;border:1.5px solid var(--n500);padding:8px 20px;font-size:13px;border-radius:var(--r-pill)}
-.nav-cta:hover{background:var(--n600)}
-nav.scrolled .nav-cta{background:var(--n500);border-color:var(--n500)}.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
-.nav-burger span{display:block;width:22px;height:2px;border-radius:2px;background:var(--n700);transition:all .22s ease}
+.nav-cta{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.28);padding:8px 20px;font-size:13px;border-radius:var(--r-pill);backdrop-filter:blur(8px)}
+.nav-cta:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.45)}
+nav.scrolled .nav-cta{background:var(--n500);border-color:var(--n500);backdrop-filter:none}
+nav.scrolled .nav-cta:hover{background:var(--n600)}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;border-radius:2px;background:rgba(255,255,255,.85);transition:all .22s ease}
 nav.scrolled .nav-burger span{background:var(--n700)}
 .nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
@@ -94,30 +96,56 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 .mobile-menu-cta{margin-top:16px}
 @media(max-width:768px){.nav-links{display:none}.nav-burger{display:flex}}
 
-/* HERO — light background */
-.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:#f7f8fc}
-/* Subtle dot grid texture */
-.hero::before{content:'';position:absolute;inset:0;pointer-events:none;
-  background-image:radial-gradient(rgba(30,78,128,.045) 1px,transparent 1px);
-  background-size:32px 32px}
-.hero-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:center;min-height:100vh;padding:108px clamp(20px,5vw,80px) 80px;max-width:1440px;margin:0 auto;width:100%;gap:48px;position:relative;z-index:1}
-@media(max-width:900px){.hero-layout{grid-template-columns:1fr;padding:96px clamp(20px,5vw,80px) 64px}.hero-globe-col{display:none}}
-.hero-content{position:relative;z-index:2}
-.hero-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:var(--r-pill);background:rgba(11,25,41,.055);border:1px solid rgba(11,25,41,.10);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--n500);margin-bottom:24px}
-.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--n400);flex-shrink:0}
-.hero-headline{font-family:var(--font-display);font-size:clamp(44px,5.4vw,80px);font-weight:400;line-height:1.04;letter-spacing:-.03em;color:var(--n800);margin-bottom:20px}
-.hero-headline em{font-style:italic;color:var(--n400)}
-.hero-sub{font-size:clamp(15px,1.4vw,17px);font-weight:300;color:var(--ink2);line-height:1.72;max-width:460px;margin-bottom:32px}
-.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:28px}
-.hero-route{display:flex;align-items:center;gap:8px;margin-bottom:0}
-.route-from{font-size:11px;font-weight:600;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase}
-.route-arrow{color:var(--n400);font-size:14px;margin:0 2px}
-.route-dest-wrap{position:relative;height:18px;overflow:hidden;min-width:90px}
-.route-dest{position:absolute;top:0;left:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--n400);opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease;white-space:nowrap}
-.route-dest.active{opacity:1;transform:none}
+/* HERO — full-bleed Hamburg image */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;background:var(--n900)}
 
-/* Globe column */
-.hero-globe-col{display:flex;align-items:center;justify-content:center;position:relative}
+/* Background image layer */
+@keyframes heroZoom{from{transform:scale(1.06)}to{transform:scale(1)}}
+.hero-bg{
+  position:absolute;inset:0;z-index:0;
+  background:url('https://images.unsplash.com/photo-1599946347371-68eb71b16afc?auto=format&fit=crop&w=1920&q=80') center 55% / cover no-repeat;
+  animation:heroZoom 2.4s cubic-bezier(.25,.46,.45,.94) forwards
+}
+
+/* Layered gradient overlay — dark left where text lives, opens right to show image */
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:
+    linear-gradient(100deg, rgba(6,13,26,.92) 0%, rgba(6,13,26,.78) 32%, rgba(6,13,26,.42) 58%, rgba(6,13,26,.18) 100%),
+    linear-gradient(to top, rgba(6,13,26,.55) 0%, rgba(6,13,26,.1) 30%, transparent 55%),
+    linear-gradient(to bottom, rgba(6,13,26,.32) 0%, transparent 18%)
+}
+
+/* Content sits above overlay */
+.hero-layout{display:flex;flex-direction:column;justify-content:center;min-height:100vh;padding:108px clamp(24px,5vw,88px) 88px;max-width:1440px;margin:0 auto;width:100%;position:relative;z-index:2}
+@media(max-width:768px){.hero-layout{padding:96px clamp(20px,5vw,80px) 72px}}
+.hero-content{max-width:640px;position:relative;z-index:2}
+
+/* Badge */
+.hero-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:var(--r-pill);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.9);margin-bottom:28px;backdrop-filter:blur(8px)}
+.hero-chip-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;box-shadow:0 0 6px var(--gold)}
+
+/* Headline */
+.hero-headline{font-family:var(--font-display);font-size:clamp(48px,5.8vw,84px);font-weight:400;line-height:1.02;letter-spacing:-.03em;color:#fff;margin-bottom:22px;text-shadow:0 2px 32px rgba(6,13,26,.35)}
+.hero-headline em{font-style:italic;color:var(--n100)}
+
+/* Subhead */
+.hero-sub{font-size:clamp(15px,1.4vw,17px);font-weight:300;color:rgba(255,255,255,.7);line-height:1.75;max-width:480px;margin-bottom:36px}
+
+/* CTAs */
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:32px}
+@media(max-width:480px){.hero-actions{flex-direction:column;align-items:flex-start}.hero-actions .btn{width:auto}}
+
+/* Route ticker */
+.hero-route{display:flex;align-items:center;gap:8px;margin-bottom:0}
+.route-from{font-size:11px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:.12em;text-transform:uppercase}
+.route-arrow{color:rgba(255,255,255,.22);font-size:14px;margin:0 2px}
+.route-dest-wrap{position:relative;height:18px;overflow:hidden;min-width:90px}
+.route-dest{position:absolute;top:0;left:0;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.42);opacity:0;transform:translateY(8px);transition:opacity .4s ease,transform .4s ease;white-space:nowrap}
+.route-dest.active{opacity:1;transform:none;color:rgba(255,255,255,.9)}
+
+/* Globe column — hidden (globe replaced by image) */
+.hero-globe-col{display:none}
 .globe-canvas-wrap{position:relative;display:inline-block}
 #globe-canvas{border-radius:50%;display:block;
   box-shadow:0 48px 96px rgba(6,13,26,0.18),0 12px 28px rgba(6,13,26,0.10);
@@ -431,34 +459,30 @@ footer{background:#0A0A0A;padding:96px 0 48px}
 
 <!-- HERO -->
 <section class="hero">
+  <div class="hero-bg"></div>
   <div class="hero-layout">
-    <!-- Left: copy -->
     <div class="hero-content">
-        <div class="hero-chip"><span class="hero-chip-dot"></span>Commercial FX &middot; Hamburg</div>
-        <h1 class="hero-headline">Cross-border<br>payments, <em>reimagined.</em></h1>
-        <p class="hero-sub">Stop overpaying on every international transfer. HansePay gives mid-sized European businesses direct access to interbank FX rates — zero markup, same-day settlement, BaFin regulated.</p>
-        <div class="hero-actions">
-          <a href="#contact" class="btn btn-primary">Open an account</a>
-          <a href="#contact" class="btn btn-ghost-navy">Talk to our team</a>
+      <div class="hero-chip"><span class="hero-chip-dot"></span>Commercial FX &middot; Hamburg</div>
+      <h1 class="hero-headline">Cross-border<br>payments, <em>reimagined.</em></h1>
+      <p class="hero-sub">Stop overpaying on every international transfer. HansePay gives mid-sized European businesses direct access to interbank FX rates — zero markup, same-day settlement, BaFin regulated.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-white-fill">Open an account</a>
+        <a href="#contact" class="btn btn-ghost-white">Talk to our team</a>
+      </div>
+      <div class="hero-route">
+        <span class="route-from">Hamburg</span>
+        <span class="route-arrow">&#8594;</span>
+        <div class="route-dest-wrap" id="route-dest-wrap">
+          <span class="route-dest active" data-code="GB">London</span>
+          <span class="route-dest" data-code="US">New York</span>
+          <span class="route-dest" data-code="AE">Dubai</span>
+          <span class="route-dest" data-code="JP">Tokyo</span>
+          <span class="route-dest" data-code="SG">Singapore</span>
         </div>
-        <div class="hero-route">
-          <span class="route-from">Hamburg</span>
-          <span class="route-arrow">&#8594;</span>
-          <div class="route-dest-wrap" id="route-dest-wrap">
-            <span class="route-dest active" data-code="GB">London</span>
-            <span class="route-dest" data-code="US">New York</span>
-            <span class="route-dest" data-code="AE">Dubai</span>
-            <span class="route-dest" data-code="JP">Tokyo</span>
-            <span class="route-dest" data-code="SG">Singapore</span>
-          </div>
-        </div>
-    </div>
-    <!-- Right: animated globe -->
-    <div class="hero-globe-col">
-      <div class="globe-canvas-wrap">
-        <canvas id="globe-canvas"></canvas>
       </div>
     </div>
+    <!-- Globe canvas kept for JS compatibility, column hidden via CSS -->
+    <div class="hero-globe-col"><div class="globe-canvas-wrap"><canvas id="globe-canvas"></canvas></div></div>
   </div>
 </section>
 

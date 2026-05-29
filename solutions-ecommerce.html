@@ -118,6 +118,42 @@ section{position:relative}
 .cta-sub{font-size:16px;font-weight:300;color:rgba(255,255,255,.65);line-height:1.65;margin-bottom:48px}
 .cta-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
 @media(max-width:768px){.cta-band{padding:80px 0}}
+
+/* Comparison table */
+.comp-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:44px}
+.comp-table{width:100%;border-collapse:collapse;min-width:640px}
+.comp-table th{padding:14px 20px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);text-align:left;border-bottom:2px solid rgba(11,25,41,.08)}
+.comp-table th.hp-col{color:var(--n500);background:rgba(30,78,128,.04)}
+.comp-table td{padding:18px 20px;font-size:13px;color:var(--ink2);line-height:1.55;border-bottom:1px solid rgba(11,25,41,.06);vertical-align:top}
+.comp-table td.hp-col{background:rgba(30,78,128,.04);color:var(--n800);font-weight:500}
+.comp-table tr:last-child td{border-bottom:none}
+.comp-feat{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);display:block;margin-bottom:4px}
+.comp-bad{color:#B91C1C}
+.comp-mid{color:#B45309}
+.comp-good{color:var(--n500);font-weight:600}
+.comp-footnote{font-size:11px;color:var(--ink3);margin-top:16px;line-height:1.5}
+/* Coverage pills */
+.cov-pill-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:32px}
+.cov-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--r-pill);background:#fff;border:1px solid rgba(11,25,41,.08);font-size:13px;font-weight:500;color:var(--n800)}
+.cov-pill-flag{font-size:15px}
+/* Inline calculator */
+.inline-calc{background:#fff;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);padding:40px;max-width:900px;margin:44px auto 0}
+.ic-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media(max-width:700px){.ic-grid{grid-template-columns:1fr}}
+.ic-label{font-size:13px;font-weight:600;color:var(--n500);margin-bottom:8px;display:block}
+.ic-big{font-family:var(--font-display);font-size:32px;font-weight:400;color:var(--n900);letter-spacing:-.01em;line-height:1.1;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.ic-slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:9999px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--n400) 0%,var(--n400) var(--pct,20%),var(--n100) var(--pct,20%),var(--n100) 100%)}
+.ic-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--n500);border:3px solid #fff;box-shadow:0 1px 4px rgba(11,25,41,.2);cursor:pointer}
+.ic-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--n500);border:3px solid #fff;cursor:pointer}
+.ic-hint{font-size:12px;color:var(--ink3);margin-top:8px}
+.ic-select{width:100%;border:1px solid rgba(11,25,41,.09);border-radius:10px;padding:9px 12px;font-size:14px;color:var(--n900);font-family:var(--font-ui);outline:none;background:#fff;margin-bottom:4px}
+.ic-result-lbl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--n300);margin-bottom:8px}
+.ic-saving{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(48px,6vw,72px);color:var(--n900);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.ic-saving-ccy{font-family:var(--font-display);font-size:clamp(48px,6vw,72px);font-weight:400;color:var(--n500);letter-spacing:-.02em;line-height:1}
+.ic-breakdown{margin-top:20px;border-top:1px solid rgba(11,25,41,.07);padding-top:16px}
+.ic-br-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px}
+.ic-br-key{color:var(--ink2)}
+.ic-br-val{font-weight:600;color:var(--n900);font-variant-numeric:tabular-nums}
 </style>
 </head>
 <body>
@@ -332,6 +368,181 @@ section{position:relative}
     </div>
   </div>
 </section>
+
+<!-- ── COMPARISON ── -->
+<section style="background:#FAFAFA;border-top:1px solid rgba(11,25,41,.06)" class="section-pad">
+  <div class="container">
+    <span class="eyebrow">The comparison</span>
+    <h2 class="section-head">HansePay vs. your bank<br><em>vs. a fintech app.</em></h2>
+    <p class="section-sub">The honest, line-by-line comparison most providers won't put on their website.</p>
+    <div class="comp-wrap">
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th style="width:18%">Feature</th>
+            <th style="width:27%">House bank</th>
+            <th style="width:27%">Fintech apps</th>
+            <th class="hp-col" style="width:28%">HansePay</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="comp-feat">FX margin</span></td>
+            <td><span class="comp-bad">2.0% to 4.0%</span><br>Opaque / hidden</td>
+            <td><span class="comp-mid">0.4% to 1.0%</span><br>Standard retail</td>
+            <td class="hp-col"><span class="comp-good">0.15% to 0.75%</span><br>Transparently locked, disclosed before trade*</td>
+          </tr>
+          <tr>
+            <td><span class="comp-feat">Settlement</span></td>
+            <td>1 to 3 business days<br><span style="color:var(--ink3);font-size:12px">Slow SWIFT routing</span></td>
+            <td>Same day<br><span style="color:var(--ink3);font-size:12px">Capped for large volumes</span></td>
+            <td class="hp-col"><span class="comp-good">Minutes to hours</span><br><span style="font-size:12px;font-weight:400;color:var(--ink2)">Local rails, no SWIFT dependency</span></td>
+          </tr>
+          <tr>
+            <td><span class="comp-feat">Coverage</span></td>
+            <td><span class="comp-bad">Highly limited</span><br>Manual fees and delays</td>
+            <td><span class="comp-mid">Restricted</span><br>Local volume limits</td>
+            <td class="hp-col"><span class="comp-good">45+ markets worldwide</span><br><span style="font-size:12px;font-weight:400;color:var(--ink2)">Including markets your bank won't touch</span></td>
+          </tr>
+          <tr>
+            <td><span class="comp-feat">Payout certainty</span></td>
+            <td><span class="comp-bad">No</span><br>Intermediary bank cuts</td>
+            <td><span class="comp-mid">Conditional</span><br>Market volatility risks</td>
+            <td class="hp-col"><span class="comp-good">Locked rate guarantee</span><br><span style="font-size:12px;font-weight:400;color:var(--ink2)">Exact recipient payout</span></td>
+          </tr>
+          <tr>
+            <td><span class="comp-feat">Per-payment fee</span></td>
+            <td>~€35 per wire</td>
+            <td>Varies / hidden</td>
+            <td class="hp-col"><span class="comp-good">€10</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="comp-footnote">* Example margin range for major currency pairs at volumes above EUR 1 million. Exact rate disclosed before every trade.</p>
+  </div>
+</section>
+
+<!-- ── COVERAGE ── -->
+<section style="background:#fff;border-top:1px solid rgba(11,25,41,.06)" class="section-pad">
+  <div class="container">
+    <span class="eyebrow">Global reach</span>
+    <h2 class="section-head">45+ markets, <em>one platform.</em></h2>
+    <p class="section-sub">Reach the Americas, Africa, the Middle East, Asia &amp; Pacific, and Europe — including markets most banks refuse to quote on.</p>
+    <div class="cov-pill-grid">
+      <div class="cov-pill"><span class="cov-pill-flag">🇺🇸</span>USD</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇬🇧</span>GBP</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇯🇵</span>JPY</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇨🇦</span>CAD</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇦🇺</span>AUD</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇸🇬</span>SGD</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇭🇰</span>HKD</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇧🇷</span>BRL</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇲🇽</span>MXN</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇨🇴</span>COP</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇨🇱</span>CLP</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇵🇪</span>PEN</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇦🇷</span>ARS</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇿🇦</span>ZAR</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇳🇬</span>NGN</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇰🇪</span>KES</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇬🇭</span>GHS</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇪🇬</span>EGP</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇲🇦</span>MAD</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇦🇪</span>AED</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇸🇦</span>SAR</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇶🇦</span>QAR</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇮🇱</span>ILS</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇹🇷</span>TRY</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇨🇳</span>CNY</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇮🇳</span>INR</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇰🇷</span>KRW</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇲🇾</span>MYR</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇹🇭</span>THB</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇮🇩</span>IDR</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇵🇭</span>PHP</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇻🇳</span>VND</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇵🇰</span>PKR</div>
+      <div class="cov-pill"><span class="cov-pill-flag">🇧🇩</span>BDT</div>
+      <div class="cov-pill" style="background:var(--n050);border-color:var(--n100);color:var(--n500)">+11 more</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CALCULATOR ── -->
+<section style="background:#F8F9FC;border-top:1px solid rgba(11,25,41,.06)" class="section-pad">
+  <div class="container">
+    <span class="eyebrow">What could you save</span>
+    <h2 class="section-head">Estimate your annual saving, <em>in 30 seconds.</em></h2>
+    <p class="section-sub">Set your annual FX volume and your current provider. We calculate the estimated annual saving with HansePay.</p>
+    <div class="inline-calc">
+      <div class="ic-grid">
+        <div>
+          <label class="ic-label">Annual FX volume</label>
+          <div class="ic-big" id="ic-vol-disp">1.000.000 €</div>
+          <input type="range" class="ic-slider" id="ic-vol" min="100000" max="50000000" step="50000" value="1000000" style="--pct:1.8%">
+          <p class="ic-hint">Total foreign currency payments per year</p>
+
+          <label class="ic-label" style="margin-top:28px">Currency category</label>
+          <select class="ic-select" id="ic-cat">
+            <option value="major">Major (USD, GBP, JPY, CAD…)</option>
+            <option value="minor">Minor (BRL, MXN, ZAR, AED…)</option>
+            <option value="exotic">Exotic (VND, NGN, PKR…)</option>
+          </select>
+
+          <label class="ic-label" style="margin-top:16px">Current provider type</label>
+          <select class="ic-select" id="ic-bank">
+            <option value="2.5">House bank (~2.5% margin)</option>
+            <option value="3.5">Sparkasse / regional bank (~3.5%)</option>
+            <option value="0.7">Fintech app (~0.7%)</option>
+            <option value="1.5">Online bank (~1.5%)</option>
+          </select>
+        </div>
+        <div>
+          <div class="ic-result-lbl">Estimated annual saving</div>
+          <div style="line-height:1">
+            <span class="ic-saving" id="ic-save-big">37.500</span><span class="ic-saving-ccy"> €</span>
+          </div>
+          <div class="ic-breakdown">
+            <div class="ic-br-row"><span class="ic-br-key">Your current annual FX cost</span><span class="ic-br-val" id="ic-cur-cost">25.000 €</span></div>
+            <div class="ic-br-row"><span class="ic-br-key">With HansePay</span><span class="ic-br-val" id="ic-hp-cost">3.000 €</span></div>
+            <div class="ic-br-row" style="border-top:1px solid rgba(11,25,41,.07);margin-top:4px;padding-top:10px"><span class="ic-br-key" style="font-weight:600;color:var(--n800)">Annual saving</span><span class="ic-br-val" style="color:var(--n500)" id="ic-saving-row">22.000 €</span></div>
+          </div>
+          <a href="tools-calculator.html" class="btn btn-primary" style="margin-top:24px;width:100%;justify-content:center">Full calculator with breakdown &rarr;</a>
+          <p style="font-size:11px;color:var(--ink3);margin-top:10px;line-height:1.5">Estimate only. Exact saving depends on your transaction history. Request a free FX audit for a precise figure.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var CATS={major:{bank:.025,hp:.003},minor:{bank:.035,hp:.007},exotic:{bank:.05,hp:.010}};
+  var vol=1000000,cat='major',bankM=2.5;
+  function fmt(n){return new Intl.NumberFormat('de-DE',{maximumFractionDigits:0}).format(Math.round(n));}
+  function calc(){
+    var c=CATS[cat];
+    var bm=bankM/100;
+    var curCost=vol*bm; var hpCost=vol*c.hp;
+    var saving=Math.max(0,curCost-hpCost);
+    document.getElementById('ic-save-big').textContent=fmt(saving);
+    document.getElementById('ic-cur-cost').textContent=fmt(curCost)+' €';
+    document.getElementById('ic-hp-cost').textContent=fmt(hpCost)+' €';
+    document.getElementById('ic-saving-row').textContent=fmt(saving)+' €';
+  }
+  function pct(v,mn,mx){return Math.max(0,Math.min(100,(v-mn)/(mx-mn)*100));}
+  var vs=document.getElementById('ic-vol');
+  vs.addEventListener('input',function(){
+    vol=+this.value;
+    document.getElementById('ic-vol-disp').textContent=fmt(vol)+' €';
+    this.style.setProperty('--pct',pct(vol,100000,50000000)+'%');
+    calc();
+  });
+  document.getElementById('ic-cat').addEventListener('change',function(){cat=this.value;calc();});
+  document.getElementById('ic-bank').addEventListener('change',function(){bankM=+this.value;calc();});
+  calc();
+})();
+</script>
 
 <!-- ── FAQ ── -->
 <section style="background:var(--n050)" class="section-pad">

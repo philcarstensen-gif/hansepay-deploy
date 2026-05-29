@@ -409,6 +409,8 @@ app.post('/api/booking', async (req, res) => {
     console.error('[booking] create error:', err.message);
     // Specific Google API errors
     if (err.code === 409) return res.status(409).json({ error: 'That slot was just taken. Please choose another time.' });
+    if (err.code === 404) return res.status(500).json({ error: 'Calendar not yet connected. Please contact us directly at hello@hansepay.com and we\'ll schedule your call manually.' });
+    if (err.code === 403) return res.status(500).json({ error: 'Calendar access not authorised. Please contact us directly at hello@hansepay.com.' });
     res.status(500).json({ error: 'Could not create booking. Please try again or contact us directly.', detail: err.message });
   }
 });

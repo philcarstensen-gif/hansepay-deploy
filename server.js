@@ -280,11 +280,13 @@ app.delete('/api/users/:id', authenticateToken, requireAdmin, (req, res) => {
 
 // ─── Analytics routes ─────────────────────────────────────────────────────────
 
+// Legacy pageview endpoint (kept for backwards compat)
 app.post('/api/analytics/pageview', (req, res) => {
   const { page, referrer } = req.body;
   const analytics = readData('analytics.json');
   analytics.push({
     id: uuidv4(),
+    type: 'pageview',
     page: page || '/',
     referrer: referrer || '',
     timestamp: new Date().toISOString()
@@ -293,34 +295,69 @@ app.post('/api/analytics/pageview', (req, res) => {
   res.json({ success: true });
 });
 
-app.get('/api/analytics/summary', authenticateToken, (req, res) => {
+// Generic event tracking (pageview, booking_modal_open, booking_submitted, etc.)
+app.post('/api/analytics/event', (req, res) => {
+  const { event, page, data } = req.body;
   const analytics = readData('analytics.json');
-  const posts = readData('posts.json');
-  const users = readData('users.json');
+  analytics.push({
+    id: uuidv4(),
+    type: event || 'pageview',
+    page: page || '/',
+    data: data || {},
+    timestamp: new Date().toISOString()
+  });
+  writeData('analytics.json', analytics);
+  res.json({ success: true });
+});
 
-  const totalPageviews = analytics.length;
+app.get('/api/analytics/summary', authenticateToken, (req, res) => {
+  const analytics  = readData('analytics.json');
+  const posts      = readData('posts.json');
+  const users      = readData('users.json');
+  const bookings   = readData('bookings.json');
+
+  // Normalise: old records may not have a `type` field — treat them as pageviews
+  const pageviews = analytics.filter(a => !a.type || a.type === 'pageview');
+
+  const totalPageviews = pageviews.length;
   const postsPublished = posts.filter(p => p.status === 'published').length;
-  const postsDraft = posts.filter(p => p.status === 'draft').length;
-  const totalUsers = users.length;
+  const postsDraft     = posts.filter(p => p.status === 'draft').length;
+  const totalUsers     = users.length;
+
+  // Booking stats
+  const totalBookings = Array.isArray(bookings) ? bookings.length : 0;
+  const newLeads      = Array.isArray(bookings) ? bookings.filter(b => b.status === 'new').length : 0;
+  const wonDeals      = Array.isArray(bookings) ? bookings.filter(b => b.status === 'won').length : 0;
+
+  // Funnel
+  const modalOpens      = analytics.filter(a => a.type === 'booking_modal_open').length;
+  const bookingConfirmed = analytics.filter(a => a.type === 'booking_confirmed').length;
+
+  // Event counts breakdown
+  const eventCounts = {};
+  analytics.forEach(a => {
+    if (a.type && a.type !== 'pageview') {
+      eventCounts[a.type] = (eventCounts[a.type] || 0) + 1;
+    }
+  });
 
   // Views by page
   const viewsByPage = {};
-  analytics.forEach(a => {
+  pageviews.forEach(a => {
     viewsByPage[a.page] = (viewsByPage[a.page] || 0) + 1;
   });
 
   // Views last 30 days
   const now = new Date();
-  const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
   const viewsLast30Days = [];
   for (let i = 29; i >= 0; i--) {
     const d = new Date(now.getTime() - i * 24 * 60 * 60 * 1000);
     const dateStr = d.toISOString().split('T')[0];
-    const count = analytics.filter(a => a.timestamp && a.timestamp.startsWith(dateStr)).length;
+    const count = pageviews.filter(a => a.timestamp && a.timestamp.startsWith(dateStr)).length;
     viewsLast30Days.push({ date: dateStr, count });
   }
 
-  // Top posts (support both 'viewCount' and 'views' field names)
+  // Top posts
   const topPosts = [...posts]
     .filter(p => p.status === 'published')
     .sort((a, b) => (b.viewCount || b.views || 0) - (a.viewCount || a.views || 0))
@@ -332,10 +369,91 @@ app.get('/api/analytics/summary', authenticateToken, (req, res) => {
     postsPublished,
     postsDraft,
     totalUsers,
+    totalBookings,
+    newLeads,
+    wonDeals,
+    bookingFunnel: { pageViews: totalPageviews, modalOpens, bookings: bookingConfirmed },
     viewsByPage,
     viewsLast30Days,
-    topPosts
+    topPosts,
+    eventCounts,
   });
+});
+
+// ─── Bookings CRM routes ──────────────────────────────────────────────────────
+
+app.get('/api/bookings', authenticateToken, (req, res) => {
+  const bookings = readData('bookings.json');
+  const list = Array.isArray(bookings) ? bookings : [];
+  res.json(list.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
+});
+
+app.patch('/api/bookings/:id', authenticateToken, (req, res) => {
+  const bookings = readData('bookings.json');
+  if (!Array.isArray(bookings)) return res.status(404).json({ error: 'Booking not found' });
+  const idx = bookings.findIndex(b => b.id === req.params.id);
+  if (idx === -1) return res.status(404).json({ error: 'Booking not found' });
+  ['status', 'notes'].forEach(k => {
+    if (req.body[k] !== undefined) bookings[idx][k] = req.body[k];
+  });
+  bookings[idx].updatedAt = new Date().toISOString();
+  writeData('bookings.json', bookings);
+  res.json(bookings[idx]);
+});
+
+// ─── SEO routes ───────────────────────────────────────────────────────────────
+
+app.get('/api/seo', (req, res) => {
+  res.json(readData('seo.json'));
+});
+
+app.get('/api/seo/:slug', (req, res) => {
+  const seo = readData('seo.json');
+  res.json(seo[req.params.slug] || {});
+});
+
+app.put('/api/seo/:slug', authenticateToken, requireAdmin, (req, res) => {
+  const seo = readData('seo.json');
+  seo[req.params.slug] = Object.assign({}, seo[req.params.slug] || {}, req.body, {
+    updatedAt: new Date().toISOString(),
+  });
+  writeData('seo.json', seo);
+  res.json(seo[req.params.slug]);
+});
+
+// ─── Sitemap ──────────────────────────────────────────────────────────────────
+
+app.get('/sitemap.xml', (req, res) => {
+  const seo   = readData('seo.json');
+  const posts = readData('posts.json');
+  const base  = 'https://hansepay-deploy-production-328c.up.railway.app';
+
+  const staticPages = [
+    { slug: 'index',   path: '/',                    priority: '1.0', changefreq: 'weekly'  },
+    { slug: 'about',   path: '/about.html',           priority: '0.8', changefreq: 'monthly' },
+    { slug: 'tools',   path: '/tools-calculator.html',priority: '0.8', changefreq: 'monthly' },
+    { slug: 'blog',    path: '/blog.html',            priority: '0.7', changefreq: 'weekly'  },
+    { slug: 'booking', path: '/booking.html',         priority: '0.9', changefreq: 'monthly' },
+  ];
+
+  const today = new Date().toISOString().split('T')[0];
+
+  const urls = [
+    ...staticPages.map(p => {
+      const meta    = seo[p.slug] || {};
+      const lastmod = meta.updatedAt ? meta.updatedAt.split('T')[0] : today;
+      return `  <url><loc>${base}${p.path}</loc><lastmod>${lastmod}</lastmod><changefreq>${p.changefreq}</changefreq><priority>${p.priority}</priority></url>`;
+    }),
+    ...(Array.isArray(posts) ? posts : [])
+      .filter(p => p.status === 'published' && p.slug)
+      .map(p => {
+        const lastmod = (p.updatedAt || p.createdAt || today).split('T')[0];
+        return `  <url><loc>${base}/blog/${p.slug}</loc><lastmod>${lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>`;
+      }),
+  ].join('\n');
+
+  res.setHeader('Content-Type', 'application/xml');
+  res.send(`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls}\n</urlset>`);
 });
 
 // ─── Settings routes ──────────────────────────────────────────────────────────
@@ -479,6 +597,26 @@ app.post('/api/booking', async (req, res) => {
   try {
     const event = cal ? await cal.createBookingEvent(slot, lead) : { id: 'unconfigured', htmlLink: '#', hangoutLink: null };
     console.log(`[booking] created: ${lead.email} @ ${slot.startISO} — event ${event.id}`);
+
+    // Persist to bookings CRM
+    try {
+      const bookings = readData('bookings.json');
+      const list = Array.isArray(bookings) ? bookings : [];
+      list.push({
+        id:        event.id || uuidv4(),
+        createdAt: new Date().toISOString(),
+        slot,
+        lead,
+        status:    'new',
+        notes:     '',
+        meetLink:  event.hangoutLink || null,
+        eventId:   event.id,
+      });
+      writeData('bookings.json', list);
+    } catch (e) {
+      console.error('[booking] CRM save error:', e.message);
+    }
+
     res.json({
       success: true,
       eventId:     event.id,

@@ -419,7 +419,16 @@ nav.scrolled .nav-burger span{background:var(--n700)}
       document.getElementById('hp-bm-close-mobile').addEventListener('click', closeBookingModal);
       document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeBookingModal(); });
       window.addEventListener('message', function(e){
-        if (e.data && e.data.type === 'hp-booking-complete') { /* success — keep open */ }
+        if (e.data && e.data.type === 'hp-booking-complete') {
+          // Track confirmed booking in funnel
+          try {
+            fetch('/api/analytics/event', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ event: 'booking_confirmed', page: window.location.pathname })
+            });
+          } catch(ex) {}
+        }
       });
     }
     var iframe = document.getElementById('hp-bm-iframe');
@@ -428,6 +437,14 @@ nav.scrolled .nav-burger span{background:var(--n700)}
     requestAnimationFrame(function(){
       overlay.classList.add('hp-bm-open');
     });
+    // Track funnel event
+    try {
+      fetch('/api/analytics/event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ event: 'booking_modal_open', page: window.location.pathname })
+      });
+    } catch(e) {}
   }
 
   function closeBookingModal() {

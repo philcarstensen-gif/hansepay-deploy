@@ -45,8 +45,7 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
         <ul class="footer-links">
           <li><a class="footer-link" href="platform.html">Overview</a></li>
           <li><a class="footer-link" href="platform-technology.html">Technology</a></li>
-          <li><a class="footer-link" href="platform-security.html">Security</a></li>
-          <li><a class="footer-link" href="tools.html">Tools</a></li>
+          <li><a class="footer-link" href="tools-calculator.html">FX Calculator</a></li>
           <li><a class="footer-link" href="tools-calculator.html">FX Calculator</a></li>
           <li><a class="footer-link" href="tools-converter.html">Currency Converter</a></li>
         </ul>
@@ -54,9 +53,8 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links">
-          <li><a class="footer-link" href="about-vision.html">Vision &amp; Values</a></li>
-          <li><a class="footer-link" href="about-history.html">History</a></li>
-          <li><a class="footer-link" href="about-team.html">Team</a></li>
+          <li><a class="footer-link" href="about-vision.html">Vision &amp; Mission</a></li>
+          <li><a class="footer-link" href="about-team.html">Team &amp; History</a></li>
           <li><a class="footer-link" href="about-licenses.html">Licenses</a></li>
           <li><a class="footer-link" href="insights-stories.html">Customer stories</a></li>
           <li><a class="footer-link" href="insights-market.html">Market insights</a></li>
@@ -70,7 +68,6 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
           <li><a class="footer-link" href="#">Terms of service</a></li>
           <li><a class="footer-link" href="#">Complaints</a></li>
           <li><a class="footer-link" href="about-licenses.html">Licences</a></li>
-          <li><a class="footer-link" href="partners-partner.html">Partners</a></li>
         </ul>
       </div>
     </div>

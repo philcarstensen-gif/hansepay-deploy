@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet"/>
+<!-- Hide nav/footer instantly when loaded in modal mode, before JS runs -->
+<script>if(location.search.includes('modal=1'))document.write('<style>nav,footer,.booking-hero,.back-to-site{display:none!important}<\/style>')</script>
 <style>
 /* ── tokens ── */
 :root{
@@ -172,6 +174,14 @@ button{cursor:pointer;font-family:var(--font-ui)}
 .submit-loading{display:none;position:fixed;inset:0;background:rgba(11,25,41,.35);z-index:999;align-items:center;justify-content:center}
 .submit-loading.visible{display:flex}
 .submit-spinner{width:48px;height:48px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+
+/* ── modal mode (booking.html?modal=1) ── */
+body.modal-mode{background:#F6F9FC}
+body.modal-mode .booking-hero{display:none}
+body.modal-mode .back-to-site{display:none}
+body.modal-mode .booking-wrap{padding:24px 16px 40px}
+body.modal-mode footer{display:none!important}
+body.modal-mode nav{display:none!important}
 </style>
 </head>
 <body>
@@ -449,8 +459,19 @@ button{cursor:pointer;font-family:var(--font-ui)}
 <script src="assets/footer.js"></script>
 
 <script>
+// Detect modal mode immediately (before paint) to avoid flash
+if (new URLSearchParams(window.location.search).get('modal') === '1') {
+  document.documentElement.classList.add('modal-mode-early');
+  document.addEventListener('DOMContentLoaded', function(){
+    document.body.classList.add('modal-mode');
+  });
+}
+</script>
+<script>
 (function(){
 'use strict';
+
+var IS_MODAL = new URLSearchParams(window.location.search).get('modal') === '1';
 
 // ── State ──────────────────────────────────────────────────────
 var state = {
@@ -760,6 +781,10 @@ document.getElementById('confirmBtn').addEventListener('click', function(){
       ml.style.display = 'flex';
     }
     goTo(5);
+    // Notify parent modal (if embedded)
+    if(IS_MODAL && window.parent !== window){
+      window.parent.postMessage({ type: 'hp-booking-complete', meetLink: result.body.meetLink || null }, '*');
+    }
   })
   .catch(function(){
     loading.classList.remove('visible');

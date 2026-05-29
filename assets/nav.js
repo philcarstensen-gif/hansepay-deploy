@@ -297,4 +297,96 @@ nav.scrolled .nav-burger span{background:var(--n700)}
     if (burger) burger.classList.remove('open');
     document.body.style.overflow = '';
   };
+
+  // ── Booking modal ─────────────────────────────────────────────────────────
+  if (!document.getElementById('hp-bm-css')) {
+    var bmSt = document.createElement('style');
+    bmSt.id = 'hp-bm-css';
+    bmSt.textContent = `
+.hp-bm-overlay{position:fixed;inset:0;z-index:9000;background:rgba(6,13,26,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .3s ease}
+.hp-bm-overlay.hp-bm-open{opacity:1;pointer-events:auto}
+.hp-bm-drawer{width:660px;max-width:100%;height:100%;background:#F6F9FC;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .38s cubic-bezier(.25,.46,.45,.94);box-shadow:-12px 0 60px rgba(6,13,26,.22)}
+.hp-bm-overlay.hp-bm-open .hp-bm-drawer{transform:translateX(0)}
+.hp-bm-head{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:60px;background:#0B1929;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
+.hp-bm-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
+.hp-bm-logo img{height:22px;width:22px;object-fit:contain}
+.hp-bm-logo-text{font-family:var(--font-logo,'Libre Baskerville',Georgia,serif);font-size:16px;font-weight:400;color:#fff;letter-spacing:-.02em}
+.hp-bm-close{width:34px;height:34px;border:1.5px solid rgba(255,255,255,.18);border-radius:8px;background:transparent;color:rgba(255,255,255,.6);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+.hp-bm-close:hover{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.08)}
+.hp-bm-close svg{width:16px;height:16px;stroke:currentColor}
+.hp-bm-iframe{flex:1;border:none;width:100%;display:block}
+@media(max-width:680px){.hp-bm-drawer{width:100%}}
+`;
+    document.head.appendChild(bmSt);
+  }
+
+  function openBookingModal() {
+    var overlay = document.getElementById('hp-bm-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'hp-bm-overlay';
+      overlay.className = 'hp-bm-overlay';
+      overlay.innerHTML =
+        '<div class="hp-bm-drawer">' +
+          '<div class="hp-bm-head">' +
+            '<a class="hp-bm-logo" href="index.html">' +
+              '<img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay"/>' +
+              '<span class="hp-bm-logo-text">HansePay</span>' +
+            '</a>' +
+            '<button class="hp-bm-close" id="hp-bm-close-btn" aria-label="Close">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
+            '</button>' +
+          '</div>' +
+          '<iframe class="hp-bm-iframe" id="hp-bm-iframe" src="" title="Book a discovery call"></iframe>' +
+        '</div>';
+      document.body.appendChild(overlay);
+
+      // Close on backdrop click
+      overlay.addEventListener('click', function(e){
+        if (e.target === overlay) closeBookingModal();
+      });
+      // Close button
+      document.getElementById('hp-bm-close-btn').addEventListener('click', closeBookingModal);
+      // Close on Esc
+      document.addEventListener('keydown', function(e){
+        if (e.key === 'Escape') closeBookingModal();
+      });
+      // Listen for success message from iframe
+      window.addEventListener('message', function(e){
+        if (e.data && e.data.type === 'hp-booking-complete') {
+          // Keep modal open to show the success screen — user closes manually
+        }
+      });
+    }
+    // Load/reload iframe
+    var iframe = document.getElementById('hp-bm-iframe');
+    iframe.src = 'booking.html?modal=1';
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(function(){
+      overlay.classList.add('hp-bm-open');
+    });
+  }
+
+  function closeBookingModal() {
+    var overlay = document.getElementById('hp-bm-overlay');
+    if (!overlay) return;
+    overlay.classList.remove('hp-bm-open');
+    document.body.style.overflow = '';
+    // Blank the iframe after transition to reset state
+    setTimeout(function(){
+      var iframe = document.getElementById('hp-bm-iframe');
+      if (iframe) iframe.src = '';
+    }, 400);
+  }
+
+  // Intercept ALL clicks on links pointing to booking.html
+  document.addEventListener('click', function(e){
+    var link = e.target.closest('a[href="booking.html"], a[href*="booking.html"]');
+    if (!link) return;
+    // Don't intercept if we're already on booking.html
+    if (window.location.pathname.endsWith('booking.html')) return;
+    e.preventDefault();
+    closeMobileMenu();
+    openBookingModal();
+  });
 })();

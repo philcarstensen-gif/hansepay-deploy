@@ -36,6 +36,9 @@ const upload = multer({
   }
 });
 
+// Trust Railway's reverse proxy so req.protocol returns 'https'
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(cors({ origin: '*' }));
 app.use(express.json());

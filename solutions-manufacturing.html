@@ -101,23 +101,35 @@ a{color:inherit;text-decoration:none}
 .cov-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--r-pill);background:#fff;border:1px solid rgba(11,25,41,.08);font-size:13px;font-weight:500;color:var(--n800)}
 .cov-pill-flag{font-size:15px}
 /* Inline calculator */
-.inline-calc{background:#fff;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);padding:40px;max-width:900px;margin:44px auto 0}
-.ic-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.inline-calc{background:#fff;border:1px solid rgba(11,25,41,.07);border-radius:var(--r-lg);padding:40px;max-width:900px;margin:44px auto 0;box-shadow:0 4px 32px rgba(11,25,41,.06)}
+.ic-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
 @media(max-width:700px){.ic-grid{grid-template-columns:1fr}}
-.ic-label{font-size:13px;font-weight:600;color:var(--n500);margin-bottom:8px;display:block}
-.ic-big{font-family:var(--font-display);font-size:32px;font-weight:400;color:var(--n900);letter-spacing:-.01em;line-height:1.1;margin-bottom:8px;font-variant-numeric:tabular-nums}
-.ic-slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:9999px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--n400) 0%,var(--n400) var(--pct,20%),var(--n100) var(--pct,20%),var(--n100) 100%)}
+.ic-left{padding-right:40px;display:flex;flex-direction:column}
+@media(max-width:700px){.ic-left{padding-right:0;padding-bottom:28px;border-bottom:1px solid rgba(11,25,41,.07)}}
+.ic-right{padding-left:40px;border-left:1px solid rgba(11,25,41,.07)}
+@media(max-width:700px){.ic-right{padding-left:0;border-left:none;padding-top:28px}}
+.ic-row{margin-bottom:24px}
+.ic-row:last-child{margin-bottom:0}
+.ic-lbl{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:13px;font-weight:600;color:var(--n800)}
+.ic-lbl-val{font-size:13px;font-weight:600;color:var(--n500);font-variant-numeric:tabular-nums}
+.ic-slider{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:9999px;outline:none;cursor:pointer;background:linear-gradient(to right,var(--n400) 0%,var(--n400) var(--pct,20%),rgba(11,25,41,.12) var(--pct,20%),rgba(11,25,41,.12) 100%)}
 .ic-slider::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--n500);border:3px solid #fff;box-shadow:0 1px 4px rgba(11,25,41,.2);cursor:pointer}
 .ic-slider::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--n500);border:3px solid #fff;cursor:pointer}
-.ic-hint{font-size:12px;color:var(--ink3);margin-top:8px}
-.ic-select{width:100%;border:1px solid rgba(11,25,41,.09);border-radius:10px;padding:9px 12px;font-size:14px;color:var(--n900);font-family:var(--font-ui);outline:none;background:#fff;margin-bottom:4px}
-.ic-result-lbl{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--n300);margin-bottom:8px}
-.ic-saving{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(48px,6vw,72px);color:var(--n900);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
-.ic-saving-ccy{font-family:var(--font-display);font-size:clamp(48px,6vw,72px);font-weight:400;color:var(--n500);letter-spacing:-.02em;line-height:1}
-.ic-breakdown{margin-top:20px;border-top:1px solid rgba(11,25,41,.07);padding-top:16px}
-.ic-br-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px}
-.ic-br-key{color:var(--ink2)}
-.ic-br-val{font-weight:600;color:var(--n900);font-variant-numeric:tabular-nums}
+.ic-range-labels{display:flex;justify-content:space-between;margin-top:5px;font-size:11px;color:var(--ink3)}
+.ic-hint{font-size:12px;color:var(--ink3);margin-top:6px}
+.ic-select-wrap{position:relative}
+.ic-select{width:100%;padding:11px 36px 11px 14px;border:1.5px solid rgba(11,25,41,.10);border-radius:var(--r-sm,6px);font-family:var(--font-ui);font-size:14px;font-weight:500;color:var(--n900);background:#fff;outline:none;appearance:none;cursor:pointer;transition:border-color .15s}
+.ic-select:focus{border-color:var(--n300)}
+.ic-arrow{position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--ink3)}
+.ic-result{background:linear-gradient(135deg,var(--n700) 0%,var(--n500) 100%);border-radius:var(--r-md);padding:22px 24px;color:#fff}
+.ic-result-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.ic-result-row:last-of-type{margin-bottom:0}
+.ic-result-lbl{font-size:11px;font-weight:500;color:rgba(255,255,255,.55);letter-spacing:.06em;text-transform:uppercase}
+.ic-result-val{font-family:var(--font-display);font-size:18px;font-weight:400;color:#fff;font-variant-numeric:tabular-nums}
+.ic-saving{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.15);display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.ic-saving-lbl{font-size:11px;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.08em;flex-shrink:0;padding-top:4px}
+.ic-saving-num{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(32px,4vw,48px);color:#fff;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.ic-saving-ccy{font-family:var(--font-display);font-weight:400;font-size:clamp(32px,4vw,48px);color:var(--n200);letter-spacing:-.02em;line-height:1}
 </style>
 </head>
 <body>
@@ -396,39 +408,55 @@ a{color:inherit;text-decoration:none}
     <p class="section-sub">Set your annual FX volume and your current provider. We calculate the estimated annual saving with HansePay.</p>
     <div class="inline-calc">
       <div class="ic-grid">
-        <div>
-          <label class="ic-label">Annual FX volume</label>
-          <div class="ic-big" id="ic-vol-disp">1.000.000 €</div>
-          <input type="range" class="ic-slider" id="ic-vol" min="100000" max="50000000" step="50000" value="1000000" style="--pct:1.8%">
-          <p class="ic-hint">Total foreign currency payments per year</p>
-
-          <label class="ic-label" style="margin-top:28px">Currency category</label>
-          <select class="ic-select" id="ic-cat">
-            <option value="major">Major (USD, GBP, JPY, CAD…)</option>
-            <option value="minor">Minor (BRL, MXN, ZAR, AED…)</option>
-            <option value="exotic">Exotic (VND, NGN, PKR…)</option>
-          </select>
-
-          <label class="ic-label" style="margin-top:16px">Current provider type</label>
-          <select class="ic-select" id="ic-bank">
-            <option value="2.5">House bank (~2.5% margin)</option>
-            <option value="3.5">Sparkasse / regional bank (~3.5%)</option>
-            <option value="0.7">Fintech app (~0.7%)</option>
-            <option value="1.5">Online bank (~1.5%)</option>
-          </select>
+        <!-- Left: inputs -->
+        <div class="ic-left">
+          <div class="ic-row">
+            <div class="ic-lbl"><span>Annual FX volume</span><span class="ic-lbl-val" id="ic-vol-disp">1.000.000 €</span></div>
+            <input type="range" class="ic-slider" id="ic-vol" min="100000" max="50000000" step="50000" value="1000000" style="--pct:1.8%">
+            <div class="ic-range-labels"><span>€100k</span><span>€50M</span></div>
+          </div>
+          <div class="ic-row">
+            <div class="ic-lbl"><span>Currency category</span></div>
+            <div class="ic-select-wrap">
+              <select class="ic-select" id="ic-cat">
+                <option value="major">Major (USD, GBP, JPY, CAD…)</option>
+                <option value="minor">Minor (BRL, MXN, ZAR, AED…)</option>
+                <option value="exotic">Exotic (VND, NGN, PKR…)</option>
+              </select>
+              <svg class="ic-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <div class="ic-row">
+            <div class="ic-lbl"><span>Current provider type</span></div>
+            <div class="ic-select-wrap">
+              <select class="ic-select" id="ic-bank">
+                <option value="2.5">House bank (~2.5% margin)</option>
+                <option value="3.5">Sparkasse / regional bank (~3.5%)</option>
+                <option value="0.7">Fintech app (~0.7%)</option>
+                <option value="1.5">Online bank (~1.5%)</option>
+              </select>
+              <svg class="ic-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
         </div>
-        <div>
-          <div class="ic-result-lbl">Estimated annual saving</div>
-          <div style="line-height:1">
-            <span class="ic-saving" id="ic-save-big">37.500</span><span class="ic-saving-ccy"> €</span>
+        <!-- Right: results -->
+        <div class="ic-right">
+          <div class="ic-result">
+            <div class="ic-result-row">
+              <span class="ic-result-lbl">Your current annual FX cost</span>
+              <span class="ic-result-val" id="ic-cur-cost">25.000 €</span>
+            </div>
+            <div class="ic-result-row">
+              <span class="ic-result-lbl">With HansePay</span>
+              <span class="ic-result-val" id="ic-hp-cost">3.000 €</span>
+            </div>
+            <div class="ic-saving">
+              <span class="ic-saving-lbl">Annual saving</span>
+              <span style="line-height:1"><span class="ic-saving-num" id="ic-save-big">22.000</span><span class="ic-saving-ccy"> €</span></span>
+            </div>
           </div>
-          <div class="ic-breakdown">
-            <div class="ic-br-row"><span class="ic-br-key">Your current annual FX cost</span><span class="ic-br-val" id="ic-cur-cost">25.000 €</span></div>
-            <div class="ic-br-row"><span class="ic-br-key">With HansePay</span><span class="ic-br-val" id="ic-hp-cost">3.000 €</span></div>
-            <div class="ic-br-row" style="border-top:1px solid rgba(11,25,41,.07);margin-top:4px;padding-top:10px"><span class="ic-br-key" style="font-weight:600;color:var(--n800)">Annual saving</span><span class="ic-br-val" style="color:var(--n500)" id="ic-saving-row">22.000 €</span></div>
-          </div>
-          <a href="tools-calculator.html" class="btn btn-white-fill" style="margin-top:24px;width:100%;justify-content:center">Full calculator with breakdown &rarr;</a>
-          <p style="font-size:11px;color:var(--ink3);margin-top:10px;line-height:1.5">Estimate only. Exact saving depends on your transaction history. Request a free FX audit for a precise figure.</p>
+          <a href="tools-calculator.html" class="btn btn-primary" style="margin-top:20px;width:100%;justify-content:center">Full calculator with breakdown &rarr;</a>
+          <p style="font-size:11px;color:var(--ink3);margin-top:10px;line-height:1.5;text-align:center">Estimate only. Exact saving depends on your transaction history.</p>
         </div>
       </div>
     </div>
@@ -447,7 +475,6 @@ a{color:inherit;text-decoration:none}
     document.getElementById('ic-save-big').textContent=fmt(saving);
     document.getElementById('ic-cur-cost').textContent=fmt(curCost)+' €';
     document.getElementById('ic-hp-cost').textContent=fmt(hpCost)+' €';
-    document.getElementById('ic-saving-row').textContent=fmt(saving)+' €';
   }
   function pct(v,mn,mx){return Math.max(0,Math.min(100,(v-mn)/(mx-mn)*100));}
   var vs=document.getElementById('ic-vol');

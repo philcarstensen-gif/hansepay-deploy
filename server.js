@@ -350,6 +350,83 @@ app.put('/api/settings', authenticateToken, requireAdmin, (req, res) => {
 
 // ─── Booking routes ───────────────────────────────────────────────────────────
 
+// GET /api/booking/auth — start one-time OAuth2 authorisation flow
+// Visit this URL in a browser while logged in as the calendar owner.
+// After consent you are redirected to /api/booking/auth/callback which prints
+// the refresh token — copy it into Railway as GOOGLE_REFRESH_TOKEN.
+app.get('/api/booking/auth', (req, res) => {
+  if (!cal) return res.status(503).send('Calendar module not loaded.');
+  if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+    return res.status(503).send(
+      'Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in Railway env vars first.'
+    );
+  }
+  const redirectUri = `${req.protocol}://${req.get('host')}/api/booking/auth/callback`;
+  try {
+    const url = cal.getOAuthUrl(redirectUri);
+    res.redirect(url);
+  } catch (err) {
+    res.status(500).send('Could not generate OAuth URL: ' + err.message);
+  }
+});
+
+// GET /api/booking/auth/callback — Google redirects here after consent
+app.get('/api/booking/auth/callback', async (req, res) => {
+  const { code, error } = req.query;
+  if (error) return res.status(400).send('OAuth error: ' + error);
+  if (!code)  return res.status(400).send('No code returned by Google.');
+
+  if (!cal) return res.status(503).send('Calendar module not loaded.');
+  const redirectUri = `${req.protocol}://${req.get('host')}/api/booking/auth/callback`;
+
+  try {
+    const tokens = await cal.exchangeCodeForTokens(code, redirectUri);
+    const rt = tokens.refresh_token;
+    if (!rt) {
+      return res.status(400).send(
+        'Google did not return a refresh token. ' +
+        'This usually means the app was already authorised without the "consent" prompt. ' +
+        'Go to https://myaccount.google.com/permissions, revoke HansePay, then visit /api/booking/auth again.'
+      );
+    }
+    // Display the token — user must copy it into Railway manually
+    res.send(`
+<!DOCTYPE html>
+<html>
+<head>
+  <title>HansePay Calendar Auth</title>
+  <style>
+    body{font-family:system-ui,sans-serif;max-width:680px;margin:60px auto;padding:0 24px;color:#1a2b3c}
+    h1{color:#0B4F8C}
+    .token-box{background:#f0f7ff;border:1.5px solid #0B4F8C;border-radius:10px;padding:20px 24px;font-family:monospace;font-size:13px;word-break:break-all;margin:20px 0}
+    .steps{background:#f9fafb;border-radius:10px;padding:20px 24px;margin:20px 0}
+    .steps ol{margin:0;padding-left:20px;line-height:2}
+    .check{color:#16a34a;font-weight:bold}
+  </style>
+</head>
+<body>
+  <h1>✅ Calendar Authorised</h1>
+  <p>Copy the refresh token below and add it to Railway as <strong>GOOGLE_REFRESH_TOKEN</strong>.</p>
+  <div class="token-box">${rt}</div>
+  <div class="steps">
+    <strong>Steps:</strong>
+    <ol>
+      <li>Copy the token above</li>
+      <li>Open <a href="https://railway.app" target="_blank">railway.app</a> → your project → Variables</li>
+      <li>Add variable: <code>GOOGLE_REFRESH_TOKEN</code> = <em>paste token</em></li>
+      <li>Railway will redeploy automatically</li>
+      <li>Come back and test a booking — it should work now 🎉</li>
+    </ol>
+  </div>
+  <p style="color:#6b7280;font-size:13px">This page is only accessible to someone with your Railway URL. The token is not stored anywhere — copy it now.</p>
+</body>
+</html>
+    `);
+  } catch (err) {
+    res.status(500).send('Token exchange failed: ' + err.message);
+  }
+});
+
 // GET /api/booking/config — public config for the frontend
 app.get('/api/booking/config', (req, res) => {
   if (!cal) return res.json({ configured: false, timezone: 'Europe/Berlin', daysAhead: 30, hoursStart: 9, hoursEnd: 17, slotMinutes: 30 });

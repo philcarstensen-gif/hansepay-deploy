@@ -176,12 +176,19 @@ button{cursor:pointer;font-family:var(--font-ui)}
 .submit-spinner{width:48px;height:48px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
 
 /* ── modal mode (booking.html?modal=1) ── */
-body.modal-mode{background:#F6F9FC}
+body.modal-mode{background:#F6F9FC;height:100vh;overflow-y:auto}
 body.modal-mode .booking-hero{display:none}
 body.modal-mode .back-to-site{display:none}
-body.modal-mode .booking-wrap{padding:24px 16px 40px}
+body.modal-mode .booking-wrap{padding:20px 20px 32px;max-width:100%}
 body.modal-mode footer{display:none!important}
 body.modal-mode nav{display:none!important}
+body.modal-mode .booking-card{box-shadow:none;border:none;border-radius:0;background:transparent}
+body.modal-mode .booking-progress{padding:16px 20px 0}
+body.modal-mode .booking-step{padding:20px}
+body.modal-mode .step-title{font-size:20px}
+body.modal-mode .cal-day{height:36px}
+body.modal-mode .form-group{margin-bottom:10px}
+body.modal-mode .form-row{gap:10px;margin-bottom:10px}
 </style>
 </head>
 <body>

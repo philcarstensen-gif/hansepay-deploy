@@ -303,19 +303,63 @@ nav.scrolled .nav-burger span{background:var(--n700)}
     var bmSt = document.createElement('style');
     bmSt.id = 'hp-bm-css';
     bmSt.textContent = `
-.hp-bm-overlay{position:fixed;inset:0;z-index:9000;background:rgba(6,13,26,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:opacity .3s ease}
+/* Overlay */
+.hp-bm-overlay{position:fixed;inset:0;z-index:9000;background:rgba(6,13,26,.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .28s ease}
 .hp-bm-overlay.hp-bm-open{opacity:1;pointer-events:auto}
-.hp-bm-drawer{width:660px;max-width:100%;height:100%;background:#F6F9FC;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .38s cubic-bezier(.25,.46,.45,.94);box-shadow:-12px 0 60px rgba(6,13,26,.22)}
-.hp-bm-overlay.hp-bm-open .hp-bm-drawer{transform:translateX(0)}
-.hp-bm-head{display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:60px;background:#0B1929;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
-.hp-bm-logo{display:flex;align-items:center;gap:9px;text-decoration:none}
-.hp-bm-logo img{height:22px;width:22px;object-fit:contain}
-.hp-bm-logo-text{font-family:var(--font-logo,'Libre Baskerville',Georgia,serif);font-size:16px;font-weight:400;color:#fff;letter-spacing:-.02em}
-.hp-bm-close{width:34px;height:34px;border:1.5px solid rgba(255,255,255,.18);border-radius:8px;background:transparent;color:rgba(255,255,255,.6);font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
-.hp-bm-close:hover{border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.08)}
-.hp-bm-close svg{width:16px;height:16px;stroke:currentColor}
-.hp-bm-iframe{flex:1;border:none;width:100%;display:block}
-@media(max-width:680px){.hp-bm-drawer{width:100%}}
+
+/* Main panel */
+.hp-bm-panel{width:100%;max-width:1060px;height:100%;max-height:720px;border-radius:20px;overflow:hidden;display:flex;box-shadow:0 40px 100px rgba(6,13,26,.55),0 0 0 1px rgba(255,255,255,.06);transform:translateY(18px) scale(.97);transition:transform .35s cubic-bezier(.22,.68,0,1.2),opacity .28s ease;opacity:0}
+.hp-bm-overlay.hp-bm-open .hp-bm-panel{transform:translateY(0) scale(1);opacity:1}
+
+/* Left branding column */
+.hp-bm-left{width:320px;flex-shrink:0;background:linear-gradient(160deg,#0B1929 0%,#0F2540 45%,#163659 100%);padding:40px 36px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.hp-bm-left::before{content:'';position:absolute;right:-80px;top:-80px;width:320px;height:320px;background:radial-gradient(circle,rgba(46,107,173,.35) 0%,transparent 70%);pointer-events:none}
+.hp-bm-left::after{content:'';position:absolute;left:-40px;bottom:-60px;width:240px;height:240px;background:radial-gradient(circle,rgba(30,78,128,.25) 0%,transparent 70%);pointer-events:none}
+
+.hp-bm-left-logo{display:flex;align-items:center;gap:10px;margin-bottom:auto;text-decoration:none}
+.hp-bm-left-logo img{height:26px;width:26px;object-fit:contain}
+.hp-bm-left-logo-text{font-family:'Libre Baskerville',Georgia,serif;font-size:17px;font-weight:400;color:#fff;letter-spacing:-.02em}
+
+.hp-bm-left-body{margin:auto 0;padding:32px 0}
+.hp-bm-left-eyebrow{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(141,189,230,.7);margin-bottom:14px}
+.hp-bm-left-headline{font-family:Georgia,'Times New Roman',serif;font-size:28px;font-weight:400;color:#fff;line-height:1.15;letter-spacing:-.02em;margin-bottom:8px}
+.hp-bm-left-headline em{font-style:italic;color:#8DBDE6}
+.hp-bm-left-sub{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6;margin-bottom:32px}
+
+.hp-bm-left-items{display:flex;flex-direction:column;gap:14px}
+.hp-bm-left-item{display:flex;align-items:flex-start;gap:12px}
+.hp-bm-left-item-icon{width:28px;height:28px;border-radius:8px;background:rgba(141,189,230,.12);border:1px solid rgba(141,189,230,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.hp-bm-left-item-icon svg{width:13px;height:13px;stroke:#8DBDE6}
+.hp-bm-left-item-text{font-size:13px;color:rgba(255,255,255,.7);line-height:1.5}
+.hp-bm-left-item-text strong{display:block;color:#fff;font-size:13px;font-weight:600;margin-bottom:1px}
+
+.hp-bm-left-footer{margin-top:auto;padding-top:24px;border-top:1px solid rgba(255,255,255,.07)}
+.hp-bm-left-footer-text{font-size:11px;color:rgba(255,255,255,.25);line-height:1.5}
+.hp-bm-left-footer-text strong{color:rgba(255,255,255,.4)}
+
+/* Right content column */
+.hp-bm-right{flex:1;background:#F6F9FC;display:flex;flex-direction:column;min-width:0;position:relative}
+.hp-bm-right-head{display:flex;align-items:center;justify-content:flex-end;padding:16px 20px;flex-shrink:0;background:#F6F9FC;border-bottom:1px solid rgba(11,25,41,.06)}
+.hp-bm-close{width:32px;height:32px;border:1.5px solid rgba(11,25,41,.12);border-radius:8px;background:#fff;color:rgba(11,25,41,.45);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0}
+.hp-bm-close:hover{border-color:rgba(11,25,41,.3);color:rgba(11,25,41,.8);background:#fff;box-shadow:0 2px 8px rgba(11,25,41,.08)}
+.hp-bm-close svg{width:14px;height:14px;stroke:currentColor}
+.hp-bm-iframe{flex:1;border:none;width:100%;display:block;min-height:0}
+
+/* Mobile: stack vertically, full screen */
+@media(max-width:720px){
+  .hp-bm-overlay{padding:0}
+  .hp-bm-panel{max-width:100%;max-height:100%;border-radius:0;flex-direction:column}
+  .hp-bm-left{width:100%;flex-shrink:0;padding:24px 24px 20px;flex-direction:row;align-items:center;gap:16px}
+  .hp-bm-left::before,.hp-bm-left::after{display:none}
+  .hp-bm-left-body,.hp-bm-left-items,.hp-bm-left-footer{display:none}
+  .hp-bm-left-logo{margin-bottom:0}
+  .hp-bm-left-eyebrow{display:none}
+  .hp-bm-right-head{display:none}
+  .hp-bm-close-mobile{display:flex!important;margin-left:auto}
+}
+.hp-bm-close-mobile{display:none;width:32px;height:32px;border:1.5px solid rgba(255,255,255,.2);border-radius:8px;background:transparent;color:rgba(255,255,255,.6);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s}
+.hp-bm-close-mobile:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.hp-bm-close-mobile svg{width:14px;height:14px;stroke:currentColor}
 `;
     document.head.appendChild(bmSt);
   }
@@ -323,42 +367,61 @@ nav.scrolled .nav-burger span{background:var(--n700)}
   function openBookingModal() {
     var overlay = document.getElementById('hp-bm-overlay');
     if (!overlay) {
+      var closeIconSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
       overlay = document.createElement('div');
       overlay.id = 'hp-bm-overlay';
       overlay.className = 'hp-bm-overlay';
       overlay.innerHTML =
-        '<div class="hp-bm-drawer">' +
-          '<div class="hp-bm-head">' +
-            '<a class="hp-bm-logo" href="index.html">' +
+        '<div class="hp-bm-panel">' +
+          // Left branding panel
+          '<div class="hp-bm-left">' +
+            '<a class="hp-bm-left-logo" href="index.html">' +
               '<img src="assets/hansepay-mark-uploaded-white.png" alt="HansePay"/>' +
-              '<span class="hp-bm-logo-text">HansePay</span>' +
+              '<span class="hp-bm-left-logo-text">HansePay</span>' +
             '</a>' +
-            '<button class="hp-bm-close" id="hp-bm-close-btn" aria-label="Close">' +
-              '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' +
-            '</button>' +
+            '<button class="hp-bm-close-mobile" id="hp-bm-close-mobile" aria-label="Close">' + closeIconSvg + '</button>' +
+            '<div class="hp-bm-left-body">' +
+              '<p class="hp-bm-left-eyebrow">Discovery Call</p>' +
+              '<h2 class="hp-bm-left-headline">Talk to an<br><em>FX specialist.</em></h2>' +
+              '<p class="hp-bm-left-sub">30 minutes. We map your payment flows and show you exactly what you&rsquo;d save.</p>' +
+              '<div class="hp-bm-left-items">' +
+                '<div class="hp-bm-left-item">' +
+                  '<div class="hp-bm-left-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>' +
+                  '<div class="hp-bm-left-item-text"><strong>30 minutes</strong>No lengthy sales process</div>' +
+                '</div>' +
+                '<div class="hp-bm-left-item">' +
+                  '<div class="hp-bm-left-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>' +
+                  '<div class="hp-bm-left-item-text"><strong>No commitment</strong>Just an honest conversation</div>' +
+                '</div>' +
+                '<div class="hp-bm-left-item">' +
+                  '<div class="hp-bm-left-item-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>' +
+                  '<div class="hp-bm-left-item-text"><strong>Regulated by BaFin</strong>EU E-Money Institution</div>' +
+                '</div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="hp-bm-left-footer">' +
+              '<p class="hp-bm-left-footer-text"><strong>HansePay</strong> &middot; Hamburg, Germany<br>A brand of Caplend Technologies GmbH</p>' +
+            '</div>' +
           '</div>' +
-          '<iframe class="hp-bm-iframe" id="hp-bm-iframe" src="" title="Book a discovery call"></iframe>' +
+          // Right booking panel
+          '<div class="hp-bm-right">' +
+            '<div class="hp-bm-right-head">' +
+              '<button class="hp-bm-close" id="hp-bm-close-btn" aria-label="Close">' + closeIconSvg + '</button>' +
+            '</div>' +
+            '<iframe class="hp-bm-iframe" id="hp-bm-iframe" src="" title="Book a discovery call"></iframe>' +
+          '</div>' +
         '</div>';
       document.body.appendChild(overlay);
 
-      // Close on backdrop click
-      overlay.addEventListener('click', function(e){
-        if (e.target === overlay) closeBookingModal();
-      });
-      // Close button
+      // Close handlers
+      overlay.addEventListener('click', function(e){ if (e.target === overlay) closeBookingModal(); });
       document.getElementById('hp-bm-close-btn').addEventListener('click', closeBookingModal);
-      // Close on Esc
-      document.addEventListener('keydown', function(e){
-        if (e.key === 'Escape') closeBookingModal();
-      });
-      // Listen for success message from iframe
+      document.getElementById('hp-bm-close-mobile').addEventListener('click', closeBookingModal);
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeBookingModal(); });
       window.addEventListener('message', function(e){
-        if (e.data && e.data.type === 'hp-booking-complete') {
-          // Keep modal open to show the success screen — user closes manually
-        }
+        if (e.data && e.data.type === 'hp-booking-complete') { /* success — keep open */ }
       });
     }
-    // Load/reload iframe
     var iframe = document.getElementById('hp-bm-iframe');
     iframe.src = 'booking.html?modal=1';
     document.body.style.overflow = 'hidden';
@@ -372,7 +435,6 @@ nav.scrolled .nav-burger span{background:var(--n700)}
     if (!overlay) return;
     overlay.classList.remove('hp-bm-open');
     document.body.style.overflow = '';
-    // Blank the iframe after transition to reset state
     setTimeout(function(){
       var iframe = document.getElementById('hp-bm-iframe');
       if (iframe) iframe.src = '';
@@ -383,7 +445,6 @@ nav.scrolled .nav-burger span{background:var(--n700)}
   document.addEventListener('click', function(e){
     var link = e.target.closest('a[href="booking.html"], a[href*="booking.html"]');
     if (!link) return;
-    // Don't intercept if we're already on booking.html
     if (window.location.pathname.endsWith('booking.html')) return;
     e.preventDefault();
     closeMobileMenu();

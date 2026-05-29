@@ -52,7 +52,7 @@ nav.scrolled .nav-burger span{background:var(--n700)}
 .nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
 .nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(12,22,38,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:24px clamp(20px,5vw,80px);z-index:199;flex-direction:column;gap:4px}
+.mobile-menu{display:none;position:fixed;top:68px;left:0;right:0;background:rgba(12,22,38,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);padding:24px clamp(20px,5vw,80px);z-index:199;flex-direction:column;gap:4px;max-height:calc(100vh - 68px);overflow-y:auto}
 .mobile-menu.open{display:flex}
 .mobile-menu-link{font-size:16px;font-weight:500;color:rgba(255,255,255,.7);padding:12px 0;border-bottom:1px solid rgba(255,255,255,.07)}
 .mobile-menu-sub{font-size:14px;color:rgba(255,255,255,.45);padding:8px 0 8px 16px;border-bottom:1px solid rgba(255,255,255,.05)}
@@ -63,7 +63,7 @@ nav.scrolled .nav-burger span{background:var(--n700)}
     document.head.appendChild(st);
   }
 
-  // 2. Inject nav HTML synchronously at <script> position
+  // 2. Inject nav HTML
   var NAV_HTML = `
 <nav id="main-nav">
   <div class="nav-inner">
@@ -72,28 +72,12 @@ nav.scrolled .nav-burger span{background:var(--n700)}
       <span class="nav-logo-text">HansePay</span>
     </a>
     <ul class="nav-links">
+
+      <!-- Platform -->
       <li class="nav-item">
-        <span class="nav-link">Product
+        <span class="nav-link">Platform
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </span>
-        <div class="nav-dropdown">
-          <div class="nav-dropdown-section">
-            <span class="nav-dropdown-label">Features</span>
-            <a href="index.html#product" class="nav-dd-link">
-              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
-              <div class="nav-dd-text"><div class="nav-dd-title">FX Execution</div><div class="nav-dd-sub">Mid-market rates, zero markup</div></div>
-            </a>
-            <a href="index.html#transfers" class="nav-dd-link">
-              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2L11 13"/><path d="M22 2L15 22 11 13 2 9l20-7z"/></svg></div>
-              <div class="nav-dd-text"><div class="nav-dd-title">Global Payments</div><div class="nav-dd-sub">Send to 35+ currencies in minutes</div></div>
-            </a>
-          </div>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="platform.html">Platform
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </a>
         <div class="nav-dropdown">
           <div class="nav-dropdown-section">
             <span class="nav-dropdown-label">Platform</span>
@@ -105,14 +89,15 @@ nav.scrolled .nav-burger span{background:var(--n700)}
               <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
               <div class="nav-dd-text"><div class="nav-dd-title">Technology</div><div class="nav-dd-sub">The infrastructure behind every transfer</div></div>
             </a>
-            <a href="platform.html#transfers" class="nav-dd-link">
-              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-              <div class="nav-dd-text"><div class="nav-dd-title">Real-time Tracking</div><div class="nav-dd-sub">Watch payments move live</div></div>
+            <a href="platform-security.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Security</div><div class="nav-dd-sub">Multi-layer protection by design</div></div>
             </a>
           </div>
         </div>
       </li>
-      <li class="nav-item"><a class="nav-link" href="index.html#calculator">Pricing</a></li>
+
+      <!-- Solutions -->
       <li class="nav-item">
         <span class="nav-link">Solutions
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
@@ -125,7 +110,7 @@ nav.scrolled .nav-burger span{background:var(--n700)}
               <div class="nav-dd-text"><div class="nav-dd-title">E-Commerce &amp; Retail</div><div class="nav-dd-sub">Supplier payments, bulk FX, emerging markets</div></div>
             </a>
             <a href="solutions-manufacturing.html" class="nav-dd-link">
-              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div>
               <div class="nav-dd-text"><div class="nav-dd-title">Import &amp; Manufacturing</div><div class="nav-dd-sub">Industrial FX, big-ticket execution, supply chain</div></div>
             </a>
             <a href="solutions-logistics.html" class="nav-dd-link">
@@ -137,7 +122,7 @@ nav.scrolled .nav-burger span{background:var(--n700)}
           <div class="nav-dropdown-section">
             <span class="nav-dropdown-label">By Business Size</span>
             <a href="solutions-corporate.html" class="nav-dd-link">
-              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg></div>
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
               <div class="nav-dd-text"><div class="nav-dd-title">Mid &amp; Large Business</div><div class="nav-dd-sub">Institutional pricing, named expert, &gt;€2M</div></div>
             </a>
             <a href="solutions-sme.html" class="nav-dd-link">
@@ -147,8 +132,115 @@ nav.scrolled .nav-burger span{background:var(--n700)}
           </div>
         </div>
       </li>
-      <li class="nav-item"><a class="nav-link" href="blog.html">Insights</a></li>
-      <li class="nav-item"><a class="nav-link" href="index.html#about">About</a></li>
+
+      <!-- Partners -->
+      <li class="nav-item">
+        <span class="nav-link">Partners
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <div class="nav-dropdown" style="width:280px">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Partner programmes</span>
+            <a href="partners-partner.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Partner with us</div><div class="nav-dd-sub">Overview of all partnership tracks</div></div>
+            </a>
+            <a href="partners-refer.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Refer clients</div><div class="nav-dd-sub">Zero commission, clients keep control</div></div>
+            </a>
+            <a href="partners-resell.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Resell</div><div class="nav-dd-sub">Revenue share on your client book</div></div>
+            </a>
+            <a href="partners-embed.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Embed payments</div><div class="nav-dd-sub">Add FX to your platform via API</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- About -->
+      <li class="nav-item">
+        <span class="nav-link">About
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <div class="nav-dropdown" style="width:270px">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">About HansePay</span>
+            <a href="about-vision.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Vision &amp; Values</div><div class="nav-dd-sub">Why we built HansePay</div></div>
+            </a>
+            <a href="about-history.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">History</div><div class="nav-dd-sub">From Caplend to HansePay</div></div>
+            </a>
+            <a href="about-team.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Team</div><div class="nav-dd-sub">Founders, advisors, offices</div></div>
+            </a>
+            <a href="about-licenses.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Licenses</div><div class="nav-dd-sub">MiCAR, BaFin, GDPR, ISO 27001</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Insights -->
+      <li class="nav-item">
+        <span class="nav-link">Insights
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <div class="nav-dropdown" style="width:260px">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Insights</span>
+            <a href="insights-stories.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Customer stories</div><div class="nav-dd-sub">Real customers. Real results.</div></div>
+            </a>
+            <a href="insights-market.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Market insights</div><div class="nav-dd-sub">Currency analysis, weekly</div></div>
+            </a>
+            <a href="events.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Events</div><div class="nav-dd-sub">Where to find us this season</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Tools -->
+      <li class="nav-item">
+        <span class="nav-link">Tools
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </span>
+        <div class="nav-dropdown" style="width:270px">
+          <div class="nav-dropdown-section">
+            <span class="nav-dropdown-label">Free tools</span>
+            <a href="tools-calculator.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="14" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="14" y1="14" x2="16" y2="14"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">FX Savings Calculator</div><div class="nav-dd-sub">Estimate your annual saving</div></div>
+            </a>
+            <a href="tools-converter.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4m0 0L3 8m4-4l4 4"/><path d="M17 8v12m0 0l4-4m-4 4l-4-4"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">Currency Converter</div><div class="nav-dd-sub">Live mid-market rates</div></div>
+            </a>
+            <a href="tools-swift.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">SWIFT / BIC Lookup</div><div class="nav-dd-sub">Find codes by bank or country</div></div>
+            </a>
+            <a href="tools-iban.html" class="nav-dd-link">
+              <div class="nav-dd-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+              <div class="nav-dd-text"><div class="nav-dd-title">IBAN Verifier</div><div class="nav-dd-sub">Validate format and bank details</div></div>
+            </a>
+          </div>
+        </div>
+      </li>
+
     </ul>
     <div class="nav-right">
       <a href="index.html#contact" class="btn nav-cta">Open an account</a>
@@ -160,14 +252,31 @@ nav.scrolled .nav-burger span{background:var(--n700)}
   <a class="mobile-menu-link" href="index.html" onclick="closeMobileMenu()">Home</a>
   <a class="mobile-menu-link" href="platform.html" onclick="closeMobileMenu()">Platform</a>
   <a class="mobile-menu-sub" href="platform-technology.html" onclick="closeMobileMenu()">Technology</a>
-  <a class="mobile-menu-link" href="index.html#calculator" onclick="closeMobileMenu()">Pricing</a>
+  <a class="mobile-menu-sub" href="platform-security.html" onclick="closeMobileMenu()">Security</a>
   <a class="mobile-menu-link" href="solutions-ecommerce.html" onclick="closeMobileMenu()">Solutions</a>
   <a class="mobile-menu-sub" href="solutions-ecommerce.html" onclick="closeMobileMenu()">E-Commerce &amp; Retail</a>
   <a class="mobile-menu-sub" href="solutions-manufacturing.html" onclick="closeMobileMenu()">Import &amp; Manufacturing</a>
   <a class="mobile-menu-sub" href="solutions-logistics.html" onclick="closeMobileMenu()">Logistics &amp; Freight</a>
   <a class="mobile-menu-sub" href="solutions-corporate.html" onclick="closeMobileMenu()">Mid &amp; Large Business</a>
   <a class="mobile-menu-sub" href="solutions-sme.html" onclick="closeMobileMenu()">Small Business</a>
-  <a class="mobile-menu-link" href="blog.html" onclick="closeMobileMenu()">Insights</a>
+  <a class="mobile-menu-link" href="partners-partner.html" onclick="closeMobileMenu()">Partners</a>
+  <a class="mobile-menu-sub" href="partners-refer.html" onclick="closeMobileMenu()">Refer clients</a>
+  <a class="mobile-menu-sub" href="partners-resell.html" onclick="closeMobileMenu()">Resell</a>
+  <a class="mobile-menu-sub" href="partners-embed.html" onclick="closeMobileMenu()">Embed payments</a>
+  <a class="mobile-menu-link" href="about-vision.html" onclick="closeMobileMenu()">About</a>
+  <a class="mobile-menu-sub" href="about-vision.html" onclick="closeMobileMenu()">Vision &amp; Values</a>
+  <a class="mobile-menu-sub" href="about-history.html" onclick="closeMobileMenu()">History</a>
+  <a class="mobile-menu-sub" href="about-team.html" onclick="closeMobileMenu()">Team</a>
+  <a class="mobile-menu-sub" href="about-licenses.html" onclick="closeMobileMenu()">Licenses</a>
+  <a class="mobile-menu-link" href="insights-stories.html" onclick="closeMobileMenu()">Insights</a>
+  <a class="mobile-menu-sub" href="insights-stories.html" onclick="closeMobileMenu()">Customer stories</a>
+  <a class="mobile-menu-sub" href="insights-market.html" onclick="closeMobileMenu()">Market insights</a>
+  <a class="mobile-menu-sub" href="events.html" onclick="closeMobileMenu()">Events</a>
+  <a class="mobile-menu-link" href="tools.html" onclick="closeMobileMenu()">Tools</a>
+  <a class="mobile-menu-sub" href="tools-calculator.html" onclick="closeMobileMenu()">FX Savings Calculator</a>
+  <a class="mobile-menu-sub" href="tools-converter.html" onclick="closeMobileMenu()">Currency Converter</a>
+  <a class="mobile-menu-sub" href="tools-swift.html" onclick="closeMobileMenu()">SWIFT / BIC Lookup</a>
+  <a class="mobile-menu-sub" href="tools-iban.html" onclick="closeMobileMenu()">IBAN Verifier</a>
   <a href="index.html#contact" class="btn btn-primary mobile-menu-cta" onclick="closeMobileMenu()">Open an account</a>
 </div>
 `;
@@ -177,14 +286,13 @@ nav.scrolled .nav-burger span{background:var(--n700)}
   tmp.innerHTML = NAV_HTML;
   while (tmp.firstChild) s.parentNode.insertBefore(tmp.firstChild, s);
 
-  // 3. Active-page detection (runs after injection — nav is already in DOM)
+  // 3. Active-page detection
   (function setActive(){
     var file = window.location.pathname
       .replace(/^\/hansepay\//, '/')
       .replace(/^\//, '') || 'index.html';
     file = file.split('#')[0].split('?')[0] || 'index.html';
 
-    // Mark active dropdown item + its parent nav-link
     document.querySelectorAll('a.nav-dd-link').forEach(function(a){
       var href = (a.getAttribute('href')||'').split('#')[0];
       if (href && href === file) {
@@ -196,26 +304,31 @@ nav.scrolled .nav-burger span{background:var(--n700)}
         }
       }
     });
-    // Mark active top-level <a class="nav-link">
     document.querySelectorAll('li.nav-item > a.nav-link').forEach(function(a){
       var href = (a.getAttribute('href')||'').split('#')[0];
       if (href && href === file) a.classList.add('active-page');
     });
-    // Special: blog-post.html -> activate Insights
-    if (file.startsWith('blog-post') || file.startsWith('post-')) {
-      document.querySelectorAll('a.nav-link[href="blog.html"]').forEach(function(a){
-        a.classList.add('active-page');
-      });
-    }
-    // Special: solutions-*.html -> activate Solutions nav-link
-    if (file.startsWith('solutions-')) {
-      document.querySelectorAll('.nav-item .nav-link').forEach(function(el){
-        if (el.textContent.trim().startsWith('Solutions')) el.classList.add('active-page');
-      });
-    }
+
+    // Section-based activations
+    var prefixes = [
+      {prefix:'solutions-', text:'Solutions'},
+      {prefix:'platform', text:'Platform'},
+      {prefix:'partners-', text:'Partners'},
+      {prefix:'about-', text:'About'},
+      {prefix:'insights-', text:'Insights'},
+      {prefix:'events', text:'Insights'},
+      {prefix:'tools', text:'Tools'}
+    ];
+    prefixes.forEach(function(p){
+      if(file.startsWith(p.prefix)){
+        document.querySelectorAll('.nav-item .nav-link').forEach(function(el){
+          if(el.textContent.trim().startsWith(p.text)) el.classList.add('active-page');
+        });
+      }
+    });
   })();
 
-  // 4. Scroll + burger (deferred until DOM ready)
+  // 4. Scroll + burger
   function initNav(){
     var nav = document.getElementById('main-nav');
     if (!nav) return;
@@ -234,7 +347,6 @@ nav.scrolled .nav-burger span{background:var(--n700)}
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initNav);
   else initNav();
 
-  // 5. Global closeMobileMenu (used in onclick attributes)
   window.closeMobileMenu = function(){
     var menu   = document.getElementById('mobile-menu');
     var burger = document.getElementById('nav-burger');

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay — FX Savings Calculator</title>
+<meta name="description" content="Estimate how much your business could save on FX vs. your current bank or provider. Set volume, currency, and provider type. Free, no signup." />
+<link rel="icon" type="image/png" href="assets/hansepay-mark-uploaded.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+:root{--n900:#060D1A;--n800:#0B1929;--n700:#0F2540;--n600:#163659;--n500:#1E4E80;--n400:#2E6BAD;--n300:#3B7BC4;--n200:#8DBDE6;--n100:#C4DDEF;--n050:#EBF4FB;--off:#F5F1EA;--gold:#C9A961;--ink:#0B1929;--ink2:#3D5A73;--ink3:#7A9AB0;--font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-display:Georgia,'Times New Roman',serif;--font-logo:'Libre Baskerville',Georgia,serif;--r-pill:100px;--r-lg:16px;--r-md:10px;--hairline:rgba(11,25,41,0.07)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--font-ui);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--n500);color:#fff}.btn-primary:hover{background:var(--n600)}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border-radius:var(--r-pill);background:rgba(30,78,128,.08);color:var(--n500)}
+.hero{background:#F6F9FC;padding:140px 0 80px}
+.hero h1{font-family:var(--font-display);font-size:clamp(44px,5.5vw,76px);font-weight:400;line-height:1.05;letter-spacing:-.03em;color:var(--ink);margin-bottom:24px}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--n500)}
+.hero-sub{font-size:17px;color:var(--ink2);line-height:1.72;max-width:640px}
+.section{padding:96px 0}
+.section-border{border-top:1px solid rgba(11,25,41,.08)}
+@media(max-width:768px){.section{padding:64px 0}}
+/* Calculator card */
+.calc-card{background:#fff;border:1px solid var(--hairline);border-radius:var(--r-lg);padding:40px;max-width:1100px;margin:0 auto;box-shadow:0 4px 20px rgba(11,25,41,.04)}
+.calc-header{margin-bottom:32px}
+.calc-header h3{font-family:var(--font-display);font-size:28px;font-weight:400;color:var(--n900);letter-spacing:-.01em;margin-bottom:8px}
+.calc-header p{font-size:15px;color:var(--ink2)}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+@media(max-width:780px){.calc-grid{grid-template-columns:1fr}}
+.calc-left{padding-right:40px;display:flex;flex-direction:column;gap:32px}
+@media(max-width:780px){.calc-left{padding-right:0;padding-bottom:32px;border-bottom:1px solid var(--hairline)}}
+.calc-right{padding-left:40px;border-left:1px solid var(--hairline)}
+@media(max-width:780px){.calc-right{padding-left:0;border-left:none;padding-top:32px}}
+/* Labels */
+.inp-label{font-size:14px;font-weight:500;color:var(--n500);margin-bottom:8px;display:block}
+.inp-big{font-family:var(--font-display);font-size:36px;font-weight:400;color:var(--n900);letter-spacing:-.01em;line-height:1.1;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.inp-hint{font-size:13px;color:var(--ink2);margin-top:8px}
+/* Slider */
+.hp-slider{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:9999px;outline:none;cursor:pointer;background:linear-gradient(to right,#3B7BC4 0%,#3B7BC4 var(--pct,0%),#C4DDEF var(--pct,0%),#C4DDEF 100%)}
+.hp-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:20px;height:20px;border-radius:50%;background:#1E4E80;border:3px solid #fff;box-shadow:0 2px 6px rgba(11,25,41,.18);cursor:pointer}
+.hp-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#1E4E80;border:3px solid #fff;box-shadow:0 2px 6px rgba(11,25,41,.18);cursor:pointer}
+/* Mode toggle */
+.mode-toggle{display:flex;padding:4px;border-radius:10px;background:var(--n050);margin-bottom:12px}
+.mode-btn{flex:1;padding:8px 12px;border-radius:8px;border:1px solid transparent;background:transparent;font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .15s;font-family:var(--font-ui)}
+.mode-btn.active{background:#fff;color:var(--n900);box-shadow:0 1px 2px rgba(11,25,41,.08);border-color:var(--hairline)}
+/* Provider select */
+.prov-select{width:100%;border:1px solid var(--hairline);border-radius:10px;padding:10px 12px;font-size:14px;color:var(--n900);font-family:var(--font-ui);outline:none;background:#fff}
+/* Currency picker */
+.ccy-btn{width:100%;display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px solid var(--hairline);border-radius:10px;padding:10px 14px;cursor:pointer;font-size:15px;font-family:var(--font-ui);color:var(--n900);transition:background .15s}
+.ccy-btn:hover{background:rgba(11,25,41,.02)}
+.ccy-picker{display:none;position:absolute;z-index:50;background:#fff;border:1px solid var(--hairline);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.12);max-height:320px;overflow-y:auto;width:100%}
+.ccy-picker.open{display:block}
+.ccy-group-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--n300);padding:10px 14px 6px;display:block}
+.ccy-option{display:flex;align-items:center;gap:10px;padding:8px 14px;cursor:pointer;transition:background .12s;font-size:14px;color:var(--n900);font-family:var(--font-ui)}
+.ccy-option:hover{background:rgba(11,25,41,.04)}
+.ccy-cat-badge{font-size:11px;font-weight:500;background:var(--n050);color:var(--n500);padding:2px 8px;border-radius:4px;margin-left:auto}
+/* Results */
+.saving-label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--n300);margin-bottom:10px}
+.saving-big{font-family:var(--font-display);font-style:italic;font-weight:300;font-size:clamp(56px,7vw,80px);color:var(--n900);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.saving-currency{font-family:var(--font-display);font-weight:400;font-size:clamp(56px,7vw,80px);color:var(--n500);letter-spacing:-.02em;line-height:1}
+.breakdown-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--hairline)}
+.breakdown-row:last-child{border-bottom:none}
+.breakdown-key{font-size:14px;font-weight:500;color:var(--n500)}
+.breakdown-val{font-size:16px;font-weight:500;color:var(--n900);font-variant-numeric:tabular-nums}
+/* Bar chart */
+.bar-wrap{margin-bottom:28px}
+.bar-row{margin-bottom:16px}
+.bar-row-label{font-size:13px;color:var(--ink2);margin-bottom:6px}
+.bar-track{width:100%;height:10px;background:var(--n050);border-radius:9999px;overflow:hidden}
+.bar-fill{height:100%;border-radius:9999px;transition:width .4s cubic-bezier(.4,0,.2,1)}
+.bar-amount{font-size:13px;font-weight:500;color:var(--n900);margin-top:4px;text-align:right;font-variant-numeric:tabular-nums}
+/* CTA in card */
+.calc-cta{display:block;width:100%;text-align:center;background:var(--n900);color:#fff;border:none;border-radius:var(--r-pill);padding:14px 24px;font-size:14px;font-weight:500;cursor:pointer;font-family:var(--font-ui);transition:opacity .15s;text-decoration:none}
+.calc-cta:hover{opacity:.9}
+.calc-footnote{font-size:12px;color:var(--ink2);margin-top:10px;line-height:1.5}
+/* CTA strip */
+.cta-strip{background:var(--n800);padding:80px 0;text-align:center}
+.cta-strip h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,46px);font-weight:400;color:#fff;letter-spacing:-.025em;margin-bottom:12px}
+.cta-strip h2 em{font-style:italic;font-weight:300;color:var(--n200)}
+.cta-strip p{font-size:16px;color:rgba(255,255,255,.55);margin-bottom:32px}
+</style>
+</head>
+<body>
+<script src="assets/nav.js"></script>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div style="max-width:820px">
+      <span class="eyebrow">FX Savings Calculator</span>
+      <h1 style="margin-top:24px">See what you could save on FX, <em>in under 30 seconds.</em></h1>
+      <p class="hero-sub">Set your annual volume, your current provider, and your destination currency. We'll show you the estimated annual saving with HansePay — then get an exact figure with a free FX audit.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="section section-border" style="padding-top:64px">
+  <div class="container">
+    <div class="calc-card" id="calc-root">
+      <div class="calc-header">
+        <h3>Estimate your FX savings</h3>
+        <p>See what you could save with HansePay in under 30 seconds. These are estimates based on industry-standard margins.</p>
+      </div>
+      <div class="calc-grid">
+        <!-- LEFT: Inputs -->
+        <div class="calc-left">
+          <!-- Volume -->
+          <div>
+            <label class="inp-label">Annual cross-border payment volume</label>
+            <div class="inp-big" id="vol-display">1.000.000 €</div>
+            <input type="range" class="hp-slider" id="vol-slider" min="100000" max="50000000" step="50000" value="1000000" style="--pct:1.8%">
+            <p class="inp-hint">Total amount you send in foreign currencies per year.</p>
+          </div>
+
+          <!-- Currency picker -->
+          <div style="position:relative">
+            <label class="inp-label">Currency pair</label>
+            <button class="ccy-btn" id="ccy-btn" type="button">
+              <span id="ccy-display">🇪🇺 EUR → 🇺🇸 USD</span>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="ccy-picker" id="ccy-picker"></div>
+            <div style="margin-top:10px">
+              <span id="cat-badge" style="font-size:11px;font-weight:500;background:var(--n050);color:var(--n500);padding:4px 10px;border-radius:6px;letter-spacing:.02em">Major currency</span>
+            </div>
+          </div>
+
+          <!-- Current FX cost -->
+          <div>
+            <label class="inp-label">Your current FX cost</label>
+            <div class="mode-toggle">
+              <button class="mode-btn active" id="mode-provider" type="button">By provider</button>
+              <button class="mode-btn" id="mode-custom" type="button">By exact margin</button>
+            </div>
+            <!-- Provider view -->
+            <div id="prov-view">
+              <select class="prov-select" id="prov-select">
+                <option value="major_de">Major German bank (Deutsche Bank, Commerzbank)</option>
+                <option value="sparkasse">Sparkasse / Volksbank</option>
+                <option value="international">International bank (HSBC, BNP Paribas)</option>
+                <option value="broker">FX broker / specialist</option>
+                <option value="other">Other / custom</option>
+              </select>
+              <p class="inp-hint" id="prov-margin-hint">Estimated margin at your volume: <strong id="prov-margin-val">2.50%</strong></p>
+            </div>
+            <!-- Custom view -->
+            <div id="custom-view" style="display:none">
+              <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px">
+                <span style="font-size:13px;color:var(--ink2)">Current FX provider markup</span>
+                <span style="font-family:var(--font-display);font-size:24px;font-weight:400;color:var(--n900)" id="custom-val-display">2.50%</span>
+              </div>
+              <input type="range" class="hp-slider" id="custom-slider" min="0.5" max="6" step="0.05" value="2.5" style="--pct:36%">
+              <div style="display:flex;justify-content:space-between;margin-top:6px;font-size:11px;color:var(--ink2)"><span>0.5%</span><span>6.0%</span></div>
+            </div>
+          </div>
+
+          <!-- Payments per month -->
+          <div>
+            <label class="inp-label">Cross-border payments per month</label>
+            <div class="inp-big" id="pay-display">25</div>
+            <input type="range" class="hp-slider" id="pay-slider" min="1" max="500" step="1" value="25" style="--pct:4.8%">
+            <p class="inp-hint">Used to estimate per-payment fee savings (SWIFT, lifting, beneficiary fees).</p>
+          </div>
+        </div>
+
+        <!-- RIGHT: Results -->
+        <div class="calc-right">
+          <div class="saving-label">Estimated annual saving</div>
+          <div style="margin-bottom:24px;line-height:1">
+            <span class="saving-big" id="saving-big">37.500</span><span class="saving-currency"> €</span>
+          </div>
+
+          <div style="margin-bottom:28px">
+            <div class="breakdown-row">
+              <span class="breakdown-key">Saved on FX margins</span>
+              <span class="breakdown-val" id="br-margin">37.500 €</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-key">Saved on per-payment fees</span>
+              <span class="breakdown-val" id="br-fees">0 €</span>
+            </div>
+          </div>
+
+          <div class="bar-wrap">
+            <div class="bar-row">
+              <div class="bar-row-label">Your current annual cost</div>
+              <div class="bar-track"><div class="bar-fill" id="bar-current" style="width:100%;background:#C4DDEF"></div></div>
+              <div class="bar-amount" id="bar-current-amt">62.500 €</div>
+            </div>
+            <div class="bar-row">
+              <div class="bar-row-label">With HansePay</div>
+              <div class="bar-track"><div class="bar-fill" id="bar-hp" style="width:40%;background:#1E4E80"></div></div>
+              <div class="bar-amount" id="bar-hp-amt">25.000 €</div>
+            </div>
+          </div>
+
+          <a href="#fx-audit" class="calc-cta" id="calc-cta-btn">Get an exact figure: request a free FX audit</a>
+          <p class="calc-footnote">These are estimates based on industry-standard margins. Your audit will use your actual transaction history.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip" id="fx-audit">
+  <div class="container">
+    <h2>Get an exact figure with a <em>free FX audit.</em></h2>
+    <p>We'll analyse your actual transaction data and show you the precise annual saving.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="index.html#contact" class="btn btn-primary">Request a free FX audit</a>
+      <a href="index.html#contact" class="btn" style="background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25)">Open your account</a>
+    </div>
+  </div>
+</section>
+
+<script src="assets/footer.js"></script>
+<script>
+(function(){
+  // Category data
+  var CATS = {
+    major:{bankMarkup:.025,hpMarkup:.004,label:'Major currency'},
+    minor:{bankMarkup:.035,hpMarkup:.007,label:'Minor currency'},
+    exotic:{bankMarkup:.05,hpMarkup:.013,label:'Exotic currency'}
+  };
+  // Bank presets
+  var BANKS = {
+    major_de:{label:'Major German bank',mult:1.0},
+    sparkasse:{label:'Sparkasse / Volksbank',mult:1.12},
+    international:{label:'International bank',mult:1.0},
+    broker:{label:'FX broker',mult:0.6},
+    other:{label:'Other / custom',mult:1.0}
+  };
+  var PER_PAYMENT_BANK = 38;
+  // Currencies (region + category)
+  var CURRENCIES = [
+    {code:'USD',name:'United States',flag:'🇺🇸',cat:'major',region:'major'},
+    {code:'GBP',name:'United Kingdom',flag:'🇬🇧',cat:'major',region:'major'},
+    {code:'CAD',name:'Canada',flag:'🇨🇦',cat:'major',region:'major'},
+    {code:'AUD',name:'Australia',flag:'🇦🇺',cat:'major',region:'major'},
+    {code:'JPY',name:'Japan',flag:'🇯🇵',cat:'major',region:'major'},
+    {code:'CHF',name:'Switzerland',flag:'🇨🇭',cat:'major',region:'major'},
+    {code:'MXN',name:'Mexico',flag:'🇲🇽',cat:'minor',region:'americas'},
+    {code:'COP',name:'Colombia',flag:'🇨🇴',cat:'minor',region:'americas'},
+    {code:'CLP',name:'Chile',flag:'🇨🇱',cat:'minor',region:'americas'},
+    {code:'PEN',name:'Peru',flag:'🇵🇪',cat:'minor',region:'americas'},
+    {code:'SVC',name:'El Salvador',flag:'🇸🇻',cat:'exotic',region:'americas'},
+    {code:'CRC',name:'Costa Rica',flag:'🇨🇷',cat:'exotic',region:'americas'},
+    {code:'GTQ',name:'Guatemala',flag:'🇬🇹',cat:'exotic',region:'americas'},
+    {code:'ZAR',name:'South Africa',flag:'🇿🇦',cat:'minor',region:'africa'},
+    {code:'GHS',name:'Ghana',flag:'🇬🇭',cat:'exotic',region:'africa'},
+    {code:'KES',name:'Kenya',flag:'🇰🇪',cat:'exotic',region:'africa'},
+    {code:'NGN',name:'Nigeria',flag:'🇳🇬',cat:'exotic',region:'africa'},
+    {code:'EGP',name:'Egypt',flag:'🇪🇬',cat:'exotic',region:'africa'},
+    {code:'TRY',name:'Turkey',flag:'🇹🇷',cat:'minor',region:'meap'},
+    {code:'ILS',name:'Israel',flag:'🇮🇱',cat:'minor',region:'meap'},
+    {code:'QAR',name:'Qatar',flag:'🇶🇦',cat:'minor',region:'meap'},
+    {code:'SAR',name:'Saudi Arabia',flag:'🇸🇦',cat:'minor',region:'meap'},
+    {code:'AED',name:'UAE',flag:'🇦🇪',cat:'minor',region:'meap'},
+    {code:'INR',name:'India',flag:'🇮🇳',cat:'minor',region:'meap'},
+    {code:'CNY',name:'China',flag:'🇨🇳',cat:'minor',region:'meap'},
+    {code:'HKD',name:'Hong Kong',flag:'🇭🇰',cat:'major',region:'meap'},
+    {code:'SGD',name:'Singapore',flag:'🇸🇬',cat:'major',region:'meap'},
+    {code:'MYR',name:'Malaysia',flag:'🇲🇾',cat:'minor',region:'meap'},
+    {code:'THB',name:'Thailand',flag:'🇹🇭',cat:'minor',region:'meap'},
+    {code:'PHP',name:'Philippines',flag:'🇵🇭',cat:'exotic',region:'meap'},
+    {code:'IDR',name:'Indonesia',flag:'🇮🇩',cat:'exotic',region:'meap'},
+    {code:'PKR',name:'Pakistan',flag:'🇵🇰',cat:'exotic',region:'meap'},
+    {code:'BDT',name:'Bangladesh',flag:'🇧🇩',cat:'exotic',region:'meap'},
+    {code:'VND',name:'Vietnam',flag:'🇻🇳',cat:'exotic',region:'meap'}
+  ];
+  var REGIONS = {major:'Major currencies',americas:'Americas',africa:'Africa',meap:'Middle East & Asia-Pacific'};
+
+  // State
+  var volume=1000000, destCode='USD', mode='provider', bankKey='major_de', customMargin=2.5, payments=25;
+
+  function eur0(n){ return new Intl.NumberFormat('de-DE',{maximumFractionDigits:0}).format(Math.round(n)); }
+  function fmtPct(m){ return (m*100).toFixed(2).replace(/\.?0+$/,'')+'%'; }
+  function pct(val,min,max){ return Math.max(0,Math.min(100,(val-min)/(max-min)*100)); }
+
+  function getCat(){ var c=CURRENCIES.find(function(x){return x.code===destCode;}); return c?c.cat:'major'; }
+  function getProvMargin(){
+    var cat=CATS[getCat()];
+    var b=BANKS[bankKey];
+    return cat.bankMarkup*(b?b.mult:1);
+  }
+  function getCurrentMargin(){
+    if(mode==='provider') return getProvMargin();
+    return customMargin/100;
+  }
+
+  // Animated counter
+  var animTarget=0, animCurrent=0, animRaf=null;
+  function animateTo(target){
+    var start=animCurrent, t0=null;
+    if(animRaf) cancelAnimationFrame(animRaf);
+    function step(ts){
+      if(!t0) t0=ts;
+      var t=Math.min(1,(ts-t0)/400);
+      var eased=1-Math.pow(1-t,3);
+      animCurrent=start+(target-start)*eased;
+      document.getElementById('saving-big').textContent=eur0(animCurrent);
+      if(t<1) animRaf=requestAnimationFrame(step);
+      else{ animCurrent=target; document.getElementById('saving-big').textContent=eur0(target); }
+    }
+    animRaf=requestAnimationFrame(step);
+  }
+
+  function compute(){
+    var cat=CATS[getCat()];
+    var cm=getCurrentMargin();
+    var annualPay=payments*12;
+    var cmCost=volume*cm;
+    var hpCost=volume*cat.hpMarkup;
+    var marginSaving=Math.max(0,cmCost-hpCost);
+    var feeSaving=Math.max(0,annualPay*PER_PAYMENT_BANK);
+    var total=marginSaving+feeSaving;
+    var curTotal=cmCost+annualPay*PER_PAYMENT_BANK;
+    var hpTotal=hpCost;
+    var maxC=Math.max(curTotal,hpTotal,1);
+    // Update UI
+    animateTo(total);
+    document.getElementById('br-margin').textContent=eur0(marginSaving)+' €';
+    document.getElementById('br-fees').textContent=eur0(feeSaving)+' €';
+    document.getElementById('bar-current').style.width=(curTotal/maxC*100)+'%';
+    document.getElementById('bar-hp').style.width=Math.max(4,hpTotal/maxC*100)+'%';
+    document.getElementById('bar-current-amt').textContent=eur0(curTotal)+' €';
+    document.getElementById('bar-hp-amt').textContent=eur0(hpTotal)+' €';
+    // cat badge
+    document.getElementById('cat-badge').textContent=cat.label;
+    // prov margin hint
+    if(mode==='provider'){
+      document.getElementById('prov-margin-val').textContent=fmtPct(getProvMargin());
+    }
+  }
+
+  // Vol slider
+  var volSlider=document.getElementById('vol-slider');
+  volSlider.addEventListener('input',function(){
+    volume=+this.value;
+    document.getElementById('vol-display').textContent=eur0(volume)+' €';
+    this.style.setProperty('--pct',pct(volume,100000,50000000)+'%');
+    compute();
+  });
+
+  // Pay slider
+  var paySlider=document.getElementById('pay-slider');
+  paySlider.addEventListener('input',function(){
+    payments=+this.value;
+    document.getElementById('pay-display').textContent=this.value;
+    this.style.setProperty('--pct',pct(payments,1,500)+'%');
+    compute();
+  });
+
+  // Custom margin slider
+  var custSlider=document.getElementById('custom-slider');
+  custSlider.addEventListener('input',function(){
+    customMargin=+this.value;
+    document.getElementById('custom-val-display').textContent=(+this.value).toFixed(2)+'%';
+    this.style.setProperty('--pct',pct(+this.value,.5,6)+'%');
+    compute();
+  });
+
+  // Mode toggle
+  document.getElementById('mode-provider').addEventListener('click',function(){
+    mode='provider';
+    this.classList.add('active'); document.getElementById('mode-custom').classList.remove('active');
+    document.getElementById('prov-view').style.display='';
+    document.getElementById('custom-view').style.display='none';
+    compute();
+  });
+  document.getElementById('mode-custom').addEventListener('click',function(){
+    mode='custom';
+    this.classList.add('active'); document.getElementById('mode-provider').classList.remove('active');
+    document.getElementById('prov-view').style.display='none';
+    document.getElementById('custom-view').style.display='';
+    // Sync custom slider to current provider margin
+    var cm=getProvMargin()*100;
+    customMargin=Math.min(6,Math.max(.5,cm));
+    custSlider.value=customMargin;
+    document.getElementById('custom-val-display').textContent=customMargin.toFixed(2)+'%';
+    custSlider.style.setProperty('--pct',pct(customMargin,.5,6)+'%');
+    compute();
+  });
+
+  // Provider select
+  document.getElementById('prov-select').addEventListener('change',function(){
+    bankKey=this.value;
+    if(bankKey==='other'){
+      document.getElementById('mode-custom').click();
+    }
+    compute();
+  });
+
+  // Currency picker
+  var pickerEl=document.getElementById('ccy-picker');
+  // Build picker HTML
+  var pickerHTML='';
+  ['major','americas','africa','meap'].forEach(function(region){
+    var items=CURRENCIES.filter(function(c){return c.region===region;});
+    pickerHTML+='<span class="ccy-group-label">'+REGIONS[region]+'</span>';
+    items.forEach(function(c){
+      pickerHTML+='<div class="ccy-option" data-code="'+c.code+'">'+
+        '<span>'+c.flag+'</span>'+
+        '<span style="font-weight:500">'+c.code+'</span>'+
+        '<span style="color:var(--ink2)">'+c.name+'</span>'+
+        '<span class="ccy-cat-badge">'+c.cat+'</span>'+
+        '</div>';
+    });
+  });
+  pickerEl.innerHTML=pickerHTML;
+
+  document.getElementById('ccy-btn').addEventListener('click',function(e){
+    e.stopPropagation();
+    pickerEl.classList.toggle('open');
+  });
+  document.addEventListener('click',function(){ pickerEl.classList.remove('open'); });
+  pickerEl.addEventListener('click',function(e){
+    var opt=e.target.closest('.ccy-option');
+    if(!opt) return;
+    destCode=opt.getAttribute('data-code');
+    var c=CURRENCIES.find(function(x){return x.code===destCode;});
+    document.getElementById('ccy-display').textContent='🇪🇺 EUR → '+(c?c.flag:'')+' '+destCode;
+    pickerEl.classList.remove('open');
+    compute();
+  });
+
+  // Init
+  compute();
+})();
+</script>
+</body>
+</html>

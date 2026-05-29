@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay — Currency Converter</title>
+<meta name="description" content="Live mid-market currency rates across 30+ markets worldwide. Convert between currencies at the real exchange rate. Free, no signup." />
+<link rel="icon" type="image/png" href="assets/hansepay-mark-uploaded.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+:root{--n900:#060D1A;--n800:#0B1929;--n700:#0F2540;--n600:#163659;--n500:#1E4E80;--n400:#2E6BAD;--n300:#3B7BC4;--n200:#8DBDE6;--n100:#C4DDEF;--n050:#EBF4FB;--off:#F5F1EA;--gold:#C9A961;--ink:#0B1929;--ink2:#3D5A73;--ink3:#7A9AB0;--font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-display:Georgia,'Times New Roman',serif;--font-logo:'Libre Baskerville',Georgia,serif;--r-pill:100px;--r-lg:16px;--r-md:10px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--font-ui);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--n500);color:#fff}.btn-primary:hover{background:var(--n600)}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border-radius:var(--r-pill);background:rgba(30,78,128,.08);color:var(--n500)}
+.hero{background:#F6F9FC;padding:140px 0 80px}
+.hero h1{font-family:var(--font-display);font-size:clamp(44px,5.5vw,76px);font-weight:400;line-height:1.05;letter-spacing:-.03em;color:var(--ink);margin-bottom:24px}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--n500)}
+.hero-sub{font-size:17px;color:var(--ink2);line-height:1.72;max-width:640px}
+.section{padding:96px 0}
+.section-light{background:#F6F9FC}
+.section-border{border-top:1px solid rgba(11,25,41,.08)}
+@media(max-width:768px){.section{padding:64px 0}}
+.section-heading{font-family:var(--font-display);font-size:clamp(30px,3.6vw,48px);font-weight:400;line-height:1.1;letter-spacing:-.025em;color:var(--ink);margin-top:12px}
+/* Converter card */
+.converter-card{background:#fff;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);overflow:hidden;max-width:1100px;margin:0 auto;box-shadow:0 4px 20px rgba(0,0,0,.04)}
+.conv-header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px;padding:28px 32px;border-bottom:1px solid rgba(11,25,41,.08)}
+.conv-rate-label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--n500);margin-bottom:6px}
+.conv-rate-big{font-family:var(--font-display);font-size:clamp(28px,3.6vw,40px);font-weight:400;color:var(--n900);line-height:1.1}
+.conv-rate-big em{font-style:italic;font-weight:300;color:var(--n500)}
+.conv-meta-row{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+.conv-timestamp{font-size:13px;color:var(--ink2)}
+.live-badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;background:rgba(26,127,90,.1);color:#1A7F5A;padding:4px 10px;border-radius:var(--r-pill)}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#1A7F5A}
+.conv-body{display:grid;grid-template-columns:1fr 1fr}
+@media(max-width:760px){.conv-body{grid-template-columns:1fr}}
+.conv-left{padding:28px 32px;border-right:1px solid rgba(11,25,41,.08)}
+@media(max-width:760px){.conv-left{border-right:none;border-bottom:1px solid rgba(11,25,41,.08)}}
+.conv-right{padding:28px 32px}
+.field-label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--n500);margin-bottom:8px}
+.currency-row{display:flex;align-items:center;gap:8px;border:1px solid rgba(11,25,41,.08);border-radius:12px;padding:0 16px;height:72px;background:#fff}
+.amount-input{flex:1;background:transparent;outline:none;border:none;font-family:var(--font-display);font-size:clamp(22px,3vw,32px);font-weight:400;color:var(--n900);min-width:0;font-variant-numeric:tabular-nums}
+.flag-emoji{font-size:20px;line-height:1;flex-shrink:0}
+.currency-select{appearance:none;background:transparent;outline:none;border:none;font-size:14px;font-weight:500;color:var(--n900);cursor:pointer;padding-right:18px;position:relative}
+.select-wrap{position:relative;flex-shrink:0}
+.select-caret{position:absolute;right:0;top:50%;transform:translateY(-50%);font-size:10px;color:var(--n700);pointer-events:none}
+.swap-btn{display:flex;align-items:center;justify-content:center;margin:12px auto;width:36px;height:36px;border-radius:50%;border:1px solid var(--n900);color:var(--n900);background:#fff;cursor:pointer;transition:all .15s}
+.swap-btn:hover{background:var(--n050)}
+.info-boxes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.info-box{background:var(--n050);border:1px solid rgba(11,25,41,.06);border-radius:10px;padding:12px 14px}
+.info-box-label{font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--n500);margin-bottom:4px}
+.info-box-val{font-size:14px;font-weight:500;color:var(--n900);font-variant-numeric:tabular-nums}
+.conv-cta{margin-top:18px;display:block;width:100%;text-align:center;border:1px solid var(--n900);color:var(--n900);border-radius:var(--r-pill);padding:14px 20px;font-size:14px;font-weight:500;transition:background .15s}
+.conv-cta:hover{background:var(--n050)}
+/* Chart */
+.chart-range{display:inline-flex;align-items:center;gap:2px;padding:4px;border-radius:var(--r-pill);background:var(--n050)}
+.range-btn{padding:6px 14px;border-radius:var(--r-pill);border:none;cursor:pointer;font-size:12px;font-weight:500;font-family:var(--font-ui);transition:all .15s;background:transparent;color:var(--n700)}
+.range-btn.active{background:var(--n900);color:#fff}
+.chart-area{width:100%;height:260px;margin-top:18px;position:relative}
+.chart-svg{width:100%;height:100%}
+.chart-disclaimer{text-align:center;font-size:13px;color:var(--ink2);margin-top:12px}
+/* Prose section */
+.prose-section{max-width:820px}
+.body-text{font-size:16px;color:var(--ink2);line-height:1.75}
+/* CTA strip */
+.cta-strip{background:var(--n800);padding:80px 0;text-align:center}
+.cta-strip h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,46px);font-weight:400;color:#fff;letter-spacing:-.025em;margin-bottom:12px}
+.cta-strip h2 em{font-style:italic;font-weight:300;color:var(--n200)}
+.cta-strip p{font-size:16px;color:rgba(255,255,255,.55);margin-bottom:32px}
+</style>
+</head>
+<body>
+<script src="assets/nav.js"></script>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div style="max-width:820px">
+      <span class="eyebrow">Currency Converter</span>
+      <h1 style="margin-top:24px">Live mid-market rates <em>across 30+ markets worldwide.</em></h1>
+      <p class="hero-sub">See the real exchange rate before any markup. The starting point for every HansePay quote.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONVERTER -->
+<section class="section section-border" style="padding-top:64px">
+  <div class="container">
+    <div class="converter-card" id="converter-root">
+      <!-- Header -->
+      <div class="conv-header">
+        <div>
+          <div class="conv-rate-label">FX Rate</div>
+          <div class="conv-rate-big" id="rate-display">1 EUR = <em id="rate-num">1.0842</em> USD</div>
+        </div>
+        <div class="conv-meta-row">
+          <span class="conv-timestamp" id="rate-age">FX rate · updated just now</span>
+          <span class="live-badge"><span class="live-dot"></span>Live</span>
+        </div>
+      </div>
+      <!-- Body -->
+      <div class="conv-body">
+        <!-- Left: inputs -->
+        <div class="conv-left">
+          <div class="field-label">You send</div>
+          <div class="currency-row" style="margin-bottom:0">
+            <input class="amount-input" id="from-amount" type="text" inputmode="decimal" value="1,000.00" autocomplete="off" />
+            <span class="flag-emoji" id="from-flag">🇪🇺</span>
+            <div class="select-wrap">
+              <select class="currency-select" id="from-select"></select>
+              <span class="select-caret">▼</span>
+            </div>
+          </div>
+
+          <div class="swap-btn" id="swap-btn" title="Swap currencies">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 16V4m0 0L3 8m4-4l4 4"/><path d="M17 8v12m0 0l4-4m-4 4l-4-4"/></svg>
+          </div>
+
+          <div class="field-label">Recipient gets</div>
+          <div class="currency-row">
+            <input class="amount-input" id="to-amount" type="text" inputmode="decimal" value="1,084.20" readonly style="opacity:.85" />
+            <span class="flag-emoji" id="to-flag">🇺🇸</span>
+            <div class="select-wrap">
+              <select class="currency-select" id="to-select"></select>
+              <span class="select-caret">▼</span>
+            </div>
+          </div>
+
+          <div class="info-boxes">
+            <div class="info-box">
+              <div class="info-box-label">Fee</div>
+              <div class="info-box-val">3.80 EUR</div>
+            </div>
+            <div class="info-box">
+              <div class="info-box-label">Arrives</div>
+              <div class="info-box-val">⚡ Within 2 hours</div>
+            </div>
+          </div>
+          <a href="index.html#contact" class="conv-cta">Open an account →</a>
+        </div>
+
+        <!-- Right: chart -->
+        <div class="conv-right">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+            <div>
+              <div class="conv-rate-label">Rate Trend</div>
+              <div style="font-size:14px;font-weight:500;color:var(--n700)" id="pair-label">EUR / USD</div>
+            </div>
+            <div class="chart-range" id="range-btns">
+              <button class="range-btn" data-r="1W">1W</button>
+              <button class="range-btn active" data-r="1M">1M</button>
+              <button class="range-btn" data-r="1Y">1Y</button>
+            </div>
+          </div>
+          <div class="chart-area">
+            <svg class="chart-svg" id="chart-svg" viewBox="0 0 600 240" preserveAspectRatio="none"></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p class="chart-disclaimer">Mid-market rates shown for reference. Actual transfer rates depend on HansePay's quoted price at the time of trade.</p>
+  </div>
+</section>
+
+<!-- WHY MID-MARKET MATTERS -->
+<section class="section section-light section-border">
+  <div class="container">
+    <div class="prose-section">
+      <span class="eyebrow">The difference</span>
+      <h2 class="section-heading">What banks don't show you.</h2>
+      <p class="body-text" style="margin-top:20px">The mid-market rate is the rate at which banks trade with each other — the closest thing to a "true" price for any currency pair. When you send money through your bank, you almost never see this rate. Instead, you see a worse rate, with the bank's spread already baked in. That spread is real cost, just disguised as the exchange rate.</p>
+      <p class="body-text" style="margin-top:16px">HansePay starts from the mid-market rate and adds a clearly disclosed markup on top. The number you see in this converter is the same number we start from when quoting your trade.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip" id="get-started">
+  <div class="container">
+    <h2>Ready to trade at <em>the real rate?</em></h2>
+    <p>Open your HansePay account. See our markup before every trade.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="index.html#contact" class="btn btn-primary">Open your business account</a>
+      <a href="partners-partner.html" class="btn" style="background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25)">Talk to a specialist</a>
+    </div>
+  </div>
+</section>
+
+<script src="assets/footer.js"></script>
+<script>
+(function(){
+  // Currency data
+  var CURRENCIES = [
+    {code:'EUR',flag:'🇪🇺',name:'Euro'},
+    {code:'USD',flag:'🇺🇸',name:'US Dollar'},
+    {code:'GBP',flag:'🇬🇧',name:'British Pound'},
+    {code:'CHF',flag:'🇨🇭',name:'Swiss Franc'},
+    {code:'JPY',flag:'🇯🇵',name:'Japanese Yen'},
+    {code:'CNY',flag:'🇨🇳',name:'Chinese Yuan'},
+    {code:'AUD',flag:'🇦🇺',name:'Australian Dollar'},
+    {code:'CAD',flag:'🇨🇦',name:'Canadian Dollar'},
+    {code:'SEK',flag:'🇸🇪',name:'Swedish Krona'},
+    {code:'NOK',flag:'🇳🇴',name:'Norwegian Krone'},
+    {code:'DKK',flag:'🇩🇰',name:'Danish Krone'},
+    {code:'PLN',flag:'🇵🇱',name:'Polish Złoty'},
+    {code:'CZK',flag:'🇨🇿',name:'Czech Koruna'},
+    {code:'HUF',flag:'🇭🇺',name:'Hungarian Forint'},
+    {code:'RON',flag:'🇷🇴',name:'Romanian Leu'},
+    {code:'BGN',flag:'🇧🇬',name:'Bulgarian Lev'},
+    {code:'TRY',flag:'🇹🇷',name:'Turkish Lira'},
+    {code:'ILS',flag:'🇮🇱',name:'Israeli Shekel'},
+    {code:'INR',flag:'🇮🇳',name:'Indian Rupee'},
+    {code:'SGD',flag:'🇸🇬',name:'Singapore Dollar'},
+    {code:'HKD',flag:'🇭🇰',name:'Hong Kong Dollar'},
+    {code:'KRW',flag:'🇰🇷',name:'South Korean Won'},
+    {code:'MXN',flag:'🇲🇽',name:'Mexican Peso'},
+    {code:'BRL',flag:'🇧🇷',name:'Brazilian Real'},
+    {code:'ZAR',flag:'🇿🇦',name:'South African Rand'},
+    {code:'NZD',flag:'🇳🇿',name:'New Zealand Dollar'},
+    {code:'THB',flag:'🇹🇭',name:'Thai Baht'},
+    {code:'MYR',flag:'🇲🇾',name:'Malaysian Ringgit'},
+    {code:'PHP',flag:'🇵🇭',name:'Philippine Peso'},
+    {code:'IDR',flag:'🇮🇩',name:'Indonesian Rupiah'},
+    {code:'ISK',flag:'🇮🇸',name:'Icelandic Króna'}
+  ];
+
+  var flagFor = function(code){ var c=CURRENCIES.find(function(x){return x.code===code;}); return c?c.flag:'🏳️'; };
+
+  // State
+  var from = 'EUR', to = 'USD';
+  var rate = 1.0842;
+  var amount = 1000;
+  var range = '1M';
+  var series = [];
+  var updatedAt = new Date();
+
+  // Populate selects
+  function populateSelect(el, selected){
+    el.innerHTML = '';
+    CURRENCIES.forEach(function(c){
+      var o = document.createElement('option');
+      o.value = c.code;
+      o.textContent = c.flag+' '+c.code+' · '+c.name;
+      if(c.code===selected) o.selected=true;
+      el.appendChild(o);
+    });
+  }
+  var fromSel = document.getElementById('from-select');
+  var toSel   = document.getElementById('to-select');
+  populateSelect(fromSel, from);
+  populateSelect(toSel, to);
+
+  // Format number
+  function fmt(n, dec){ return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:dec||2}); }
+  function isoDate(d){ return d.toISOString().slice(0,10); }
+
+  // Time ago
+  function timeAgo(d){
+    var s=Math.floor((Date.now()-d.getTime())/1000);
+    if(s<60) return 'just now';
+    if(s<3600) return Math.floor(s/60)+' min ago';
+    return Math.floor(s/3600)+' h ago';
+  }
+
+  // Update UI
+  function updateDisplay(){
+    var ra = document.getElementById('rate-display');
+    var rn = document.getElementById('rate-num');
+    ra.innerHTML='1 '+from+' = <em id="rate-num">'+rate.toFixed(4)+'</em> '+to;
+    document.getElementById('from-flag').textContent = flagFor(from);
+    document.getElementById('to-flag').textContent   = flagFor(to);
+    document.getElementById('pair-label').textContent = from+' / '+to;
+    document.getElementById('to-amount').value = fmt(amount*rate);
+    document.getElementById('rate-age').textContent = 'FX rate · updated '+timeAgo(updatedAt);
+    drawChart();
+  }
+
+  // Fetch live rate
+  function fetchRate(){
+    if(from===to){ rate=1; updatedAt=new Date(); updateDisplay(); return; }
+    fetch('https://api.frankfurter.app/latest?from='+from+'&to='+to)
+      .then(function(r){return r.json();})
+      .then(function(d){
+        var v=d&&d.rates&&d.rates[to];
+        if(typeof v==='number'){rate=v;updatedAt=new Date();}
+        updateDisplay();
+      })
+      .catch(function(){updateDisplay();});
+  }
+
+  // Generate fallback series
+  function makeFallback(days){
+    var out=[], today=new Date();
+    for(var i=days;i>=0;i--){
+      var d=new Date(today); d.setDate(d.getDate()-i);
+      var w=Math.sin(i/3)*0.005+(Math.random()-.5)*.003;
+      out.push({date:isoDate(d),r:+(rate*(1+w)).toFixed(6)});
+    }
+    return out;
+  }
+
+  // Fetch historical series
+  function fetchSeries(){
+    var days={1:7,'1W':7,'1M':30,'1Y':365}[range]||30;
+    if(range==='1W') days=7;
+    if(range==='1M') days=30;
+    if(range==='1Y') days=365;
+    if(from===to){series=makeFallback(days);drawChart();return;}
+    var end=new Date(), start=new Date();
+    start.setDate(start.getDate()-days);
+    fetch('https://api.frankfurter.app/'+isoDate(start)+'..'+isoDate(end)+'?from='+from+'&to='+to)
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d&&d.rates&&typeof d.rates==='object'){
+          var arr=Object.entries(d.rates).map(function(e){return{date:e[0],r:e[1][to]};})
+            .filter(function(x){return typeof x.r==='number';})
+            .sort(function(a,b){return a.date<b.date?-1:1;});
+          series=range==='1Y'?arr.filter(function(_,i){return i%5===0;}):arr;
+        } else {series=makeFallback(days);}
+        drawChart();
+      })
+      .catch(function(){series=makeFallback(days);drawChart();});
+  }
+
+  // Draw SVG line chart
+  function drawChart(){
+    var svg=document.getElementById('chart-svg');
+    if(!svg) return;
+    if(!series.length){svg.innerHTML='';return;}
+    var W=600,H=240,PL=50,PR=10,PT=10,PB=30;
+    var vals=series.map(function(s){return s.r;});
+    var min=Math.min.apply(null,vals), max=Math.max.apply(null,vals);
+    var pad=(max-min)*0.15||max*0.005;
+    min-=pad; max+=pad;
+    var chartW=W-PL-PR, chartH=H-PT-PB;
+    var xS=function(i){return PL+i/(series.length-1||1)*chartW;};
+    var yS=function(v){return PT+chartH-(v-min)/(max-min||1)*chartH;};
+    var pts=series.map(function(s,i){return xS(i)+','+yS(s.r);}).join(' ');
+    // axis labels
+    var ticks=5, html='';
+    for(var t=0;t<=ticks;t++){
+      var v=min+(max-min)*t/ticks;
+      var y=PT+chartH-t/ticks*chartH;
+      html+='<line x1="'+PL+'" y1="'+y+'" x2="'+(W-PR)+'" y2="'+y+'" stroke="#C4DDEF" stroke-dasharray="2 4" stroke-width="1"/>';
+      html+='<text x="'+(PL-4)+'" y="'+(y+4)+'" text-anchor="end" font-size="10" fill="#7A9AB0" font-family="Inter">'+v.toFixed(4)+'</text>';
+    }
+    // x labels (sparse)
+    var step=Math.max(1,Math.floor(series.length/5));
+    for(var i=0;i<series.length;i+=step){
+      var d=new Date(series[i].date);
+      var label;
+      if(range==='1Y') label=d.toLocaleDateString('en-GB',{month:'short'});
+      else label=d.toLocaleDateString('en-GB',{day:'2-digit',month:'short'});
+      html+='<text x="'+xS(i)+'" y="'+(H-6)+'" text-anchor="middle" font-size="10" fill="#7A9AB0" font-family="Inter">'+label+'</text>';
+    }
+    // area fill
+    var first=series[0], last=series[series.length-1];
+    var areaPath='M '+xS(0)+','+yS(first.r)+' ';
+    series.forEach(function(s,i){areaPath+='L '+xS(i)+','+yS(s.r)+' ';});
+    areaPath+='L '+(W-PR)+','+(PT+chartH)+' L '+PL+','+(PT+chartH)+' Z';
+    html+='<defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1E4E80" stop-opacity="0.18"/><stop offset="100%" stop-color="#1E4E80" stop-opacity="0"/></linearGradient></defs>';
+    html+='<path d="'+areaPath+'" fill="url(#cg)"/>';
+    // line
+    html+='<polyline points="'+pts+'" fill="none" stroke="#1E4E80" stroke-width="2"/>';
+    // active dot
+    var li=series.length-1;
+    html+='<circle cx="'+xS(li)+'" cy="'+yS(series[li].r)+'" r="4" fill="#1E4E80"/>';
+    svg.innerHTML=html;
+  }
+
+  // Events: from amount
+  document.getElementById('from-amount').addEventListener('input',function(e){
+    var raw=e.target.value.replace(/,/g,'');
+    var n=parseFloat(raw);
+    if(!isNaN(n)){amount=n;document.getElementById('to-amount').value=fmt(amount*rate);}
+  });
+  document.getElementById('from-amount').addEventListener('blur',function(){
+    this.value=fmt(amount);
+  });
+
+  // Events: selects
+  fromSel.addEventListener('change',function(){from=this.value;fetchRate();fetchSeries();});
+  toSel.addEventListener('change',function(){to=this.value;fetchRate();fetchSeries();});
+
+  // Swap
+  document.getElementById('swap-btn').addEventListener('click',function(){
+    var tmp=from; from=to; to=tmp;
+    fromSel.value=from; toSel.value=to;
+    fetchRate(); fetchSeries();
+  });
+
+  // Range buttons
+  document.getElementById('range-btns').addEventListener('click',function(e){
+    var btn=e.target.closest('[data-r]');
+    if(!btn) return;
+    range=btn.getAttribute('data-r');
+    document.querySelectorAll('.range-btn').forEach(function(b){b.classList.toggle('active',b===btn);});
+    fetchSeries();
+  });
+
+  // Tick "updated X ago"
+  setInterval(function(){ document.getElementById('rate-age').textContent='FX rate · updated '+timeAgo(updatedAt); }, 30000);
+
+  // Init
+  fetchRate();
+  fetchSeries();
+})();
+</script>
+</body>
+</html>

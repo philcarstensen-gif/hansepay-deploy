@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay — SWIFT / BIC Lookup</title>
+<meta name="description" content="Look up SWIFT/BIC codes by bank name, country, city, or code. Curated database of 50+ major banks worldwide. Free, no signup." />
+<link rel="icon" type="image/png" href="assets/hansepay-mark-uploaded.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+:root{--n900:#060D1A;--n800:#0B1929;--n700:#0F2540;--n600:#163659;--n500:#1E4E80;--n400:#2E6BAD;--n300:#3B7BC4;--n200:#8DBDE6;--n100:#C4DDEF;--n050:#EBF4FB;--off:#F5F1EA;--gold:#C9A961;--ink:#0B1929;--ink2:#3D5A73;--ink3:#7A9AB0;--font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-display:Georgia,'Times New Roman',serif;--font-logo:'Libre Baskerville',Georgia,serif;--r-pill:100px;--r-lg:16px;--r-md:10px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--font-ui);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--n500);color:#fff}.btn-primary:hover{background:var(--n600)}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border-radius:var(--r-pill);background:rgba(30,78,128,.08);color:var(--n500)}
+.hero{background:#FAFAFA;padding:140px 0 80px}
+.hero h1{font-family:var(--font-display);font-size:clamp(44px,5.5vw,76px);font-weight:400;line-height:1.05;letter-spacing:-.03em;color:var(--ink);margin-bottom:24px}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--n500)}
+.hero-sub{font-size:17px;color:var(--ink2);line-height:1.72;max-width:640px}
+.section{padding:96px 0}
+.section-light{background:#FAFAFA}
+.section-border{border-top:1px solid rgba(11,25,41,.08)}
+@media(max-width:768px){.section{padding:64px 0}}
+.section-heading{font-family:var(--font-display);font-size:clamp(30px,3.6vw,48px);font-weight:400;line-height:1.1;letter-spacing:-.025em;color:var(--ink);margin-top:12px}
+/* Lookup card */
+.lookup-card{background:#fff;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);padding:32px;max-width:900px;margin:0 auto;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+/* Search field */
+.search-wrap{position:relative}
+.search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--ink2);pointer-events:none}
+.search-input{width:100%;border:1px solid rgba(11,25,41,.12);border-radius:var(--r-pill);padding:12px 18px 12px 46px;font-size:14px;font-family:var(--font-ui);outline:none;background:#FAFAFA;transition:border-color .15s}
+.search-input:focus{border-color:var(--n400);background:#fff}
+/* Results */
+.results-list{margin-top:24px}
+.result-row{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px;padding:16px 0;border-bottom:1px solid rgba(11,25,41,.07)}
+.result-row:last-child{border-bottom:none}
+.result-name{font-family:var(--font-display);font-size:16px;font-weight:400;color:var(--ink)}
+.result-location{font-size:13px;color:var(--ink2)}
+.result-swift{margin-left:auto;font-family:monospace;font-size:14px;font-weight:600;color:var(--n500);white-space:nowrap}
+.no-results{padding:24px 0;font-size:14px;color:var(--ink2)}
+.lookup-footnote{margin-top:20px;font-size:13px;color:var(--ink2);line-height:1.55}
+/* Prose */
+.body-text{font-size:16px;color:var(--ink2);line-height:1.75;max-width:820px}
+/* SWIFT anatomy */
+.swift-anatomy{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px;max-width:820px}
+@media(max-width:640px){.swift-anatomy{grid-template-columns:repeat(2,1fr)}}
+.anatomy-block{background:#FAFAFA;border:1px solid rgba(11,25,41,.08);border-radius:10px;padding:16px}
+.anatomy-pos{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--n300);margin-bottom:6px}
+.anatomy-label{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.anatomy-example{font-family:monospace;font-size:13px;color:var(--n500)}
+/* CTA strip */
+.cta-strip{background:var(--n800);padding:80px 0;text-align:center}
+.cta-strip h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,46px);font-weight:400;color:#fff;letter-spacing:-.025em;margin-bottom:12px}
+.cta-strip h2 em{font-style:italic;font-weight:300;color:var(--n200)}
+.cta-strip p{font-size:16px;color:rgba(255,255,255,.55);margin-bottom:32px}
+</style>
+</head>
+<body>
+<script src="assets/nav.js"></script>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div style="max-width:820px">
+      <span class="eyebrow">SWIFT / BIC Lookup</span>
+      <h1 style="margin-top:24px">Find any SWIFT code, <em>fast.</em></h1>
+      <p class="hero-sub">Look up SWIFT/BIC codes by bank name, country, or code itself. Free, no signup.</p>
+    </div>
+  </div>
+</section>
+
+<!-- LOOKUP -->
+<section class="section section-border" style="padding-top:64px">
+  <div class="container">
+    <div class="lookup-card">
+      <div class="search-wrap">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input class="search-input" type="text" id="swift-search" placeholder="Search by bank name, country, city or SWIFT code…" maxlength="120" autocomplete="off" />
+      </div>
+      <div class="results-list" id="results-list"></div>
+      <p class="lookup-footnote">This lookup uses a curated dataset of major banks. For institutional use, always verify with your counterparty bank.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ANATOMY OF A SWIFT CODE -->
+<section class="section section-light section-border">
+  <div class="container">
+    <span class="eyebrow">Reference</span>
+    <h2 class="section-heading">Anatomy of a SWIFT code.</h2>
+    <p class="body-text" style="margin-top:20px">A SWIFT/BIC code is either 8 or 11 characters and identifies a specific bank (and optionally a specific branch) anywhere in the world. The first four characters are the bank code — a unique short identifier for the institution. The next two are the ISO country code. Two more identify the city or location of the head office. The optional final three identify a specific branch; if omitted, the code refers to the primary office.</p>
+    <div class="swift-anatomy">
+      <div class="anatomy-block">
+        <div class="anatomy-pos">Chars 1–4</div>
+        <div class="anatomy-label">Bank code</div>
+        <div class="anatomy-example">DEUT (Deutsche Bank)</div>
+      </div>
+      <div class="anatomy-block">
+        <div class="anatomy-pos">Chars 5–6</div>
+        <div class="anatomy-label">Country code</div>
+        <div class="anatomy-example">DE (Germany)</div>
+      </div>
+      <div class="anatomy-block">
+        <div class="anatomy-pos">Chars 7–8</div>
+        <div class="anatomy-label">Location code</div>
+        <div class="anatomy-example">FF (Frankfurt)</div>
+      </div>
+      <div class="anatomy-block">
+        <div class="anatomy-pos">Chars 9–11</div>
+        <div class="anatomy-label">Branch code</div>
+        <div class="anatomy-example">XXX (primary) or branch ID</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip">
+  <div class="container">
+    <h2>Ready to send money <em>across borders?</em></h2>
+    <p>Open your HansePay account. Mid-market rates, transparent pricing.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="index.html#contact" class="btn btn-primary">Open your business account</a>
+      <a href="partners-partner.html" class="btn" style="background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25)">Talk to a specialist</a>
+    </div>
+  </div>
+</section>
+
+<script src="assets/footer.js"></script>
+<script>
+(function(){
+  var DB = [
+    {name:'Deutsche Bank',country:'Germany',city:'Frankfurt',swift:'DEUTDEFF'},
+    {name:'Commerzbank',country:'Germany',city:'Frankfurt',swift:'COBADEFF'},
+    {name:'DZ Bank',country:'Germany',city:'Frankfurt',swift:'GENODEFF'},
+    {name:'KfW',country:'Germany',city:'Frankfurt',swift:'KFWIDEFF'},
+    {name:'HypoVereinsbank (UniCredit)',country:'Germany',city:'Munich',swift:'HYVEDEMM'},
+    {name:'Sparkasse Hamburg (Haspa)',country:'Germany',city:'Hamburg',swift:'HASPDEHH'},
+    {name:'Berliner Sparkasse',country:'Germany',city:'Berlin',swift:'BELADEBE'},
+    {name:'ING-DiBa',country:'Germany',city:'Frankfurt',swift:'INGDDEFF'},
+    {name:'N26 Bank',country:'Germany',city:'Berlin',swift:'NTSBDEB1'},
+    {name:'Solarisbank',country:'Germany',city:'Berlin',swift:'SOBKDEBB'},
+    {name:'BNP Paribas',country:'France',city:'Paris',swift:'BNPAFRPP'},
+    {name:'Société Générale',country:'France',city:'Paris',swift:'SOGEFRPP'},
+    {name:'Crédit Agricole',country:'France',city:'Paris',swift:'AGRIFRPP'},
+    {name:'ING Bank N.V.',country:'Netherlands',city:'Amsterdam',swift:'INGBNL2A'},
+    {name:'ABN AMRO',country:'Netherlands',city:'Amsterdam',swift:'ABNANL2A'},
+    {name:'Rabobank',country:'Netherlands',city:'Utrecht',swift:'RABONL2U'},
+    {name:'Banco Santander',country:'Spain',city:'Madrid',swift:'BSCHESMM'},
+    {name:'BBVA',country:'Spain',city:'Madrid',swift:'BBVAESMM'},
+    {name:'CaixaBank',country:'Spain',city:'Barcelona',swift:'CAIXESBB'},
+    {name:'Intesa Sanpaolo',country:'Italy',city:'Turin',swift:'BCITITMM'},
+    {name:'UniCredit',country:'Italy',city:'Milan',swift:'UNCRITMM'},
+    {name:'KBC Bank',country:'Belgium',city:'Brussels',swift:'KREDBEBB'},
+    {name:'Belfius Bank',country:'Belgium',city:'Brussels',swift:'GKCCBEBB'},
+    {name:'Erste Group Bank',country:'Austria',city:'Vienna',swift:'GIBAATWW'},
+    {name:'Raiffeisen Bank International',country:'Austria',city:'Vienna',swift:'RZBAATWW'},
+    {name:'UBS',country:'Switzerland',city:'Zurich',swift:'UBSWCHZH80A'},
+    {name:'Credit Suisse',country:'Switzerland',city:'Zurich',swift:'CRESCHZZ80A'},
+    {name:'Swedbank',country:'Sweden',city:'Stockholm',swift:'SWEDSESS'},
+    {name:'Nordea Bank',country:'Sweden',city:'Stockholm',swift:'NDEASESS'},
+    {name:'Danske Bank',country:'Denmark',city:'Copenhagen',swift:'DABADKKK'},
+    {name:'DNB Bank',country:'Norway',city:'Oslo',swift:'DNBANOKK'},
+    {name:'Bank of America',country:'United States',city:'New York',swift:'BOFAUS3N'},
+    {name:'JPMorgan Chase',country:'United States',city:'New York',swift:'CHASUS33'},
+    {name:'Citibank',country:'United States',city:'New York',swift:'CITIUS33'},
+    {name:'Wells Fargo',country:'United States',city:'San Francisco',swift:'WFBIUS6S'},
+    {name:'HSBC Bank USA',country:'United States',city:'New York',swift:'MRMDUS33'},
+    {name:'HSBC UK',country:'United Kingdom',city:'London',swift:'HBUKGB4B'},
+    {name:'Barclays Bank',country:'United Kingdom',city:'London',swift:'BARCGB22'},
+    {name:'Lloyds Bank',country:'United Kingdom',city:'London',swift:'LOYDGB2L'},
+    {name:'NatWest',country:'United Kingdom',city:'London',swift:'NWBKGB2L'},
+    {name:'Standard Chartered',country:'United Kingdom',city:'London',swift:'SCBLGB2L'},
+    {name:'Royal Bank of Canada',country:'Canada',city:'Toronto',swift:'ROYCCAT2'},
+    {name:'TD Bank',country:'Canada',city:'Toronto',swift:'TDOMCATTTOR'},
+    {name:'DBS Bank',country:'Singapore',city:'Singapore',swift:'DBSSSGSG'},
+    {name:'OCBC Bank',country:'Singapore',city:'Singapore',swift:'OCBCSGSG'},
+    {name:'Bank of China',country:'China',city:'Beijing',swift:'BKCHCNBJ'},
+    {name:'ICBC',country:'China',city:'Beijing',swift:'ICBKCNBJ'},
+    {name:'Mitsubishi UFJ',country:'Japan',city:'Tokyo',swift:'BOTKJPJT'},
+    {name:'Banco do Brasil',country:'Brazil',city:'Brasília',swift:'BRASBRRJ'},
+    {name:'Itaú Unibanco',country:'Brazil',city:'São Paulo',swift:'ITAUBRSP'}
+  ];
+
+  function escHtml(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+  function render(q){
+    var s=q.trim().toLowerCase();
+    var results=s?DB.filter(function(b){
+      return [b.name,b.country,b.city,b.swift].some(function(f){return f.toLowerCase().indexOf(s)!==-1;});
+    }).slice(0,50):DB.slice(0,10);
+    var list=document.getElementById('results-list');
+    if(results.length===0){
+      list.innerHTML='<p class="no-results">No matches. Try another search.</p>';
+      return;
+    }
+    list.innerHTML=results.map(function(b){
+      return '<div class="result-row">'+
+        '<span class="result-name">'+escHtml(b.name)+'</span>'+
+        '<span class="result-location">'+escHtml(b.city)+', '+escHtml(b.country)+'</span>'+
+        '<span class="result-swift">'+escHtml(b.swift)+'</span>'+
+        '</div>';
+    }).join('');
+  }
+
+  var inp=document.getElementById('swift-search');
+  inp.addEventListener('input',function(){ render(this.value); });
+  render('');
+})();
+</script>
+</body>
+</html>

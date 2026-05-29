@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HansePay — IBAN Verifier</title>
+<meta name="description" content="Validate any IBAN instantly. Checks format, country length, mod-97 checksum. For German IBANs, identifies the bank name, city, and BIC. Free, no signup." />
+<link rel="icon" type="image/png" href="assets/hansepay-mark-uploaded.png">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Libre+Baskerville:ital,wght@0,400;1,400&display=swap" rel="stylesheet" />
+<style>
+:root{--n900:#060D1A;--n800:#0B1929;--n700:#0F2540;--n600:#163659;--n500:#1E4E80;--n400:#2E6BAD;--n300:#3B7BC4;--n200:#8DBDE6;--n100:#C4DDEF;--n050:#EBF4FB;--off:#F5F1EA;--gold:#C9A961;--ink:#0B1929;--ink2:#3D5A73;--ink3:#7A9AB0;--font-ui:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-display:Georgia,'Times New Roman',serif;--font-logo:'Libre Baskerville',Georgia,serif;--r-pill:100px;--r-lg:16px;--r-md:10px}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overflow-x:hidden}
+body{font-family:var(--font-ui);color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;line-height:1.6;overflow-x:hidden}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.container{max-width:1200px;margin:0 auto;padding:0 clamp(20px,5vw,80px)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 28px;border-radius:var(--r-pill);font-family:var(--font-ui);font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .18s ease;text-decoration:none;white-space:nowrap}
+.btn-primary{background:var(--n500);color:#fff}.btn-primary:hover{background:var(--n600)}
+.eyebrow{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;padding:5px 12px;border-radius:var(--r-pill);background:rgba(30,78,128,.08);color:var(--n500)}
+.hero{background:#FAFAFA;padding:140px 0 80px}
+.hero h1{font-family:var(--font-display);font-size:clamp(44px,5.5vw,76px);font-weight:400;line-height:1.05;letter-spacing:-.03em;color:var(--ink);margin-bottom:24px}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--n500)}
+.hero-sub{font-size:17px;color:var(--ink2);line-height:1.72;max-width:640px}
+.section{padding:96px 0}
+.section-light{background:#FAFAFA}
+.section-border{border-top:1px solid rgba(11,25,41,.08)}
+@media(max-width:768px){.section{padding:64px 0}}
+.section-heading{font-family:var(--font-display);font-size:clamp(30px,3.6vw,48px);font-weight:400;line-height:1.1;letter-spacing:-.025em;color:var(--ink);margin-top:12px}
+/* Verifier card */
+.verifier-card{background:#fff;border:1px solid rgba(11,25,41,.08);border-radius:var(--r-lg);padding:32px;max-width:760px;margin:0 auto;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+.inp-label{font-size:14px;font-weight:600;color:var(--ink);display:block;margin-bottom:8px}
+.iban-input{width:100%;border:1px solid rgba(11,25,41,.12);border-radius:8px;background:#FAFAFA;padding:12px 14px;font-family:monospace;font-size:16px;letter-spacing:.08em;outline:none;transition:border-color .15s}
+.iban-input:focus{border-color:var(--n400);background:#fff}
+/* Result panels */
+.result-empty{margin-top:24px;padding:20px;border-radius:10px;border:1px solid rgba(11,25,41,.08);background:rgba(11,25,41,.02);font-size:14px;color:var(--ink2)}
+.result-panel{margin-top:24px;padding:20px;border-radius:10px;border:1px solid;display:flex;align-items:flex-start;gap:12px}
+.result-icon{flex-shrink:0;margin-top:2px}
+.result-icon svg{width:22px;height:22px}
+.result-title{font-family:var(--font-display);font-size:18px;font-weight:400;color:var(--ink);margin-bottom:4px}
+.result-body{font-size:14px;color:var(--ink2);line-height:1.65}
+.result-valid{background:#F0FAF5;border-color:#A7E3C5}
+.result-warning{background:#FFFBEB;border-color:#FCD34D}
+.result-error{background:#FEF2F2;border-color:#FCA5A5}
+/* DE details table */
+.de-table{margin-top:14px;display:grid;grid-template-columns:120px 1fr;gap:6px 0}
+.de-key{font-size:14px;color:var(--ink2)}
+.de-val{font-size:14px;color:var(--ink);font-weight:500}
+.de-val.mono{font-family:monospace}
+/* Disclaimer */
+.disclaimer{margin-top:20px;font-size:13px;color:var(--ink2);line-height:1.55}
+/* Prose */
+.body-text{font-size:16px;color:var(--ink2);line-height:1.75;max-width:820px}
+/* CTA strip */
+.cta-strip{background:var(--n800);padding:80px 0;text-align:center}
+.cta-strip h2{font-family:var(--font-display);font-size:clamp(28px,3.5vw,46px);font-weight:400;color:#fff;letter-spacing:-.025em;margin-bottom:12px}
+.cta-strip h2 em{font-style:italic;font-weight:300;color:var(--n200)}
+.cta-strip p{font-size:16px;color:rgba(255,255,255,.55);margin-bottom:32px}
+</style>
+</head>
+<body>
+<script src="assets/nav.js"></script>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div style="max-width:820px">
+      <span class="eyebrow">IBAN Verifier</span>
+      <h1 style="margin-top:24px">Validate any IBAN <em>in one click.</em></h1>
+      <p class="hero-sub">Check format, country, and bank — without sending money first.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VERIFIER -->
+<section class="section section-border" style="padding-top:64px">
+  <div class="container">
+    <div class="verifier-card">
+      <label class="inp-label" for="iban-input">IBAN</label>
+      <input class="iban-input" type="text" id="iban-input" placeholder="DE89 3704 0044 0532 0130 00" maxlength="42" spellcheck="false" autocomplete="off" />
+      <div id="result-area"><div class="result-empty">Enter an IBAN to validate.</div></div>
+      <p class="disclaimer">Format validation only. A valid format does not guarantee the IBAN is active or belongs to the intended recipient. Always verify recipient details with your counterparty before sending money.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE CHECK -->
+<section class="section section-light section-border">
+  <div class="container">
+    <span class="eyebrow">Reference</span>
+    <h2 class="section-heading">What we check.</h2>
+    <p class="body-text" style="margin-top:20px">Every IBAN starts with a two-letter country code, followed by two check digits and the country-specific account identifier. We confirm that the country is recognised, that the length matches the expected length for that country (Germany is 22 characters, France is 27, the United Kingdom is 22, and so on), and that the built-in checksum holds.</p>
+    <p class="body-text" style="margin-top:16px">The checksum is a piece of arithmetic baked into the IBAN standard: by rearranging the IBAN and running it through a fixed mathematical check (mod-97), a single typo will reliably break the result. For German IBANs, we also extract the eight-digit Bankleitzahl from the middle of the number and look it up against the active Deutsche Bundesbank BLZ register, surfacing the bank name, city, and BIC where available.</p>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip">
+  <div class="container">
+    <h2>Send money with <em>confidence.</em></h2>
+    <p>Open your HansePay account and move money internationally at transparent rates.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+      <a href="index.html#contact" class="btn btn-primary">Open your business account</a>
+      <a href="partners-partner.html" class="btn" style="background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.25)">Talk to a specialist</a>
+    </div>
+  </div>
+</section>
+
+<script src="assets/footer.js"></script>
+<script>
+(function(){
+  // IBAN length table
+  var LENGTHS={
+    DE:22,AT:20,FR:27,IT:27,ES:24,NL:18,BE:16,CH:21,PL:28,CZ:24,
+    DK:18,FI:18,SE:24,NO:15,GB:22,IE:22,PT:25,GR:27,HU:28,RO:24,
+    SK:24,SI:19,LU:20,LV:21,LT:20,EE:20,MT:31,CY:28,BG:22,HR:21,
+    IS:26,LI:21,MC:27,SM:27,AD:24,IL:23,JO:30,KW:30,QA:29,AE:23,
+    SA:24,TR:26,TN:24,MA:28,EG:29,BR:29,PK:24,GE:22,TL:23,MK:19,
+    MD:24,RS:22,ME:22,MR:27,MU:30,AL:28,AZ:28,BA:20,BH:22,BY:28,
+    CR:22,DO:28,GT:28,KZ:20,LB:28,PS:29,SV:28,UA:29,VG:24,XK:20
+  };
+  var COUNTRIES={
+    DE:'Germany',AT:'Austria',FR:'France',IT:'Italy',ES:'Spain',
+    NL:'Netherlands',BE:'Belgium',CH:'Switzerland',PL:'Poland',CZ:'Czechia',
+    DK:'Denmark',FI:'Finland',SE:'Sweden',NO:'Norway',GB:'United Kingdom',
+    IE:'Ireland',PT:'Portugal',GR:'Greece',HU:'Hungary',RO:'Romania',
+    SK:'Slovakia',SI:'Slovenia',LU:'Luxembourg',LV:'Latvia',LT:'Lithuania',
+    EE:'Estonia',MT:'Malta',CY:'Cyprus',BG:'Bulgaria',HR:'Croatia',
+    IS:'Iceland',LI:'Liechtenstein',MC:'Monaco',SM:'San Marino',AD:'Andorra',
+    IL:'Israel',JO:'Jordan',KW:'Kuwait',QA:'Qatar',AE:'United Arab Emirates',
+    SA:'Saudi Arabia',TR:'Turkey',TN:'Tunisia',MA:'Morocco',EG:'Egypt',
+    BR:'Brazil',PK:'Pakistan',GE:'Georgia',TL:'Timor-Leste',MK:'North Macedonia',
+    MD:'Moldova',RS:'Serbia',ME:'Montenegro',MR:'Mauritania',MU:'Mauritius',
+    AL:'Albania',AZ:'Azerbaijan',BA:'Bosnia and Herzegovina',BH:'Bahrain',
+    BY:'Belarus',CR:'Costa Rica',DO:'Dominican Republic',GT:'Guatemala',
+    KZ:'Kazakhstan',LB:'Lebanon',PS:'Palestine',SV:'El Salvador',
+    UA:'Ukraine',VG:'British Virgin Islands',XK:'Kosovo'
+  };
+
+  // mod-97
+  function mod97(s){
+    var rem=0;
+    for(var i=0;i<s.length;i++) rem=(rem*10+(s.charCodeAt(i)-48))%97;
+    return rem;
+  }
+  function lettersToDigits(s){
+    return s.split('').map(function(ch){
+      var c=ch.charCodeAt(0);
+      if(c>=48&&c<=57) return ch;
+      if(c>=65&&c<=90) return String(c-55);
+      return '';
+    }).join('');
+  }
+  function formatIban(s){
+    return s.replace(/[^a-zA-Z0-9]/g,'').toUpperCase().replace(/(.{4})/g,'$1 ').trim();
+  }
+
+  // BLZ map (loaded lazily)
+  var blzMap=null, blzLoading=false;
+  function loadBlz(cb){
+    if(blzMap!==null){cb();return;}
+    if(blzLoading){setTimeout(function(){loadBlz(cb);},100);return;}
+    blzLoading=true;
+    fetch('/blz.json')
+      .then(function(r){return r.json();})
+      .then(function(data){
+        blzMap={};
+        data.forEach(function(e){blzMap[e.blz]=e;});
+        blzLoading=false; cb();
+      })
+      .catch(function(){blzMap={};blzLoading=false;cb();});
+  }
+
+  function validate(raw){
+    var cl=raw.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+    if(!cl) return {state:'empty'};
+    if(cl.length<2||!/^[A-Z]{2}/.test(cl)) return {state:'fmt',reason:'Country code must be two letters.'};
+    if(cl.length<4||!/^[A-Z]{2}[0-9]{2}/.test(cl)) return {state:'fmt',reason:'Characters 3–4 must be digits (check digits).'};
+    if(!/^[A-Z0-9]+$/.test(cl)) return {state:'fmt',reason:'IBAN may contain only letters and digits.'};
+    if(cl.length<15||cl.length>34) return {state:'fmt',reason:'Length must be between 15 and 34 characters, got '+cl.length+'.'};
+    var country=cl.slice(0,2);
+    var expected=LENGTHS[country];
+    if(expected&&cl.length!==expected){
+      var name=COUNTRIES[country]||country;
+      return {state:'fmt',reason:'Expected '+expected+' characters for a '+name+' IBAN, got '+cl.length+'.'};
+    }
+    var rearranged=cl.slice(4)+cl.slice(0,4);
+    var numeric=lettersToDigits(rearranged);
+    if(mod97(numeric)!==1) return {state:'checksum'};
+    if(country==='DE'){
+      var blz=cl.slice(4,12), account=cl.slice(12);
+      var bank=blzMap&&blzMap[blz];
+      if(bank) return {state:'valid-de',bank:bank,blz:blz,account:account};
+      return {state:'valid-de-unknown',blz:blz,account:account};
+    }
+    return {state:'valid-intl',country:country,countryName:COUNTRIES[country]||country};
+  }
+
+  function iconOK(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="#1A7F5A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="9 12 11 14 15 10"/></svg>'; }
+  function iconWarn(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="#B45309" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'; }
+  function iconErr(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="#B91C1C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>'; }
+
+  function render(result){
+    var area=document.getElementById('result-area');
+    if(result.state==='empty'){
+      area.innerHTML='<div class="result-empty">Enter an IBAN to validate.</div>';
+      return;
+    }
+    var html='';
+    if(result.state==='fmt'||result.state==='checksum'){
+      var title=result.state==='checksum'?'Invalid IBAN':'Invalid format';
+      var body=result.state==='checksum'?'The check digits do not match. Please verify the IBAN with your counterparty.':result.reason;
+      html='<div class="result-panel result-error"><div class="result-icon">'+iconErr()+'</div><div><div class="result-title">'+title+'</div><div class="result-body">'+body+'</div></div></div>';
+    } else if(result.state==='valid-de'){
+      var b=result.bank;
+      html='<div class="result-panel result-valid"><div class="result-icon">'+iconOK()+'</div><div><div class="result-title">Valid German IBAN</div>'+
+        '<div class="de-table">'+
+        '<span class="de-key">Bank</span><span class="de-val">'+escHtml(b.name)+'</span>'+
+        '<span class="de-key">City</span><span class="de-val">'+escHtml(b.city)+'</span>'+
+        '<span class="de-key">BIC</span><span class="de-val mono">'+(b.bic||'Not registered')+'</span>'+
+        '<span class="de-key">BLZ</span><span class="de-val mono">'+result.blz+'</span>'+
+        '<span class="de-key">Account</span><span class="de-val mono">'+result.account+'</span>'+
+        '</div></div></div>';
+    } else if(result.state==='valid-de-unknown'){
+      html='<div class="result-panel result-warning"><div class="result-icon">'+iconWarn()+'</div><div>'+
+        '<div class="result-title">Valid format, bank not identified</div>'+
+        '<div class="result-body">The check digits validate, but the BLZ <strong>'+result.blz+'</strong> is not in the current active Bundesbank dataset. This may be a historical or non-active bank. Verify with your counterparty before using.</div>'+
+        '</div></div>';
+    } else if(result.state==='valid-intl'){
+      html='<div class="result-panel result-valid"><div class="result-icon">'+iconOK()+'</div><div>'+
+        '<div class="result-title">Valid international IBAN</div>'+
+        '<div class="result-body">Country: <strong>'+result.countryName+'</strong>. Format validated. Full bank lookup is available for German IBANs only at this stage. Verify the receiving bank details with your counterparty.</div>'+
+        '</div></div>';
+    }
+    area.innerHTML=html;
+  }
+
+  function escHtml(s){ var d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
+  // Debounce
+  var debounceTimer=null;
+  var ibanInput=document.getElementById('iban-input');
+
+  ibanInput.addEventListener('input',function(){
+    // Format while typing
+    var raw=this.value.replace(/[^a-zA-Z0-9 ]/g,'').toUpperCase();
+    var cursor=this.selectionStart;
+    var formatted=formatIban(raw);
+    this.value=formatted;
+    // Restore cursor roughly
+    try{ this.setSelectionRange(Math.min(cursor,formatted.length),Math.min(cursor,formatted.length)); }catch(e){}
+
+    clearTimeout(debounceTimer);
+    debounceTimer=setTimeout(function(){
+      var v=ibanInput.value;
+      var country=v.replace(/\s/g,'').slice(0,2).toUpperCase();
+      if(country==='DE'){
+        loadBlz(function(){ render(validate(v)); });
+      } else {
+        render(validate(v));
+      }
+    },250);
+  });
+})();
+</script>
+</body>
+</html>

@@ -27,7 +27,7 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
     document.head.appendChild(st);
   }
 
-  // 2. Inject footer HTML synchronously at <script> position
+  // 2. Inject footer HTML
   var FOOTER_HTML = `
 <footer>
   <div class="container">
@@ -38,27 +38,36 @@ footer{background:#060D1A;padding:96px 0 48px;border-top:1px solid rgba(255,255,
         <p class="footer-legal">&#169; 2026 Caplend Technologies GmbH<br>HansePay is a brand of Caplend Technologies GmbH</p>
       </div>
       <div>
-        <div class="footer-col-title">Product</div>
+        <div class="footer-col-title">Platform</div>
         <ul class="footer-links">
-          <li><a class="footer-link" href="#">Payments</a></li><li><a class="footer-link" href="#">Rate Hedging</a></li>
-          <li><a class="footer-link" href="#">Spot FX</a></li><li><a class="footer-link" href="#">Bulk Payments</a></li>
-          <li><a class="footer-link" href="#">API</a></li><li><a class="footer-link" href="#">Security</a></li>
+          <li><a class="footer-link" href="platform.html">Overview</a></li>
+          <li><a class="footer-link" href="platform-technology.html">Technology</a></li>
+          <li><a class="footer-link" href="platform-security.html">Security</a></li>
+          <li><a class="footer-link" href="tools.html">Tools</a></li>
+          <li><a class="footer-link" href="tools-calculator.html">FX Calculator</a></li>
+          <li><a class="footer-link" href="tools-converter.html">Currency Converter</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">Company</div>
         <ul class="footer-links">
-          <li><a class="footer-link" href="#">About</a></li><li><a class="footer-link" href="#">Team</a></li>
-          <li><a class="footer-link" href="#">Insights</a></li><li><a class="footer-link" href="#">Careers</a></li>
-          <li><a class="footer-link" href="#">Contact</a></li><li><a class="footer-link" href="#">Press</a></li>
+          <li><a class="footer-link" href="about-vision.html">Vision &amp; Values</a></li>
+          <li><a class="footer-link" href="about-history.html">History</a></li>
+          <li><a class="footer-link" href="about-team.html">Team</a></li>
+          <li><a class="footer-link" href="about-licenses.html">Licenses</a></li>
+          <li><a class="footer-link" href="insights-stories.html">Customer stories</a></li>
+          <li><a class="footer-link" href="insights-market.html">Market insights</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-col-title">Legal</div>
         <ul class="footer-links">
-          <li><a class="footer-link" href="#">Imprint</a></li><li><a class="footer-link" href="#">Privacy</a></li>
-          <li><a class="footer-link" href="#">Terms</a></li><li><a class="footer-link" href="#">Complaints</a></li>
-          <li><a class="footer-link" href="#">Regulatory</a></li><li><a class="footer-link" href="#">Licences</a></li>
+          <li><a class="footer-link" href="imprint.html">Imprint</a></li>
+          <li><a class="footer-link" href="#">Privacy policy</a></li>
+          <li><a class="footer-link" href="#">Terms of service</a></li>
+          <li><a class="footer-link" href="#">Complaints</a></li>
+          <li><a class="footer-link" href="about-licenses.html">Licences</a></li>
+          <li><a class="footer-link" href="partners-partner.html">Partners</a></li>
         </ul>
       </div>
     </div>

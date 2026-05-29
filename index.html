@@ -971,14 +971,16 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener
 
 /* GLOBE CANVAS — ported from sending-globe.jsx */
 (function(){
+  function initGlobe(){
   var canvas=document.getElementById('globe-canvas');
   if(!canvas)return;
   var ctx=canvas.getContext('2d');
   var DPR=window.devicePixelRatio||1;
 
-  /* Size the canvas to fit its container in the currencies section */
+  /* Size the canvas — defer by one rAF so grid layout is computed */
   var col=canvas.closest('.currencies-globe-wrap')||canvas.parentElement;
   var SIZE=Math.min(col.offsetWidth-32, 480);
+  if(SIZE<100){SIZE=420;} /* fallback if layout not yet available */
   canvas.width=SIZE*DPR; canvas.height=SIZE*DPR;
   canvas.style.width=SIZE+'px'; canvas.style.height=SIZE+'px';
   ctx.scale(DPR,DPR);
@@ -1253,6 +1255,8 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener
   }
 
   requestAnimationFrame(draw);
+  } // end initGlobe
+  requestAnimationFrame(initGlobe);
 })();
 
 // ── Insights: load from API if available, fallback to static cards ────────────
